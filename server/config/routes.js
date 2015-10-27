@@ -94,7 +94,7 @@ module.exports = function(app, db) {
             var firstIndex = params.page * params.list - params.list;
             var lastIndex = params.page * params.list;
 
-            //preventing bad data from throwing exceptions
+            //preventing bad data from   throwing exceptions
             if (firstIndex > filteredMovies.length) {
                 firstIndex = firstIndex.length;
             }
@@ -110,7 +110,7 @@ module.exports = function(app, db) {
             result.movies = movieChunk;
             result.totalfilteredMovies = filteredMovies.length;
             result.totalMoviesCount = db.movies.length;
-            
+
             res.status(200).send(result);
         }
 
