@@ -10,15 +10,13 @@
         <br/>
         <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ng-maxlength="lastPage"><span> page out of {{finalPage}}</span>
         <br/>
-        <ul class="pagination">
-            <li class="{{pagination.hasPrevious()?'':'disabled'}}"><a href="" ng-click="pagination.previous()">&laquo;</a></li>
-            <li ng-show="pagination.hasPrevious()"><a href="">{{pagination.current() - 1}}</a></li>
-            <li ng-hide="pagination.hasPrevious()"><span>&nbsp;</span></li>
-            <li class="active"><a href="">{{pagination.current()}}</a></li>
-            <li ng-show="pagination.hasNext()"><a href="">{{pagination.current() + 1}}</a></li>
-            <li class="{{pagination.hasNext()?'':'disabled'}}"><a href="" ng-click="pagination.next()">&raquo;</a></li>
-        </ul>
+        <pagination-dir></pagination-dir>
         <br/>
+        <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'
+ -->
+        <div>
+            Matched {{totalfilteredMovies}} of {{totalMoviesCount}} movies total
+        </div>
     </div>
     <table>
         <thead>

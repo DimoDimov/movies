@@ -1,4 +1,7 @@
 module.exports = function(app, db) {
+
+	// - Backend
+	// - The server should serve server/data.json when a request is made to /api/movies
     app.get('/api/movies', function(req, res) {
 
         var params = {};
@@ -81,6 +84,8 @@ module.exports = function(app, db) {
             }
         }
 
+        //- Allow limiting the number of items returned
+        //- Allow pagination of data, e.g. get 10 items from the 4th 'page'
         function filterByPageAndList() {
             if (!filteredMovies.length) {
                 result.errorMessage = 'No matching items';
@@ -110,7 +115,7 @@ module.exports = function(app, db) {
             result.movies = movieChunk;
             result.totalfilteredMovies = filteredMovies.length;
             result.totalMoviesCount = db.movies.length;
-            
+
             res.status(200).send(result);
         }
 

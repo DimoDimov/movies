@@ -306,8 +306,8 @@
     var app = angular.module('app');
 
     app.controller('movieListCtrl', [
-        '$scope', 'movieModelServices', 'commonConstants', 'paginatonService', 'validationServices',
-        function($scope, movieModelServices, commonConstants, paginatonService, validationServices) { //) {
+        '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
+        function($scope, movieModelServices, commonConstants, validationServices) { //) {
 
             $scope.Title = "Title1";
             $scope.movieList = [];
@@ -320,6 +320,10 @@
             $scope.maxList = 1;
 
             $scope.totalfilteredMovies = 0;
+            $scope.totalMoviesCount = 0;
+
+
+            var requestSent = false;
 
             //self invoked to load 20 movies on page load
             // - On page load, you should display first 20 movies, 
@@ -331,41 +335,52 @@
                         // debugger //jshint ignore:line
                         $scope.movieList = data.movies;
                         $scope.list = commonConstants.numberMoviesPageLoad;
-                        $scope.pagination = paginatonService.Pagination($scope.finalPage, $scope.currentPage);
+                        // $scope.pagination = paginatonService.Pagination($scope.finalPage, $scope.currentPage);
                     });
             })();
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
+
                 if ($scope.searchPhrase.length > 2 || $scope.searchPhrase === '') {
 
-                    movieModelServices.getAllMovies(list, currentPage, searchPhrase)
-                        .then(function(data) {
-                            if ($scope.errorMessage) {
-                                $scope.errorMessage = '';
-                            }
+                    if (!requestSent) {
+                        requestSent = true;
 
-                            $scope.movieList = data.movies;
+                        movieModelServices.getAllMovies(list, currentPage, searchPhrase)
+                            .then(function(data) {
+                                requestSent = false;
+                                if ($scope.errorMessage) {
+                                    $scope.errorMessage = '';
+                                }
 
-                            if (searchPhrase) {
-                                $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
-                                $scope.totalfilteredMovies = data.totalfilteredMovies;
-                            } else {
-                                $scope.totalfilteredMovies = data.totalMoviesCount;
-                                $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
-                            }
+                                $scope.movieList = data.movies;
+                                $scope.totalMoviesCount = data.totalMoviesCount;
 
-                            if ($scope.totalfilteredMovies < $scope.list) {
-                                $scope.list = $scope.totalfilteredMovies;
-                            }
+                                if (searchPhrase) {
+                                    $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
+                                    $scope.totalfilteredMovies = data.totalfilteredMovies;
+                                } else {
+                                    $scope.totalfilteredMovies = data.totalMoviesCount;
+                                    $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
+                                }
 
-                            $scope.pagination = paginatonService.Pagination($scope.finalPage, $scope.currentPage);
+                                if ($scope.totalfilteredMovies < $scope.list) {
+                                    $scope.list = $scope.totalfilteredMovies;
+                                }
 
-                        }, function(data) {
-                            if (data.errorMessage) {
-                                $scope.errorMessage = data.errorMessage;
-                                $scope.movieList = [];
-                            }
-                        });
+                                // $scope.pagination = paginatonService.Pagination($scope.finalPage, $scope.currentPage);
+
+                            }, function(data) {
+                                requestSent = false;
+
+                                if (data.errorMessage) {
+                                    $scope.errorMessage = data.errorMessage;
+                                    $scope.movieList = [];
+                                }
+                            });
+                    }
+
+
                 }
             };
 
@@ -416,6 +431,16 @@
                     $scope.currentPage = newVal;
                 }
             });
+            // var self = this;
+            // $scope.nextCallback = function() {
+            //     debugger //jshint ignore:line
+            //     $scope.currentPage++;
+            // }.bind(self);
+
+            // $scope.previousCallback = function() {
+            //     $scope.currentPage--;
+            // };
+
 
             $scope.$on('pagination:next', function() {
                 // change page to next
@@ -450,18 +475,18 @@
 
     var app = angular.module('app');
 
-    app.factory('paginatonService', 
+    app.factory('paginationService', 
         ['$rootScope', 
         function($rootScope) {
         return {
-            Pagination: function(maxCount, current) {
-                return new Pagination(maxCount, current, $rootScope);
+            Pagination: function(maxCount, current, $scope) {
+                return new Pagination(maxCount, current, $scope);
             }
         };
     }]);
 
+    function Pagination(maxCount, current, $scope) {
 
-    function Pagination(maxCount, current, $rootScope) {
         this.maxCount = maxCount;
         this.counter = current;
 
@@ -474,13 +499,13 @@
         this.next = function() {
             if (this.hasNext()) {
                 this.counter++;
-                $rootScope.$broadcast("pagination:next", this.counter);
+               	$scope.currentPage++;
             }
         };
         this.previous = function() {
             if (this.hasPrevious()) {
                 this.counter--;
-                $rootScope.$broadcast("pagination:previous", this.counter);
+                $scope.currentPage--;
             }
         };
         this.hasPrevious = function() {
@@ -489,5 +514,38 @@
         this.hasNext = function() {
             return this.counter < this.maxCount;
         };
-    }    
+    } 
+
+    app.controller('paginationCtrl', 
+    	['$scope', 'paginationService', 
+        function($scope, paginationService) {  
+        	$scope.$watch("finalPage", function (newVal, oldVal) {
+        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope);
+        	});
+
+        	$scope.$watch("currentPage", function (newVal, oldVal) {	
+        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope);
+        	});
+        }
+    ]);
+})();
+;(function() {
+
+    var app = angular.module('app');
+
+    app.directive('paginationDir', [
+        function() {
+            return {
+                restrict: 'E',
+                transclude: true,
+                controller: 'paginationCtrl',
+                // scope: true,
+                link: function(scope, element, attrs) {
+
+                },
+                templateUrl: 'js/app/modules/pagination/paginationView.html'
+            };
+        }
+    ]);
+
 })();
