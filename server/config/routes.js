@@ -37,9 +37,8 @@ module.exports = function(app, db) {
                 }
 
                 params.list = parseInt(params.list);
-            }
-            else{
-            	 params.list = 20;
+            } else {
+                params.list = 20;
             }
 
             if (params.page) {
@@ -52,13 +51,12 @@ module.exports = function(app, db) {
                 }
 
                 params.page = parseInt(params.page);
-            }
-            else{
-            	params.page = 1;
+            } else {
+                params.page = 1;
             }
 
             if (params.query === undefined) {
-            	params.query = "";
+                params.query = "";
             }
 
             if (params.query) {
@@ -84,6 +82,13 @@ module.exports = function(app, db) {
         }
 
         function filterByPageAndList() {
+            if (!filteredMovies.length) {
+                result.errorMessage = 'No matching items';
+                res.status(404).send(result);
+
+                return;
+            }
+
             var movieChunk = [];
 
             var firstIndex = params.page * params.list - params.list;
@@ -105,8 +110,9 @@ module.exports = function(app, db) {
             result.movies = movieChunk;
             result.totalfilteredMovies = filteredMovies.length;
             result.totalMoviesCount = db.movies.length;
+            
+            res.status(200).send(result);
         }
 
-        res.status(200).send(result);
     });
 };
