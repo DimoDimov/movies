@@ -42,7 +42,7 @@
                             }
 
                             $scope.movieList = data.movies;
-                            
+
                             if (searchPhrase) {
                                 $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
                                 $scope.totalfilteredMovies = data.totalfilteredMovies;
@@ -67,6 +67,10 @@
             };
 
             $scope.$watch('searchPhrase', function(newVal, oldVal) {
+                if (oldVal && oldVal.length && oldVal.length > 0 && newVal.length === 0) {
+                    $scope.list = commonConstants.numberMoviesPageLoad;
+                }
+
                 proccessMovies($scope.list, $scope.currentPage, newVal);
             });
 
@@ -75,9 +79,12 @@
                     $scope.list = 1;
                 }
 
-                if ($scope.list > $scope.totalfilteredMovies && $scope.totalfilteredMovies > 0) {
-                    $scope.list = $scope.totalfilteredMovies;
+                if ($scope.searchPhrase && $scope.searchPhrase.lenght && $scope.searchPhrase.length > 2) {
+                    if ($scope.list > $scope.totalfilteredMovies && $scope.totalfilteredMovies > 0) {
+                        $scope.list = $scope.totalfilteredMovies;
+                    }
                 }
+
 
                 proccessMovies(newVal, $scope.currentPage, $scope.searchPhrase);
             });
