@@ -1,0 +1,30 @@
+{
+  "name": "CurrProjIce",
+  "description": "Iceberg",
+  "main": "",
+  "authors": [
+    "DimoDimov <dimo.ivanov.dimov@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "amd"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7",
+    "bootstrap-css-only": "~3.3.5",
+    "angular-mocks": "~1.4.7",
+    "angular-resource": "~1.4.7",
+    "angular-route": "~1.4.7"
+  },
+  "devDependencies": {}
+}

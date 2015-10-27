@@ -1,0 +1,43 @@
+<div>
+    <div class="searchAndPaginationTools">
+        <input type="text" style="search-box" ng-model="searchPhrase">
+        <br/>
+        <div class="errorMessage" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
+        <div class="errorMessage" ng-if="errorMessage">{{::errorMessage}}</div>
+        <br/>
+        <input class="numeric-input-50" type="number" ng-model="list" min="1" ng-maxlength="lastPerPage"><span> per page</span>
+        <br/>
+        <br/>
+        <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ng-maxlength="lastPage"><span> page out of {{finalPage}}</span>
+        <br/>
+        <ul class="pagination">
+            <li class="{{pagination.hasPrevious()?'':'disabled'}}"><a href="" ng-click="pagination.previous()">&laquo;</a></li>
+            <li ng-show="pagination.hasPrevious()"><a href="">{{pagination.current() - 1}}</a></li>
+            <li ng-hide="pagination.hasPrevious()"><span>&nbsp;</span></li>
+            <li class="active"><a href="">{{pagination.current()}}</a></li>
+            <li ng-show="pagination.hasNext()"><a href="">{{pagination.current() + 1}}</a></li>
+            <li class="{{pagination.hasNext()?'':'disabled'}}"><a href="" ng-click="pagination.next()">&raquo;</a></li>
+        </ul>
+        <br/>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="table-row">Title</th>
+                <th class="table-row">Year</th>
+                <th class="table-row">Rating</th>
+                <th class="table-row">Duration(min)</th>
+                <th class="table-row">Actors</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng:repeat="(k, movie) in movieList track by movie.title">
+                <td class="table-row">{{movie.title}}</td>
+                <td class="table-row">{{movie.year}}</td>
+                <td class="table-row">{{movie.rating}}</td>
+                <td class="table-row">{{movie.duration | filterDuration}}</td>
+                <td class="table-row-actors">{{movie.actors | filterActors}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

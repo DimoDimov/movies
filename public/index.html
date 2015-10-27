@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iceberg Search</title>
+</head>
+
+<body>
+    <!-- --------- SPA entry point ------------------- -->
+    <div ng-view></div>
+    
+    <!-- --------- Dependencies ------------------- -->
+    <!--  Styles  -->
+    <link rel="stylesheet" href="styles/lib/bootstrap.css">
+    <!-- Only one compressed and minified css file will be added to application. -->
+    <link rel="stylesheet" href="styles/dist/app.min.css">
+    <!--  Scripts  -->
+    <script src="js/lib/angular.js"></script>
+    <script src="js/lib/angular-route.js"></script>
+    <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap.js"></script>
+    <!-- LiveReload Script -->
+    <!-- For Dev Purposes -->
+    <script src="//localhost:35729/livereload.js"></script>
+    <!-- All custom javascript code are uglified and minified and concatenated with Gulp or Grunt or any other task runner. Only one compressed and minified javascript file will be added to application. -->
+    <script src="js/dist/app.concat.js"></script>
+</body>
+
+</html>
