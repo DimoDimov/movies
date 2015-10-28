@@ -309,7 +309,6 @@
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
 
-            $scope.Title = "Title1";
             $scope.movieList = [];
             $scope.searchPhrase = '';
 
@@ -323,7 +322,6 @@
             $scope.totalMoviesCount = 0;
 
             var doNotUpdateList = false;
-            var reques = 0;
 
             //self invoked to load 20 movies on page load
             // - On page load, you should display first 20 movies, 
@@ -338,12 +336,10 @@
                     });
             })();
 
-            var proccessMovies = function(list, currentPage, searchPhrase, forceList, whois) {
-                console.log(whois);
+            var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
+          
                 if ($scope.searchPhrase.length > 2 || $scope.searchPhrase === '') {
 
-                    reques++;
-                    console.log(reques);
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
 
@@ -381,7 +377,7 @@
                 if (oldVal && oldVal.length && oldVal.length > 0 && newVal.length === 0) {
                     $scope.list = commonConstants.numberMoviesPageLoad;
                 }
-                
+
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
                 }
