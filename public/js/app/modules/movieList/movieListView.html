@@ -5,10 +5,10 @@
         <div class="errorMessage" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
         <div class="errorMessage" ng-if="errorMessage">{{::errorMessage}}</div>
         <br/>
-        <input class="numeric-input-50" type="number" ng-model="list" min="1" ng-maxlength="lastPerPage"><span> per page</span>
+        <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
         <br/>
         <br/>
-        <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ng-maxlength="lastPage"><span> page out of {{finalPage}}</span>
+        <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of {{finalPage}}</span>
         <br/>
         <pagination-dir></pagination-dir>
         <br/>

@@ -322,6 +322,7 @@
             $scope.totalfilteredMovies = 0;
             $scope.totalMoviesCount = 0;
 
+            var doNotUpdateList = false;
             var reques = 0;
 
             //self invoked to load 20 movies on page load
@@ -362,6 +363,7 @@
                             }
 
                             if ($scope.totalfilteredMovies < $scope.list) {
+                                doNotUpdateList = true;
                                 $scope.list = $scope.totalfilteredMovies;
                             }
                         }, function(data) {
@@ -376,6 +378,10 @@
             };
 
             $scope.$watch('searchPhrase', function(newVal, oldVal) {
+                if (oldVal && oldVal.length && oldVal.length > 0 && newVal.length === 0) {
+                    $scope.list = commonConstants.numberMoviesPageLoad;
+                }
+                
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
                 }
@@ -392,8 +398,11 @@
                     }
                 }
 
-                if (oldVal !== newVal) {
+                if (oldVal !== newVal && !doNotUpdateList) {
                     proccessMovies(newVal, $scope.currentPage, $scope.searchPhrase, false, 'list');
+                }
+                else{
+                    doNotUpdateList = false;
                 }
             });
 
