@@ -11,7 +11,7 @@
         <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of {{finalPage}}</span>
         <br/>
         <!-- Custom Pagination -->  
-        <pagination-dir></pagination-dir>
+        <pagination-dir nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
         <br/>
         <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'
  -->

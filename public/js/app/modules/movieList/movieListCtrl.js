@@ -5,7 +5,9 @@
     app.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
+            self = this;
 
+            self.scope = $scope;
             $scope.movieList = [];
             $scope.searchPhrase = '';
 
@@ -17,6 +19,14 @@
 
             $scope.totalfilteredMovies = 0;
             $scope.totalMoviesCount = 0;
+
+            $scope.nextcallback = function () {
+                self.scope.currentPage++;
+            }.bind(self);
+
+            $scope.previouscallback = function () {
+                self.scope.currentPage--;
+            }.bind(self);
 
             var doNotUpdateList = false;
 

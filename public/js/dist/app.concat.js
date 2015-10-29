@@ -254,16 +254,21 @@
     app.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
-        var isNumeric = function(n) {
+        var _isNumeric = function(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
         };
 
-        var _validateInput = function (numberOfItemsToReturn, pageNumber) {
+        var _isFunction = function (functionToCheck) {
+            var getType = {};
+            return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+        };
+
+        var _validateInput = function(numberOfItemsToReturn, pageNumber) {
 
             //------------------------- NumberOfItemsToReturn Validation -----------
 
             //if Not Valid numberOfItemsToReturn then throw ex
-            if (numberOfItemsToReturn !== undefined && !isNumeric(numberOfItemsToReturn)) {
+            if (numberOfItemsToReturn !== undefined && !_isNumeric(numberOfItemsToReturn)) {
                 console.log(numberOfItemsToReturn);
                 throw "Please provide valid integer for number of items to return.";
             }
@@ -278,7 +283,7 @@
             //---------------------------- PageNumber Validation -----------------
 
             //if Not Valid pageNumber then throw ex
-            if (pageNumber !== undefined && !isNumeric(pageNumber)) {
+            if (pageNumber !== undefined && !_isNumeric(pageNumber)) {
                 console.log(pageNumber);
                 throw "Please provide valid integer for page number.";
             }
@@ -297,7 +302,8 @@
 
         return {
             validateInput: _validateInput,
-            isNumeric: isNumeric
+            isNumeric: _isNumeric,
+            isFunction: _isFunction
         };
     }]);
 })();
@@ -308,7 +314,9 @@
     app.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
+            self = this;
 
+            self.scope = $scope;
             $scope.movieList = [];
             $scope.searchPhrase = '';
 
@@ -320,6 +328,14 @@
 
             $scope.totalfilteredMovies = 0;
             $scope.totalMoviesCount = 0;
+
+            $scope.nextcallback = function () {
+                self.scope.currentPage++;
+            }.bind(self);
+
+            $scope.previouscallback = function () {
+                self.scope.currentPage--;
+            }.bind(self);
 
             var doNotUpdateList = false;
 
@@ -453,56 +469,15 @@
 
     var app = angular.module('app');
 
-    app.factory('paginationService', 
-        ['$rootScope', 
-        function($rootScope) {
-        return {
-            Pagination: function(maxCount, current, $scope) {
-                return new Pagination(maxCount, current, $scope);
-            }
-        };
-    }]);
-
-    function Pagination(maxCount, current, $scope) {
-
-        this.maxCount = maxCount;
-        this.counter = current;
-
-        this.max = function() {
-            return this.maxCount;
-        };
-        this.current = function() {
-            return this.counter;
-        };
-        this.next = function() {
-            if (this.hasNext()) {
-                this.counter++;
-               	$scope.currentPage++;
-            }
-        };
-        this.previous = function() {
-            if (this.hasPrevious()) {
-                this.counter--;
-                $scope.currentPage--;
-            }
-        };
-        this.hasPrevious = function() {
-            return this.counter > 1;
-        };
-        this.hasNext = function() {
-            return this.counter < this.maxCount;
-        };
-    } 
-
     app.controller('paginationCtrl', 
     	['$scope', 'paginationService', 
         function($scope, paginationService) {  
         	$scope.$watch("finalPage", function (newVal, oldVal) {
-        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope);
+        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope.nextcallback, $scope.previouscallback);
         	});
 
         	$scope.$watch("currentPage", function (newVal, oldVal) {	
-        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope);
+        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope.nextcallback, $scope.previouscallback);
         	});
         }
     ]);
@@ -517,6 +492,13 @@
                 restrict: 'E',
                 transclude: true,
                 controller: 'paginationCtrl',
+                scope:{
+                    nextcallback:"&",
+                    previouscallback:"&",
+
+                    finalPage:"=finalpage",
+                    currentPage:"=currentpage"
+                },
                 link: function(scope, element, attrs) {
 
                 },
@@ -524,5 +506,64 @@
             };
         }
     ]);
+
+})();
+;(function() {
+
+    var app = angular.module('app');
+
+    app.factory('paginationService', ['validationServices',
+        function(validationServices) {
+
+            var Pagination = function(maxCount, current, nextcallback, previouscallback) {
+
+                this.maxCount = maxCount;
+                this.counter = current;
+
+                this.max = function() {
+                    return this.maxCount;
+                };
+                this.current = function() {
+                    return this.counter;
+                };
+                this.next = function() {
+                    if (this.hasNext()) {
+                        this.counter++;
+                        if (validationServices.isFunction(nextcallback)) {
+                            nextcallback();
+                        }
+                        else{
+                        	throw "Please provide a next callback function";
+                        }
+                    }
+                };
+                this.previous = function() {
+                    if (this.hasPrevious()) {
+                        this.counter--;
+
+                        if (validationServices.isFunction(previouscallback)) {
+                            previouscallback();
+                        }
+                        else{
+                        	throw "Please provide a previous callback function";
+                        }
+                    }
+                };
+                this.hasPrevious = function() {
+                    return this.counter > 1;
+                };
+                this.hasNext = function() {
+                    return this.counter < this.maxCount;
+                };
+            };
+
+            return {
+                Pagination: function(maxCount, current, nextcallback, previouscallback) {
+                    return new Pagination(maxCount, current, nextcallback, previouscallback);
+                }
+            };
+        }
+    ]);
+
 
 })();
