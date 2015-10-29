@@ -517,18 +517,21 @@
 
             var Pagination = function(maxCount, current, nextcallback, previouscallback) {
 
-                this.maxCount = maxCount;
-                this.counter = current;
+                var _maxCount = maxCount;
+                var _counter = current;
+
+                this.nextcallback = nextcallback;
+                this.previouscallback = previouscallback;
 
                 this.max = function() {
-                    return this.maxCount;
+                    return _maxCount;
                 };
                 this.current = function() {
-                    return this.counter;
+                    return _counter;
                 };
                 this.next = function() {
                     if (this.hasNext()) {
-                        this.counter++;
+                        _counter++;
                         if (validationServices.isFunction(nextcallback)) {
                             nextcallback();
                         }
@@ -539,10 +542,10 @@
                 };
                 this.previous = function() {
                     if (this.hasPrevious()) {
-                        this.counter--;
+                        _counter--;
 
-                        if (validationServices.isFunction(previouscallback)) {
-                            previouscallback();
+                        if (validationServices.isFunction(this.previouscallback)) {
+                             this.previouscallback();
                         }
                         else{
                         	throw "Please provide a previous callback function";
@@ -550,10 +553,10 @@
                     }
                 };
                 this.hasPrevious = function() {
-                    return this.counter > 1;
+                    return _counter > 1;
                 };
                 this.hasNext = function() {
-                    return this.counter < this.maxCount;
+                    return _counter < _maxCount;
                 };
             };
 
