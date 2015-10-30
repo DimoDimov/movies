@@ -9,6 +9,14 @@
             return !isNaN(parseFloat(n)) && isFinite(n);
         };
 
+        var _isObject = function(o) {
+            return o !== null && typeof o === 'object';
+        };
+
+        var _isArray = function (arr) {
+            return arr && arr.constructor === Array;
+        };
+
         var _isFunction = function (functionToCheck) {
             var getType = {};
             return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
@@ -54,7 +62,9 @@
         return {
             validateInput: _validateInput,
             isNumeric: _isNumeric,
-            isFunction: _isFunction
+            isFunction: _isFunction,
+            isArray:_isArray,
+            isObject:_isObject
         };
     }]);
 })();

@@ -1,3 +1,5 @@
+//Controllers Testing
+
 describe("movieListCtrl", function () {
 	var $rootScope,
 		$scope,
@@ -5,6 +7,8 @@ describe("movieListCtrl", function () {
 
     //Controller Testing
 	beforeEach(function () {
+		//replace each dependency with a bulk => module('pie', 'desserts');
+        // module.apply(this, app.Dependencies);
 		module('app');
 
 		inject(function ($injector) {

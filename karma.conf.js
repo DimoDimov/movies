@@ -1,4 +1,4 @@
-module.exports = function (config) {
+module.exports = function(config) {
 
     config.set({
 
@@ -8,14 +8,24 @@ module.exports = function (config) {
             'public/js/lib/angular-mocks.js',
             'public/js/lib/angular-route.js',
             'public/js/lib/jquery.js',
-
             'public/js/dist/app.min.js',
+            //load templates
+            'public/js/app/**/*View.html',
             'test/unit/**/*.spec.js'
         ],
 
         // list of files to exclude
         exclude: [],
 
+        //using the ng-html2js makes the directive testing trivial
+        preprocessors: {
+            'public/**/*View.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'public/',
+            moduleName: 'templates'
+        },
 
         proxies: {},
 
@@ -29,7 +39,7 @@ module.exports = function (config) {
 
         // frameworks to use
         frameworks: ['jasmine'],
-        browsers : ['ChromeDesktop'],
+        browsers: ['ChromeDesktop'],
 
         customLaunchers: {
             ChromeDesktop: {
@@ -41,7 +51,8 @@ module.exports = function (config) {
         plugins: [
             'karma-jasmine',
             'karma-chrome-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-ng-html2js-preprocessor',
         ],
 
         // Test results reporter to use
@@ -57,6 +68,3 @@ module.exports = function (config) {
 
     });
 };
-
-
-

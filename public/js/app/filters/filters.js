@@ -2,25 +2,46 @@
 
     var app = angular.module('app');
 
-    app.filter('filterActors', function() {
-        return function(actors) {
-            var result = "";
-            //debugger //jshint ignore:line
-            for (var i = 0; i < actors.list.length; i++) {
-                if (actors.list.length - 1) {
-                     result += actors.list[i].name + ", ";
-                 }
-            }
+    app.filter('filterActors', ['validationServices',
+        function(validationServices) {
 
-            return result;
-        };
-    });
+            return function(actors) {
+                //debugger; //jshint ignore:line
+                if (validationServices.isObject(actors) && validationServices.isArray(actors.list)) {
+                    var result = "";
+                    //debugger //jshint ignore:line
+                    for (var i = 0; i < actors.list.length; i++) {
+                        if (i < actors.list.length - 1) {
+                            result += actors.list[i].name + ", ";
+                        } else {
+                            result += actors.list[i].name;
+                        }
+                    }
 
-    app.filter('filterDuration', function() {
-        return function(duration) {
-            var result = duration / 60;
-            return result;
-        };
-    });
+                    return result;
+                } else {
+                    return "";
+                }
+            };
+        }
+    ]);
+
+    app.filter('filterDuration', ['validationServices',
+        function(validationServices) {
+
+            return function(duration) {
+
+                if (validationServices.isNumeric(duration)) {
+                    //make sure we always return integer
+                    duration = parseInt(duration);
+                    var result = duration / 60;
+                    return result;
+                } else {
+                    return duration;
+                }
+            };
+
+        }
+    ]);
 
 })();
