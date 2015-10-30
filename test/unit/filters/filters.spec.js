@@ -4,14 +4,9 @@ describe('Filter duration tests', function() {
     var filter, $filter;
 
     beforeEach(function() {
-        //$inject
-        //module('app');
-        //replace each dependency with a bulk => module('pie', 'desserts');
-        //console.log(app.Dependencies);
-        //debugger //jshint ignore:line
+        //replace each dependency with a bulk
         module.apply(module, app.Dependencies);
 
-        //module('app');
         inject(function($injector) {
             $filter = $injector.get('$filter');
 

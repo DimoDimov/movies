@@ -16,7 +16,8 @@ module.exports = function(config) {
             //load html templates for html2js
             'public/js/app/**/*View.html',
             //load tests
-            'test/unit/**/*.spec.js'
+            'test/unit/libs/test-helpers.js',
+            'test/unit/**/*.spec.js',
         ],
 
         // list of files to exclude
