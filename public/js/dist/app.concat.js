@@ -2,7 +2,7 @@
 
     // Organizing the code
     // The Domain Style
-    var app = angular.module('app', ['ngRoute']);
+    var app = angular.module('app', ['ngRoute', 'APIServices', 'constants', 'filters', 'services', 'controllers', 'directives']);
 
     //declare my modules, bulking by groups
     //separation: Specific Style
