@@ -18,7 +18,7 @@ describe("movieListDir", function() {
             $compile = $injector.get('$compile');
             el = $compile(angular.element(simpleHtml))($scope);
         });
-        debugger; //jshint ignore:line
+        
         $body.append(el);
         $rootScope.$digest();
         $el = $('.movie-list-wrapper');

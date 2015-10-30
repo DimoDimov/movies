@@ -4,13 +4,16 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+            //libs
             'public/js/lib/angular.js',
             'public/js/lib/angular-mocks.js',
             'public/js/lib/angular-route.js',
             'public/js/lib/jquery.js',
+            //main js entry
             'public/js/dist/app.min.js',
-            //load templates
+            //load html templates for html2js
             'public/js/app/**/*View.html',
+            //load tests
             'test/unit/**/*.spec.js'
         ],
 
