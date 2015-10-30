@@ -9,8 +9,10 @@ module.exports = function(config) {
             'public/js/lib/angular-mocks.js',
             'public/js/lib/angular-route.js',
             'public/js/lib/jquery.js',
+            'public/js/lib/neosavvy-javascript-angular-core.js',
+
             //main js entry
-            'public/js/dist/app.min.js',
+            'public/js/dist/app.concat.js',
             //load html templates for html2js
             'public/js/app/**/*View.html',
             //load tests
@@ -67,7 +69,7 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: true
+        // singleRun: true
 
     });
 };

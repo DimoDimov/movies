@@ -9,9 +9,9 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 separator: ';'
-            },
+            }, 
             distJS: {
-                src: ['public/js/app/app.js', 'public/js/app/**/*.js'],
+                src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
                 dest: 'public/js/dist/app.concat.js',
             },
             distCSS: {
@@ -152,12 +152,14 @@ module.exports = function(grunt) {
                     destPrefix: 'public/js/lib'
                 },
                 files: {
-                    'jquery.js': 'jquery/dist/jquery.js',
+                    'jquery.js': 'jquery/jquery.js',
                     'bootstrap.js': 'bootstrap/dist/js/bootstrap.js',
                     'angular.js': 'angular/angular.js',
                     'angular-route.js': 'angular-route/angular-route.js',
                     'angular-mocks.js': 'angular-mocks/angular-mocks.js',
                     'angular-resource.js': 'angular-resource/angular-resource.js',
+                    'neosavvy-javascript-angular-core.js': 'neosavvy-javascript-angular-core/neosavvy-javascript-angular-core.js',
+
                 }
             },
             stylefiles: {

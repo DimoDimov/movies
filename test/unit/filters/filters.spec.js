@@ -5,7 +5,13 @@ describe('Filter duration tests', function() {
 
     beforeEach(function() {
         //$inject
-        module('app');
+        //module('app');
+        //replace each dependency with a bulk => module('pie', 'desserts');
+        //console.log(app.Dependencies);
+        //debugger //jshint ignore:line
+        module.apply(module, app.Dependencies);
+
+        //module('app');
         inject(function($injector) {
             $filter = $injector.get('$filter');
 
@@ -39,8 +45,8 @@ describe('Filter actors tests', function() {
     var filter, $filter;
 
     beforeEach(function() {
-        //$inject
-        module('app');
+        module.apply(module, app.Dependencies);
+
         inject(function($injector) {
             $filter = $injector.get('$filter');
             //debugger;//jshint ignore:line

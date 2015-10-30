@@ -7,9 +7,8 @@ describe("movieListCtrl", function () {
 
     //Controller Testing
 	beforeEach(function () {
-		//replace each dependency with a bulk => module('pie', 'desserts');
-        // module.apply(this, app.Dependencies);
-		module('app');
+		
+		module.apply(module, app.Dependencies);
 
 		inject(function ($injector) {
 			$rootScope = $injector.get('$rootScope');

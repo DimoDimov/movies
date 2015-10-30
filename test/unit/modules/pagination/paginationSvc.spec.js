@@ -10,7 +10,7 @@ describe("paginationService", function() {
 
     //Factory Testing
     beforeEach(function() {
-        module('app');
+        module.apply(module, app.Dependencies);
 
         inject(function($injector) {
             factory = $injector.get('paginationService');

@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module('app');
+    var app = angular.module('APIServices');
 
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 

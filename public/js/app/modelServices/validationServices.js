@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module('app');
+    var app = angular.module('services');
 
     app.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/

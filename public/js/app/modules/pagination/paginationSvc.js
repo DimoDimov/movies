@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module('app');
+    var app = angular.module('services');
 
     app.factory('paginationService', ['validationServices',
         function(validationServices) {

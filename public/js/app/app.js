@@ -4,6 +4,15 @@
     // The Domain Style
     var app = angular.module('app', ['ngRoute']);
 
+    //declare my modules, bulking by groups
+    //separation: Specific Style
+    angular.module('APIServices', []);
+    angular.module('constants', []);
+    angular.module('filters', []);
+    angular.module('services', []);
+    angular.module('controllers', []);
+    angular.module('directives', []);
+
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
     // of a module are in one folder. Ex: 'modules/movieList'. This helps to easily store

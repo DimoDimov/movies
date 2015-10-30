@@ -10,7 +10,7 @@ describe("movieListDir", function() {
 
     //Controller Testing
     beforeEach(function() {
-        module('templates', 'app');
+        module.apply(module, app.Dependencies);
 
         inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
@@ -25,11 +25,11 @@ describe("movieListDir", function() {
         
     });
 
-    // describe("Initialization", function() {
-    //     it("Should instantiate movie list to equal 20", function() {
-    //         expect(20).toEqual(20);
-    //     });
-    // });
+    describe("Initialization", function() {
+        it("Should instantiate movie list to equal 20", function() {
+            expect(20).toEqual(20);
+        });
+    });
 
     // describe("Initialization", function () {
     // 	it("Should instantiate movie list to equal 20", function () {

@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module('app');
+    var app = angular.module('constants');
     //Declaring routes that are being used by the API Services
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly

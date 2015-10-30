@@ -4,6 +4,15 @@
     // The Domain Style
     var app = angular.module('app', ['ngRoute']);
 
+    //declare my modules, bulking by groups
+    //separation: Specific Style
+    angular.module('APIServices', []);
+    angular.module('constants', []);
+    angular.module('filters', []);
+    angular.module('services', []);
+    angular.module('controllers', []);
+    angular.module('directives', []);
+
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
     // of a module are in one folder. Ex: 'modules/movieList'. This helps to easily store
@@ -59,7 +68,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('APIServices');
 
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
@@ -137,7 +146,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('constants');
     //Declaring routes that are being used by the API Services
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly
@@ -154,7 +163,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('filters');
 
     app.filter('filterActors', ['validationServices',
         function(validationServices) {
@@ -201,7 +210,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('services');
 
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
@@ -270,7 +279,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('services');
 
     app.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
@@ -340,7 +349,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('controllers');
 
     app.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
@@ -480,7 +489,7 @@
 })();
 ;(function() {
 
-	var app = angular.module('app');
+	var app = angular.module('directives');
 
 	app.directive('movieList', function() {
 		return {
@@ -498,7 +507,7 @@
 
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('controllers');
 
     app.controller('paginationCtrl', 
     	['$scope', 'paginationService', 
@@ -515,7 +524,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('directives');
 
     app.directive('paginationDir', [
         function() {
@@ -541,7 +550,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('app');
+    var app = angular.module('services');
 
     app.factory('paginationService', ['validationServices',
         function(validationServices) {
@@ -601,3 +610,23 @@
 
 
 })();
+;//we are breaking down the dependencies for mid and huge applications
+//in the current example we will just add all the dependecies in a bulk
+var app = app || {};
+
+app.Controllers = angular.module('app.constants', ['constants']);
+app.Services = angular.module('app.services', ['APIServices', 'services']);
+app.Filters = angular.module('app.filters', ['filters']);
+app.Controllers = angular.module('app.controllers', ['controllers']);
+app.Directives = angular.module('app.directives', ['directives']);
+app.Tests = angular.module('app.tests', ['templates']);
+
+app.Dependencies = Neosavvy.AngularCore.Dependencies.concat(
+    [
+        'app.constants',
+        'app.services',
+        'app.filters',
+        'app.controllers',
+        'app.directives',
+        'app.tests'
+    ]);

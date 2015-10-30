@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module('app');
+    var app = angular.module('controllers');
 
     app.controller('paginationCtrl', 
     	['$scope', 'paginationService', 
