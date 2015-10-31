@@ -101,76 +101,28 @@ describe("movieListDir", function() {
         });
 
 
-        // it("Should calculate the page value based on the number of movies to display and the list number", function() {
-        //     //click counter, be sure we make more clicks than pages
-        //     var clicksAfterFinalPage = finalPage + 1;
+        it("Should not allow current page to go beyond the final page", function() {
+            //click counter, be sure we make more clicks than pages
+            var clicksBeyondFinalPage =  $scope.finalPage + 1;
 
-        //     for (var i = 0; i < clicksAfterFinalPage; i++) {
-        //         pagination.next();
-        //     }
+            for (var i = 0; i < clicksBeyondFinalPage; i++) {
+                $scope.currentPage++;
+                $scope.$digest();
+            }
 
-        //     expect(pagination.current()).toEqual(finalPage);
-        // });
+            expect($scope.currentPage).toEqual($scope.finalPage);
+        });
 
-        // it("The counter should not go below 1. Even if pagination.previous() is being applied", function() {
-        //     expect(pagination.current()).toEqual(1);
+        it("The counter should not go below 1. Even if pagination.previous() is being applied", function() {
+            expect($scope.currentPage).toEqual(1);
 
-        //     pagination.previous();
-        //     expect(pagination.current()).toEqual(1);
+            $scope.currentPage--;
+            $scope.$digest();
+            expect($scope.currentPage).toEqual(1);
             
-        //     pagination.previous();
-        //     expect(pagination.current()).toEqual(1);
-        // });
-
-        // it("Check the border cases for the pagination.hasPrevious and pagination.hasNext methods", function() {
-        //     expect(pagination.current()).toEqual(1);
-
-        //     expect(pagination.hasPrevious()).toBeFalsy();
-        //     expect(pagination.hasNext()).toBeTruthy();
-
-        //     for (var i = 0; i < finalPage; i++) {
-        //         pagination.next();
-        //     }
-
-        //     expect(pagination.hasNext()).toBeFalsy();
-        //     expect(pagination.hasPrevious()).toBeTruthy();
-
-        // });
-
-        // it("Should instantiate pagination", function() {
-        //     expect(pagination).not.toBeNull();
-        // });
-
-        // it("Should set pagination.maxCount equal to final page", function() {
-        //     expect(pagination.max()).toEqual(finalPage);
-        // });
-
-        // it("Should set pagination.current equal to current page", function() {
-        //     expect(pagination.current()).toEqual(currentPage);
-        // });
-
-        // it("The nextcallback should return the expected result", function() {
-        //     expect(pagination.nextcallback()).toEqual(nextcallbackResult);
-        // });
-
-        // it("The previouscallback should return the expected result", function() {
-        //     expect(pagination.previouscallback()).toEqual(previousCallbackResult);
-        // });
+            $scope.currentPage--;
+            $scope.$digest();
+            expect($scope.currentPage).toEqual(1);
+        });
     });
-
-    // describe("Initialization", function() {
-    //     it("Should instantiate movie list to equal 20", function() {
-    //         expect(20).toEqual(20);
-    //     });
-    // });
-
-    // describe("Initialization", function () {
-    // 	it("Should instantiate movie list to equal 20", function () {
-    // 		expect($scope.list).toEqual(20);
-    // 	});
-
-    // 	it("Should instantiate current page to equal 1", function () {
-    // 		expect($scope.currentPage).toEqual(1);
-    // 	});
-    // });
 });

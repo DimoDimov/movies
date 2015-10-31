@@ -119,7 +119,7 @@
                     $scope.currentPage = 1;
                     return;
                 }
-
+                // debugger; //jshint ignore:line
                 if ($scope.finalPage < newVal) {
                     $scope.currentPage = $scope.finalPage;
                     return;
