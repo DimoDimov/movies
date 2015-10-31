@@ -15,7 +15,7 @@ describe("movieListCtrl", function () {
 			$scope = $rootScope.$new();
 			controller = $injector.get('$controller')("movieListCtrl", {$scope:$scope});
 		});
-	});
+	});	
 
 	describe("Initialization", function () {
 		it("Should instantiate movie list to equal 20", function () {

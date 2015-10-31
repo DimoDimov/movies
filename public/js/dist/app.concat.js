@@ -364,7 +364,6 @@
             $scope.list = 20;
             $scope.currentPage = 1;
             $scope.finalPage = 1;
-            $scope.maxList = 1;
 
             $scope.totalfilteredMovies = 0;
             $scope.totalMoviesCount = 0;
@@ -388,6 +387,7 @@
                         $scope.movieList = data.movies;
                         $scope.list = commonConstants.numberMoviesPageLoad;
                         $scope.totalfilteredMovies = data.totalMoviesCount;
+                        $scope.totalMoviesCount = data.totalMoviesCount;
                         $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
                     });
             })();
