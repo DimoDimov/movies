@@ -16,11 +16,12 @@
                     currentPage:"=currentpage"
                 },
                 link: function(scope, element, attrs) {
-
+                    if (!attrs.nextcallback || !attrs.previouscallback) {
+                        throw "You must provide nextcallback and previouscallback for pagination service";
+                    }
                 },
                 templateUrl: 'js/app/modules/pagination/paginationView.html'
             };
         }
     ]);
-
 })();

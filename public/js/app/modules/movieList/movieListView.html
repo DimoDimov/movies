@@ -1,6 +1,6 @@
 <div>
     <div class="searchAndPaginationTools">
-        <input type="text" style="search-box" ng-model="searchPhrase">
+        <input type="text" class="search-box" ng-model="searchPhrase">
         <br/>
         <div class="errorMessage" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
         <div class="errorMessage" ng-if="errorMessage">{{::errorMessage}}</div>
@@ -11,7 +11,7 @@
         <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of {{finalPage}}</span>
         <br/>
         <!-- Custom Pagination -->  
-        <pagination-dir nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
+        <pagination-dir class="pagination" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
         <br/>
         <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'
  -->
