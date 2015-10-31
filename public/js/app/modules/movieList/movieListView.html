@@ -2,8 +2,8 @@
     <div class="searchAndPaginationTools">
         <input type="text" class="search-box" ng-model="searchPhrase">
         <br/>
-        <div class="errorMessage" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
-        <div class="errorMessage" ng-if="errorMessage">{{::errorMessage}}</div>
+        <div class="errorMessage leastThreeChar" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
+        <div class="errorMessage errMessageGeneral" ng-if="errorMessage">{{::errorMessage}}</div>
         <br/>
         <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
         <br/>
