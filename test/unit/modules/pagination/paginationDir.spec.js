@@ -13,7 +13,6 @@ describe("paginationDir", function() {
         module.apply(module, app.Dependencies);
 
         inject(function($injector) {
-            $body.html('');
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             $compile = $injector.get('$compile');
@@ -24,6 +23,10 @@ describe("paginationDir", function() {
         $rootScope.$digest();
         
         $el = $('.pagination-wrapper');
+    });
+
+    afterEach(function () {
+        $body.empty();
     });
 
     describe("Initialization", function() {

@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 separator: ';'
-            }, 
+            },
             distJS: {
                 src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
                 dest: 'public/js/dist/app.concat.js',
@@ -40,6 +40,7 @@ module.exports = function(grunt) {
             all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
+                debug: true,
                 globals: {
                     jQuery: true,
                     console: true,
@@ -48,7 +49,8 @@ module.exports = function(grunt) {
                     curly: true,
                     eqeqeq: true,
                     eqnull: true,
-                    browser: true
+                    browser: true,
+
                 }
             }
         },
@@ -176,10 +178,10 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // includes files within path
-                    {   
+                    {
                         //cwd: '../CurrProjIce/',
                         expand: true,
-                        src: ['../CurrProjIce/**/*','!**/bower_components/**', '!**/node_modules/**'  ], //'!**/bower_components/**', '!**/node_modules/**'
+                        src: ['../CurrProjIce/**/*', '!**/bower_components/**', '!**/node_modules/**'], //'!**/bower_components/**', '!**/node_modules/**'
                         dest: '../CashProjIce/',
                         //filter: 'isFile',
                     },

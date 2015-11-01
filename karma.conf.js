@@ -18,7 +18,7 @@ module.exports = function(config) {
             //load tests
             'test/unit/libs/test-helpers.js',
             'test/unit/**/*.spec.js',
-            //'test/unit/modules/pagination/paginationDir.spec.js',
+            //'test/unit/modelServices/movieModelServices.spec.js',
 
         ],
 

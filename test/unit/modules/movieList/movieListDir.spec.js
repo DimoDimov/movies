@@ -17,13 +17,12 @@ describe("movieListDir", function() {
         module.apply(module, app.Dependencies);
 
         inject(function($injector) {
-            $body.html('');
             $rootScope = $injector.get('$rootScope');
-            $q = $injector.get('$q');
-           
             $scope = $rootScope.$new();
             $compile = $injector.get('$compile');
             el = $compile(angular.element(simpleHtml))($scope);
+            
+            $q = $injector.get('$q');
             deferred = $q.defer();
 
             //Faking response with $q
@@ -34,6 +33,10 @@ describe("movieListDir", function() {
         $body.append(el);
         $rootScope.$digest();
         $el = $('.movie-list-wrapper');
+    });
+
+    afterEach(function () {
+        $body.empty();
     });
 
     describe("Initialization", function() {

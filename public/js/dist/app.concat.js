@@ -623,6 +623,13 @@ app.Controllers = angular.module('app.controllers', ['controllers']);
 app.Directives = angular.module('app.directives', ['directives']);
 app.Tests = angular.module('app.tests', ['templates']);
 
+// app.Controllers = angular.module('app.constants', ['constants']);
+// app.Services = angular.module('app.services', ['APIServices', 'services']);
+// app.Filters = angular.module('app.filters', ['filters']);
+// app.Controllers = angular.module('app.controllers', ['controllers']);
+// app.Directives = angular.module('app.directives', ['directives']);
+// app.Tests = angular.module('app.tests', ['templates']);
+
 app.Dependencies = Neosavvy.AngularCore.Dependencies.concat(
     [
         'app.constants',
