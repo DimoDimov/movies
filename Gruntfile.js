@@ -11,6 +11,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             distJS: {
+                // src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
                 src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
                 dest: 'public/js/dist/app.concat.js',
             },
@@ -37,7 +38,9 @@ module.exports = function(grunt) {
                 src: 'gruntfile.js'
             },
             test: ['test/**/*.js'],
-            all: ['public/js/app/**/*.js', 'server/**/*.js'],
+            beforeconcat: ['public/js/app/**/*.js', 'server/**/*.js'],
+            afterconcat: ['public/js/dist/**/*.js'],
+            //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
                 debug: true,
@@ -237,7 +240,7 @@ module.exports = function(grunt) {
     //rebuild bundle - it cleans 'public/js/app/dist' and prepares the 'dist' directory
     // for the new js bunbled files. The code is being tested for errors
     //with jshint, after waht all file are being concatenated into one and then minified;
-    grunt.registerTask('rebuild', ['clean:dist', 'jshint', 'concat', 'uglify', 'cssmin']);
+    grunt.registerTask('rebuild', ['clean:dist', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'cssmin']);
 
     //'grunt start' command will activte the 'start' bundle of processes
     // additionaly after a succesfull rebuild we will run a express server
