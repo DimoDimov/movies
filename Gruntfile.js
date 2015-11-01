@@ -20,6 +20,7 @@ module.exports = function(grunt) {
                 dest: 'public/styles/dist/app.concat.css',
             }
         },
+        //js minifier
         uglify: {
             dist: {
                 files: {
@@ -27,12 +28,14 @@ module.exports = function(grunt) {
                 }
             }
         },
+        //css minifier
         cssmin: {
             css: {
                 src: 'public/styles/dist/app.concat.css',
                 dest: 'public/styles/dist/app.min.css'
             }
         },
+        //high quality code
         jshint: {
             gruntfile: {
                 src: 'gruntfile.js'
@@ -43,7 +46,7 @@ module.exports = function(grunt) {
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
-                debug: true,
+                debug: false,
                 globals: {
                     jQuery: true,
                     console: true,
@@ -53,7 +56,6 @@ module.exports = function(grunt) {
                     eqeqeq: true,
                     eqnull: true,
                     browser: true,
-
                 }
             }
         },
@@ -67,11 +69,7 @@ module.exports = function(grunt) {
             lib: {
                 src: ['public/js/lib/**/*', 'public/styles/lib/**/*'],
                 //filter: 'isFile',
-            },
-            copy: {
-                src: ['public/js/lib/**/*', 'public/styles/lib/**/*'],
-                //filter: 'isFile',
-            },
+            }
         },
 
         //set watchers on files
