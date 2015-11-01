@@ -1,7 +1,5 @@
 (function() {
 
-    var app = angular.module('services');
-
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
     //any errors related ot backend requests.
@@ -11,7 +9,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.factory('movieModelServices',
+    app.Services.factory('movieModelServices',
 
         //inline array annotation. Best way for minification approach
         ['$q', 'movieAPIServices', 'validationServices',
@@ -31,7 +29,6 @@
                         deferred.resolve(movieListCached.movies);
                     } else {
                         //go to DB
-
                         //update page and list values
                         var valdiationResult = validationServices.validateInput(maxList, page);
 

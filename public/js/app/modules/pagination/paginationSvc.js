@@ -1,8 +1,6 @@
 (function() {
 
-    var app = angular.module('services');
-
-    app.factory('paginationService', ['validationServices',
+    app.Services.factory('paginationService', ['validationServices',
         function(validationServices) {
 
             var Pagination = function(maxCount, current, nextcallback, previouscallback) {
@@ -57,6 +55,4 @@
             };
         }
     ]);
-
-
 })();

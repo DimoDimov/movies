@@ -1,8 +1,6 @@
 (function() {
 
-    var app = angular.module('filters');
-
-    app.filter('filterActors', ['validationServices',
+    app.Filters.filter('filterActors', ['validationServices',
         function(validationServices) {
 
             return function(actors) {
@@ -26,7 +24,7 @@
         }
     ]);
 
-    app.filter('filterDuration', ['validationServices',
+    app.Filters.filter('filterDuration', ['validationServices',
         function(validationServices) {
 
             return function(duration) {
@@ -40,8 +38,6 @@
                     return duration;
                 }
             };
-
         }
     ]);
-
 })();

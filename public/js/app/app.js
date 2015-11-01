@@ -2,16 +2,14 @@
 
     // Organizing the code
     // The Domain Style
-    var app = angular.module('app', ['ngRoute', 'APIServices', 'constants', 'filters', 'services', 'controllers', 'directives']);
-
-    //declare my modules, bulking by groups
-    //separation: Specific Style
-    angular.module('APIServices', []);
-    angular.module('constants', []);
-    angular.module('filters', []);
-    angular.module('services', []);
-    angular.module('controllers', []);
-    angular.module('directives', []);
+    // modules are declared into namespacing at app-dependencies.js
+    var app = angular.module('app', 
+        ['ngRoute', 
+        'app.constants', 
+        'app.services', 
+        'app.filters', 
+        'app.controllers', 
+        'app.directives']);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
@@ -64,5 +62,4 @@
             redirectTo: '/'
         });
     }]);
-
 })();

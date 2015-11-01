@@ -1,8 +1,6 @@
 (function() {
 
-    var app = angular.module('controllers');
-
-    app.controller('movieListCtrl', [
+ app.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
             self = this;

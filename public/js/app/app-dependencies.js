@@ -3,16 +3,16 @@
     //in the current example we will just add all the dependecies in a bulk
     var self = this;
 
-    self.app = this.app || {};
+    self.app = self.app || {};
 
-    self.app.Controllers = angular.module('app.constants', ['constants']);
-    self.app.Services = angular.module('app.services', ['APIServices', 'services']);
-    self.app.Filters = angular.module('app.filters', ['filters']);
-    self.app.Controllers = angular.module('app.controllers', ['controllers']);
-    self.app.Directives = angular.module('app.directives', ['directives']);
+    self.app.Constants = angular.module('app.constants', []);
+    self.app.Services = angular.module('app.services', []);
+    self.app.Filters = angular.module('app.filters', []);
+    self.app.Controllers = angular.module('app.controllers', []);
+    self.app.Directives = angular.module('app.directives', []);
     self.app.Tests = angular.module('app.tests', ['templates']);
 
-    // app.Controllers = angular.module('app.constants', ['constants']);
+    // app.Constants = angular.module('app.constants', ['constants']);
     // app.Services = angular.module('app.services', ['APIServices', 'services']);
     // app.Filters = angular.module('app.filters', ['filters']);
     // app.Controllers = angular.module('app.controllers', ['controllers']);

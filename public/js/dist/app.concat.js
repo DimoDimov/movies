@@ -2,16 +2,14 @@
 
     // Organizing the code
     // The Domain Style
-    var app = angular.module('app', ['ngRoute', 'APIServices', 'constants', 'filters', 'services', 'controllers', 'directives']);
-
-    //declare my modules, bulking by groups
-    //separation: Specific Style
-    angular.module('APIServices', []);
-    angular.module('constants', []);
-    angular.module('filters', []);
-    angular.module('services', []);
-    angular.module('controllers', []);
-    angular.module('directives', []);
+    // modules are declared into namespacing at app-dependencies.js
+    var app = angular.module('app', 
+        ['ngRoute', 
+        'app.constants', 
+        'app.services', 
+        'app.filters', 
+        'app.controllers', 
+        'app.directives']);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
@@ -64,11 +62,39 @@
             redirectTo: '/'
         });
     }]);
-
 })();
 ;(function() {
+    //we are breaking down the dependencies for mid and huge applications
+    //in the current example we will just add all the dependecies in a bulk
+    var self = this;
 
-    var app = angular.module('APIServices');
+    self.app = self.app || {};
+
+    self.app.Constants = angular.module('app.constants', []);
+    self.app.Services = angular.module('app.services', []);
+    self.app.Filters = angular.module('app.filters', []);
+    self.app.Controllers = angular.module('app.controllers', []);
+    self.app.Directives = angular.module('app.directives', []);
+    self.app.Tests = angular.module('app.tests', ['templates']);
+
+    // app.Constants = angular.module('app.constants', ['constants']);
+    // app.Services = angular.module('app.services', ['APIServices', 'services']);
+    // app.Filters = angular.module('app.filters', ['filters']);
+    // app.Controllers = angular.module('app.controllers', ['controllers']);
+    // app.Directives = angular.module('app.directives', ['directives']);
+    // app.Tests = angular.module('app.tests', ['templates']);
+
+    self.app.Dependencies = Neosavvy.AngularCore.Dependencies.concat(
+        [
+            'app.constants',
+            'app.services',
+            'app.filters',
+            'app.controllers',
+            'app.directives',
+            'app.tests'
+        ]);
+})();
+;(function() {
 
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
@@ -79,7 +105,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.factory('movieAPIServices',
+    app.Services.factory('movieAPIServices',
 
         //inline array annotation. Best way for minification approach
         ['$http', '$q', 'routingConstants',
@@ -132,40 +158,33 @@
                             }
                         });
 
-
                     return deferred.promise;
                 };
 
                 return {
                     getAllMovies: _getAllMovies
                 };
-
             }
         ]);
-
 })();
 ;(function() {
 
-    var app = angular.module('constants');
     //Declaring routes that are being used by the API Services
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly
-    app.constant("routingConstants", {
+    app.Constants.constant("routingConstants", {
         url: "http://localhost",
         port: "8000",
         moviesAPI: "/api/movies"
     });
 
-    app.constant("commonConstants", {
+    app.Constants.constant("commonConstants", {
         numberMoviesPageLoad: 20,
     });
-
 })();
 ;(function() {
 
-    var app = angular.module('filters');
-
-    app.filter('filterActors', ['validationServices',
+    app.Filters.filter('filterActors', ['validationServices',
         function(validationServices) {
 
             return function(actors) {
@@ -189,7 +208,7 @@
         }
     ]);
 
-    app.filter('filterDuration', ['validationServices',
+    app.Filters.filter('filterDuration', ['validationServices',
         function(validationServices) {
 
             return function(duration) {
@@ -203,14 +222,10 @@
                     return duration;
                 }
             };
-
         }
     ]);
-
 })();
 ;(function() {
-
-    var app = angular.module('services');
 
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
@@ -221,7 +236,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.factory('movieModelServices',
+    app.Services.factory('movieModelServices',
 
         //inline array annotation. Best way for minification approach
         ['$q', 'movieAPIServices', 'validationServices',
@@ -241,7 +256,6 @@
                         deferred.resolve(movieListCached.movies);
                     } else {
                         //go to DB
-
                         //update page and list values
                         var valdiationResult = validationServices.validateInput(maxList, page);
 
@@ -279,9 +293,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('services');
-
-    app.factory('validationServices', [function() {
+    app.Services.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
         var _isNumeric = function(n) {
@@ -349,9 +361,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('controllers');
-
-    app.controller('movieListCtrl', [
+ app.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
             self = this;
@@ -488,10 +498,8 @@
     ]);
 })();
 ;(function() {
-
-	var app = angular.module('directives');
-
-	app.directive('movieList', function() {
+	
+	app.Directives.directive('movieList', function() {
 		return {
 			restrict: 'E',
 			transclude: true,
@@ -507,9 +515,7 @@
 
 ;(function() {
 
-    var app = angular.module('controllers');
-
-    app.controller('paginationCtrl', 
+    app.Controllers.controller('paginationCtrl', 
     	['$scope', 'paginationService', 
         function($scope, paginationService) {  
         	$scope.$watch("finalPage", function (newVal, oldVal) {
@@ -523,21 +529,18 @@
     ]);
 })();
 ;(function() {
-
-    var app = angular.module('directives');
-
-    app.directive('paginationDir', [
+    app.Directives.directive('paginationDir', [
         function() {
             return {
                 restrict: 'E',
                 transclude: true,
                 controller: 'paginationCtrl',
-                scope:{
-                    nextcallback:"&",
-                    previouscallback:"&",
+                scope: {
+                    nextcallback: "&",
+                    previouscallback: "&",
 
-                    finalPage:"=finalpage",
-                    currentPage:"=currentpage"
+                    finalPage: "=finalpage",
+                    currentPage: "=currentpage"
                 },
                 link: function(scope, element, attrs) {
 
@@ -552,9 +555,7 @@
 })();
 ;(function() {
 
-    var app = angular.module('services');
-
-    app.factory('paginationService', ['validationServices',
+    app.Services.factory('paginationService', ['validationServices',
         function(validationServices) {
 
             var Pagination = function(maxCount, current, nextcallback, previouscallback) {
@@ -609,37 +610,4 @@
             };
         }
     ]);
-
-
-})();
-;(function() {
-    //we are breaking down the dependencies for mid and huge applications
-    //in the current example we will just add all the dependecies in a bulk
-    var self = this;
-
-    self.app = this.app || {};
-
-    self.app.Controllers = angular.module('app.constants', ['constants']);
-    self.app.Services = angular.module('app.services', ['APIServices', 'services']);
-    self.app.Filters = angular.module('app.filters', ['filters']);
-    self.app.Controllers = angular.module('app.controllers', ['controllers']);
-    self.app.Directives = angular.module('app.directives', ['directives']);
-    self.app.Tests = angular.module('app.tests', ['templates']);
-
-    // app.Controllers = angular.module('app.constants', ['constants']);
-    // app.Services = angular.module('app.services', ['APIServices', 'services']);
-    // app.Filters = angular.module('app.filters', ['filters']);
-    // app.Controllers = angular.module('app.controllers', ['controllers']);
-    // app.Directives = angular.module('app.directives', ['directives']);
-    // app.Tests = angular.module('app.tests', ['templates']);
-
-    self.app.Dependencies = Neosavvy.AngularCore.Dependencies.concat(
-        [
-            'app.constants',
-            'app.services',
-            'app.filters',
-            'app.controllers',
-            'app.directives',
-            'app.tests'
-        ]);
 })();

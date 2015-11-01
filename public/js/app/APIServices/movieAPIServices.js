@@ -1,7 +1,5 @@
 (function() {
 
-    var app = angular.module('APIServices');
-
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
     //any errors related ot backend requests.
@@ -11,7 +9,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.factory('movieAPIServices',
+    app.Services.factory('movieAPIServices',
 
         //inline array annotation. Best way for minification approach
         ['$http', '$q', 'routingConstants',
@@ -64,15 +62,12 @@
                             }
                         });
 
-
                     return deferred.promise;
                 };
 
                 return {
                     getAllMovies: _getAllMovies
                 };
-
             }
         ]);
-
 })();

@@ -1,19 +1,16 @@
 (function() {
-
-    var app = angular.module('directives');
-
-    app.directive('paginationDir', [
+    app.Directives.directive('paginationDir', [
         function() {
             return {
                 restrict: 'E',
                 transclude: true,
                 controller: 'paginationCtrl',
-                scope:{
-                    nextcallback:"&",
-                    previouscallback:"&",
+                scope: {
+                    nextcallback: "&",
+                    previouscallback: "&",
 
-                    finalPage:"=finalpage",
-                    currentPage:"=currentpage"
+                    finalPage: "=finalpage",
+                    currentPage: "=currentpage"
                 },
                 link: function(scope, element, attrs) {
 

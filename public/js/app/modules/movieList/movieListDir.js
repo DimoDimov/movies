@@ -1,8 +1,6 @@
 (function() {
-
-	var app = angular.module('directives');
-
-	app.directive('movieList', function() {
+	
+	app.Directives.directive('movieList', function() {
 		return {
 			restrict: 'E',
 			transclude: true,
