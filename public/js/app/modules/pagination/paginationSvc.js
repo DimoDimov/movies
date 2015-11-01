@@ -1,6 +1,6 @@
 (function() {
 
-    app.Services.factory('paginationService', ['validationServices',
+    appDep.Services.factory('paginationService', ['validationServices',
         function(validationServices) {
 
             var Pagination = function(maxCount, current, nextcallback, previouscallback) {

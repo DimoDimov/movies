@@ -1,5 +1,5 @@
 (function() {
-    app.Directives.directive('paginationDir', [
+    appDep.Directives.directive('paginationDir', [
         function() {
             return {
                 restrict: 'E',

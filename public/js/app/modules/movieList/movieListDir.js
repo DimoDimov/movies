@@ -1,6 +1,6 @@
 (function() {
 	
-	app.Directives.directive('movieList', function() {
+	appDep.Directives.directive('movieList', function() {
 		return {
 			restrict: 'E',
 			transclude: true,

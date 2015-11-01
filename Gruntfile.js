@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             },
             distJS: {
                 // src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
-                src: ['public/js/app/app.js', 'public/js/app/app-dependencies.js', 'public/js/app/**/*.js'],
+                src: [ 'public/js/app/app-dependencies.js', 'public/js/app/app.js', 'public/js/app/**/*.js'],
                 dest: 'public/js/dist/app.concat.js',
             },
             distCSS: {

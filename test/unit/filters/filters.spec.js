@@ -5,14 +5,13 @@ describe('Filter duration tests', function() {
 
     beforeEach(function() {
         //replace each dependency with a bulk
-        module.apply(module, app.Dependencies);
+        module.apply(module, appDep.TestDependencies);
 
         inject(function($injector) {
             $filter = $injector.get('$filter');
 
             filter = $filter('filterDuration');
         });
-
     });
 
     it("Should return undefined when undefined is passed in", function() {
@@ -40,14 +39,12 @@ describe('Filter actors tests', function() {
     var filter, $filter;
 
     beforeEach(function() {
-        module.apply(module, app.Dependencies);
+        module.apply(module, appDep.TestDependencies);
 
         inject(function($injector) {
             $filter = $injector.get('$filter');
-            //debugger;//jshint ignore:line
             filter = $filter('filterActors');
         });
-
     });
 
     it("Should return empty string when undefined is passed in", function() {

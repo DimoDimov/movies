@@ -8,7 +8,7 @@ describe("movieListCtrl", function () {
     //Controller Testing
 	beforeEach(function () {
 		
-		module.apply(module, app.Dependencies);
+		module.apply(module, appDep.TestDependencies);
 
 		inject(function ($injector) {
 			$rootScope = $injector.get('$rootScope');

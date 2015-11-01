@@ -3,13 +3,12 @@
     // Organizing the code
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js
-    var app = angular.module('app', 
-        ['ngRoute', 
-        'app.constants', 
-        'app.services', 
-        'app.filters', 
-        'app.controllers', 
-        'app.directives']);
+    var app = angular.module('app', appDep.AllDependencies); 
+        // 'app.constants', 
+        // 'app.services', 
+        // 'app.filters', 
+        // 'app.controllers', 
+        // 'app.directives']);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files

@@ -1,6 +1,6 @@
 (function() {
 
-    app.Filters.filter('filterActors', ['validationServices',
+    appDep.Filters.filter('filterActors', ['validationServices',
         function(validationServices) {
 
             return function(actors) {
@@ -24,7 +24,7 @@
         }
     ]);
 
-    app.Filters.filter('filterDuration', ['validationServices',
+    appDep.Filters.filter('filterDuration', ['validationServices',
         function(validationServices) {
 
             return function(duration) {

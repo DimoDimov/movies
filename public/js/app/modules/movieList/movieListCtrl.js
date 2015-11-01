@@ -1,6 +1,6 @@
 (function() {
 
- app.Controllers.controller('movieListCtrl', [
+ appDep.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
             self = this;

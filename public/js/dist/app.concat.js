@@ -1,15 +1,60 @@
 (function() {
+    //we are breaking down the dependencies for mid and huge applications
+    //in the current example we will just add all the dependecies in a bulk
+    var self = this;
+
+    self.appDep = self.appDep || {};
+
+    //namespacing
+    self.appDep.Libs = angular.module('app.libs', ['ngRoute']);
+
+    self.appDep.Constants = angular.module('app.constants', []);
+    self.appDep.Services = angular.module('app.services', []);
+    self.appDep.Filters = angular.module('app.filters', []);
+    self.appDep.Controllers = angular.module('app.controllers', []);
+    self.appDep.Directives = angular.module('app.directives', []);
+    self.appDep.Tests = angular.module('app.tests', ['templates']);
+
+
+    // app.Constants = angular.module('app.constants', ['constants']);
+    // app.Services = angular.module('app.services', ['APIServices', 'services']);
+    // app.Filters = angular.module('app.filters', ['filters']);
+    // app.Controllers = angular.module('app.controllers', ['controllers']);
+    // app.Directives = angular.module('app.directives', ['directives']);
+    // app.Tests = angular.module('app.tests', ['templates']);
+
+    self.appDep.AllDependencies = Neosavvy.AngularCore.Dependencies.concat(
+        [
+            'app.libs',
+            'app.constants',
+            'app.services',
+            'app.filters',
+            'app.controllers',
+            'app.directives'
+        ]);
+
+    self.appDep.TestDependencies = Neosavvy.AngularCore.Dependencies.concat(
+        [
+            'app.libs',
+            'app.constants',
+            'app.services',
+            'app.filters',
+            'app.controllers',
+            'app.directives',
+            'app.tests'
+        ]);
+})();
+;(function() {
 
     // Organizing the code
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js
-    var app = angular.module('app', 
-        ['ngRoute', 
-        'app.constants', 
-        'app.services', 
-        'app.filters', 
-        'app.controllers', 
-        'app.directives']);
+    var app = angular.module('app', appDep.AllDependencies); 
+        // 'app.constants', 
+        // 'app.services', 
+        // 'app.filters', 
+        // 'app.controllers', 
+        // 'app.directives']);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
@@ -64,37 +109,6 @@
     }]);
 })();
 ;(function() {
-    //we are breaking down the dependencies for mid and huge applications
-    //in the current example we will just add all the dependecies in a bulk
-    var self = this;
-
-    self.app = self.app || {};
-
-    self.app.Constants = angular.module('app.constants', []);
-    self.app.Services = angular.module('app.services', []);
-    self.app.Filters = angular.module('app.filters', []);
-    self.app.Controllers = angular.module('app.controllers', []);
-    self.app.Directives = angular.module('app.directives', []);
-    self.app.Tests = angular.module('app.tests', ['templates']);
-
-    // app.Constants = angular.module('app.constants', ['constants']);
-    // app.Services = angular.module('app.services', ['APIServices', 'services']);
-    // app.Filters = angular.module('app.filters', ['filters']);
-    // app.Controllers = angular.module('app.controllers', ['controllers']);
-    // app.Directives = angular.module('app.directives', ['directives']);
-    // app.Tests = angular.module('app.tests', ['templates']);
-
-    self.app.Dependencies = Neosavvy.AngularCore.Dependencies.concat(
-        [
-            'app.constants',
-            'app.services',
-            'app.filters',
-            'app.controllers',
-            'app.directives',
-            'app.tests'
-        ]);
-})();
-;(function() {
 
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
@@ -105,7 +119,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.Services.factory('movieAPIServices',
+    appDep.Services.factory('movieAPIServices',
 
         //inline array annotation. Best way for minification approach
         ['$http', '$q', 'routingConstants',
@@ -172,19 +186,19 @@
     //Declaring routes that are being used by the API Services
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly
-    app.Constants.constant("routingConstants", {
+    appDep.Constants.constant("routingConstants", {
         url: "http://localhost",
         port: "8000",
         moviesAPI: "/api/movies"
     });
 
-    app.Constants.constant("commonConstants", {
+    appDep.Constants.constant("commonConstants", {
         numberMoviesPageLoad: 20,
     });
 })();
 ;(function() {
 
-    app.Filters.filter('filterActors', ['validationServices',
+    appDep.Filters.filter('filterActors', ['validationServices',
         function(validationServices) {
 
             return function(actors) {
@@ -208,7 +222,7 @@
         }
     ]);
 
-    app.Filters.filter('filterDuration', ['validationServices',
+    appDep.Filters.filter('filterDuration', ['validationServices',
         function(validationServices) {
 
             return function(duration) {
@@ -236,7 +250,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.Services.factory('movieModelServices',
+    appDep.Services.factory('movieModelServices',
 
         //inline array annotation. Best way for minification approach
         ['$q', 'movieAPIServices', 'validationServices',
@@ -293,7 +307,7 @@
 })();
 ;(function() {
 
-    app.Services.factory('validationServices', [function() {
+    appDep.Services.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
         var _isNumeric = function(n) {
@@ -361,7 +375,7 @@
 })();
 ;(function() {
 
- app.Controllers.controller('movieListCtrl', [
+ appDep.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
             self = this;
@@ -499,7 +513,7 @@
 })();
 ;(function() {
 	
-	app.Directives.directive('movieList', function() {
+	appDep.Directives.directive('movieList', function() {
 		return {
 			restrict: 'E',
 			transclude: true,
@@ -515,7 +529,7 @@
 
 ;(function() {
 
-    app.Controllers.controller('paginationCtrl', 
+    appDep.Controllers.controller('paginationCtrl', 
     	['$scope', 'paginationService', 
         function($scope, paginationService) {  
         	$scope.$watch("finalPage", function (newVal, oldVal) {
@@ -529,7 +543,7 @@
     ]);
 })();
 ;(function() {
-    app.Directives.directive('paginationDir', [
+    appDep.Directives.directive('paginationDir', [
         function() {
             return {
                 restrict: 'E',
@@ -555,7 +569,7 @@
 })();
 ;(function() {
 
-    app.Services.factory('paginationService', ['validationServices',
+    appDep.Services.factory('paginationService', ['validationServices',
         function(validationServices) {
 
             var Pagination = function(maxCount, current, nextcallback, previouscallback) {

@@ -1,6 +1,6 @@
 (function() {
 
-    app.Controllers.controller('paginationCtrl', 
+    appDep.Controllers.controller('paginationCtrl', 
     	['$scope', 'paginationService', 
         function($scope, paginationService) {  
         	$scope.$watch("finalPage", function (newVal, oldVal) {

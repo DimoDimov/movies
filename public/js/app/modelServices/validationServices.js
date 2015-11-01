@@ -1,6 +1,6 @@
 (function() {
 
-    app.Services.factory('validationServices', [function() {
+    appDep.Services.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
         var _isNumeric = function(n) {

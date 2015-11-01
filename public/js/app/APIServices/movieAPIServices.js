@@ -9,7 +9,7 @@
     //any data with the backend. It offers to the controllers in the application reusable logic
     //for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
-    app.Services.factory('movieAPIServices',
+    appDep.Services.factory('movieAPIServices',
 
         //inline array annotation. Best way for minification approach
         ['$http', '$q', 'routingConstants',
