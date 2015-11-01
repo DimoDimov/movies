@@ -15,14 +15,6 @@
     self.appDep.Directives = angular.module('app.directives', []);
     self.appDep.Tests = angular.module('app.tests', ['templates']);
 
-
-    // app.Constants = angular.module('app.constants', ['constants']);
-    // app.Services = angular.module('app.services', ['APIServices', 'services']);
-    // app.Filters = angular.module('app.filters', ['filters']);
-    // app.Controllers = angular.module('app.controllers', ['controllers']);
-    // app.Directives = angular.module('app.directives', ['directives']);
-    // app.Tests = angular.module('app.tests', ['templates']);
-
     self.appDep.AllDependencies = Neosavvy.AngularCore.Dependencies.concat(
         [
             'app.libs',

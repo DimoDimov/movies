@@ -4,31 +4,33 @@ module.exports = function(app, db) {
 	// - The server should serve server/data.json when a request is made to /api/movies
     app.get('/api/movies', function(req, res) {
 
+        //------------ Url Params ------------
         var params = {};
         params.list = req.query.list;
         params.page = req.query.page;
         params.query = req.query.q;
 
+        //------------ Variables ------------
         var result = {};
         result.movies = [];
         result.errorMessage = "";
-
         var filteredMovies = [];
 
-
+        //------------ Helpers ------------
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
         var isNumeric = function(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
         };
 
+        //------------ Bullets ------------
         validateInput();
 
         filterByPhrase();
 
         filterByPageAndList();
 
-        //------All Input Data Validation------------
+        //------ All Input Data Validation ------------
         function validateInput() {
             if (params.list) {
                 if (!isNumeric(params.list)) {
@@ -67,7 +69,7 @@ module.exports = function(app, db) {
             }
         }
 
-        //FilterResultsByPhrase
+        //-------------------- FilterResultsByPhrase --------------------
         function filterByPhrase() {
             if (params.query &&
                 params.query.length &&
@@ -84,8 +86,8 @@ module.exports = function(app, db) {
             }
         }
 
-        //- Allow limiting the number of items returned
-        //- Allow pagination of data, e.g. get 10 items from the 4th 'page'
+        //--------------------- Allow limiting the number of items returned --------------------
+        //--------------------- Allow pagination of data, e.g. get 10 items from the 4th 'page' --------------------
         function filterByPageAndList() {
             if (!filteredMovies.length) {
                 result.errorMessage = 'No matching items';
@@ -118,6 +120,5 @@ module.exports = function(app, db) {
 
             res.status(200).send(result);
         }
-
     });
 };
