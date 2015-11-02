@@ -2,7 +2,7 @@ module.exports = function(app, db) {
 
 	// - Backend
 	// - The server should serve server/data.json when a request is made to /api/movies
-    app.get('/api/movies', function(req, res) {
+    app.get('/api/movies', function(req, res, next) {
 
         //------------ Url Params ------------
         var params = {};

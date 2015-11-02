@@ -14,19 +14,18 @@
         //inline array annotation. Best way for minification approach
         ['$q', 'movieAPIServices', 'validationServices',
             function($q, movieAPIServices, validationServices) {
-
+                var self = this;
                 //cashed theMovieList to work and save with temporary model
                 //send the updated model back do DB upon request.
-                var movieListCached = null;
+                self.movieListCached = null;
 
                 var _getAllMovies = function(maxList, page, searchPhrase, getCashedMovies) {
                     var deferred = $q.defer();
-
-                    // debugger //jshint ignore:line
-                    if (getCashedMovies && movieListCached) {
+                    
+                    if (getCashedMovies && self.movieListCached) {
 
                         //if need the cashed movieListModel
-                        deferred.resolve(movieListCached.movies);
+                        deferred.resolve(self.movieListCached);
                     } else {
                         //go to DB
                         //update page and list values
@@ -42,14 +41,15 @@
                             .then(function(data) {
                                 if (data) {
                                     //process the successfully received from the API service data
-                                    movieListCached = data;
+                                    this.movieListCached = data;
 
                                     deferred.resolve(data);
                                 } else {
                                     //we can save and log the problem for history and error tracking purposes
                                     console.warn("Error in movieModelServices _getAllMovies");
                                 }
-                            }, function(data, status) {
+                            }.bind(self), 
+                            function(data, status) {
 
                                 deferred.reject(data);
                             });

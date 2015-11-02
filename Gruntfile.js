@@ -46,7 +46,7 @@ module.exports = function(grunt) {
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
-                debug: false,
+                debug: true,
                 globals: {
                     jQuery: true,
                     console: true,
