@@ -379,6 +379,7 @@
             self.scope = $scope;
             $scope.movieList = [];
             $scope.searchPhrase = '';
+            $scope.errorMessage = '';
 
             $scope.pagination = {};
             $scope.list = 20;
@@ -457,6 +458,10 @@
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
                 }
+
+                if (newVal === '' || newVal.length > 2) {
+                    $scope.errorMessage = '';
+                }
             });
 
             $scope.$watch('list', function(newVal, oldVal) {
@@ -508,21 +513,28 @@
     ]);
 })();
 ;(function() {
-	
-	appDep.Directives.directive('movieList', function() {
-		return {
-			restrict: 'E',
-			transclude: true,
-			controller: 'movieListCtrl',
-			link: function(scope, element, attrs) {
-				
-			},
-			templateUrl: 'js/app/modules/movieList/movieListView.html'
-		};
-	});
+
+    appDep.Directives.directive('movieList', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            controller: 'movieListCtrl',
+            link: function(scope, element, attrs) {
+
+                scope.$watch('errorMessage', function(newVal, oldVal) {
+                if (oldVal !== newVal && newVal) {
+                    $('.hide-if-error').hide();
+                }
+                else{
+                	$('.hide-if-error').show();
+                }
+            });
+            },
+            templateUrl: 'js/app/modules/movieList/movieListView.html'
+        };
+    });
 
 })();
-
 ;(function() {
 
     appDep.Controllers.controller('paginationCtrl', 

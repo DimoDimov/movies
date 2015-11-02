@@ -42,7 +42,7 @@ module.exports = function(grunt) {
             },
             test: ['test/**/*.js'],
             beforeconcat: ['public/js/app/**/*.js', 'server/**/*.js'],
-            afterconcat: ['public/js/dist/**/*.js'],
+            afterconcat: ['public/js/dist/**/*concat.js'],
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults

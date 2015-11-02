@@ -8,6 +8,7 @@
             self.scope = $scope;
             $scope.movieList = [];
             $scope.searchPhrase = '';
+            $scope.errorMessage = '';
 
             $scope.pagination = {};
             $scope.list = 20;
@@ -85,6 +86,10 @@
 
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
+                }
+
+                if (newVal === '' || newVal.length > 2) {
+                    $scope.errorMessage = '';
                 }
             });
 

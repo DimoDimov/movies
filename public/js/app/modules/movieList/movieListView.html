@@ -4,8 +4,10 @@
         <br/>
         <div class="errorMessage leastThreeChar" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
         <div class="errorMessage errMessageGeneral" ng-if="errorMessage">{{::errorMessage}}</div>
-        <br/>
-        <div ng-show="movieList && movieList.length > 0">
+    </div>
+    <br/>
+    <div class="hide-if-error">
+        <div class="searchAndPaginationTools">
             <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
             <br/>
             <br/>
@@ -14,31 +16,30 @@
             <!-- Custom Pagination -->
             <pagination-dir class="pagination" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             <br/>
-            <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'
- -->
+            <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'-->
             <div>
                 Matched {{totalfilteredMovies}} of {{totalMoviesCount}} movies total
             </div>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-row">Title</th>
+                    <th class="table-row">Year</th>
+                    <th class="table-row">Rating</th>
+                    <th class="table-row">Duration(min)</th>
+                    <th class="table-row">Actors</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng:repeat="(k, movie) in movieList track by movie.title">
+                    <td class="table-row">{{movie.title}}</td>
+                    <td class="table-row">{{movie.year}}</td>
+                    <td class="table-row">{{movie.rating}}</td>
+                    <td class="table-row">{{movie.duration | filterDuration}}</td>
+                    <td class="table-row-actors">{{movie.actors | filterActors}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table ng-show="movieList && movieList.length > 0">
-        <thead>
-            <tr>
-                <th class="table-row">Title</th>
-                <th class="table-row">Year</th>
-                <th class="table-row">Rating</th>
-                <th class="table-row">Duration(min)</th>
-                <th class="table-row">Actors</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng:repeat="(k, movie) in movieList track by movie.title">
-                <td class="table-row">{{movie.title}}</td>
-                <td class="table-row">{{movie.year}}</td>
-                <td class="table-row">{{movie.rating}}</td>
-                <td class="table-row">{{movie.duration | filterDuration}}</td>
-                <td class="table-row-actors">{{movie.actors | filterActors}}</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
