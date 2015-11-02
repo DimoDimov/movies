@@ -5,21 +5,23 @@
         <div class="errorMessage leastThreeChar" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
         <div class="errorMessage errMessageGeneral" ng-if="errorMessage">{{::errorMessage}}</div>
         <br/>
-        <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
-        <br/>
-        <br/>
-        <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of {{finalPage}}</span>
-        <br/>
-        <!-- Custom Pagination -->  
-        <pagination-dir class="pagination" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
-        <br/>
-        <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'
+        <div ng-show="movieList && movieList.length > 0">
+            <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
+            <br/>
+            <br/>
+            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of {{finalPage}}</span>
+            <br/>
+            <!-- Custom Pagination -->
+            <pagination-dir class="pagination" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
+            <br/>
+            <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'
  -->
-        <div>
-            Matched {{totalfilteredMovies}} of {{totalMoviesCount}} movies total
+            <div>
+                Matched {{totalfilteredMovies}} of {{totalMoviesCount}} movies total
+            </div>
         </div>
     </div>
-    <table>
+    <table ng-show="movieList && movieList.length > 0">
         <thead>
             <tr>
                 <th class="table-row">Title</th>

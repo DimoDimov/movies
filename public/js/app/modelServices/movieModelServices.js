@@ -17,6 +17,10 @@
                 var self = this;
                 //cashed theMovieList to work and save with temporary model
                 //send the updated model back do DB upon request.
+                //updates of the model happens here, before Save for example 
+                //All CRUD operations are being applied to this model 
+                //before sending to Middleware for further manipulation 
+
                 self.movieListCached = null;
 
                 var _getAllMovies = function(maxList, page, searchPhrase, getCashedMovies) {
