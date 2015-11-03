@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                 options: {
                     stdout: true
                 },
-                command: "node-debug ./server/index.js"
+                command: "node-debug --hidden node_modules --no-preload ./server/index.js"
             },
         },
 
