@@ -4,15 +4,61 @@ module.exports = function(grunt) {
     grunt.initConfig({
         //package Json
         pkg: grunt.file.readJSON('package.json'),
+        'node-inspector': {
+            'server-unit': {
+                options: {
+                    'preload': false,
+                    'hidden': ['node_modules'],
+                    'stack-trace-limit': 4,
+                }
+            },
+            'dev': {
+                options: {
+                    'preload': false,
+                    'hidden': ['node_modules'],
+                    'stack-trace-limit': 4,
+                }
+            }
+        },
+
+        shell: {
+            'server-unit': {
+                options: {
+                    stdout: true
+                },
+                command: "node-debug c:\\Users\\Dimo\\AppData\\Roaming\\npm\\node_modules\\grunt-cli\\bin\\grunt server-unit"
+            },
+            'dev': {
+                options: {
+                    stdout: true
+                },
+                command: "node-debug ./server/index.js"
+            },
+        },
+
+        concurrent: {
+            'server-unit': {
+                tasks: ['node-inspector:server-unit', 'shell:server-unit'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            },
+            'dev': {
+                tasks: ['node-inspector:dev', 'shell:dev'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            },
+        },
 
         //file manipulations - concatenation, minification, syntax validity checking
-        concat: {
+        'concat': {
             options: {
                 separator: ';'
             },
             distJS: {
                 // src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
-                src: [ 'public/js/app/app-dependencies.js', 'public/js/app/app.js', 'public/js/app/**/*.js'],
+                src: ['public/js/app/app-dependencies.js', 'public/js/app/app.js', 'public/js/app/**/*.js'],
                 dest: 'public/js/dist/app.concat.js',
             },
             distCSS: {
@@ -20,23 +66,26 @@ module.exports = function(grunt) {
                 dest: 'public/styles/dist/app.concat.css',
             }
         },
+
         //js minifier
-        uglify: {
+        'uglify': {
             dist: {
                 files: {
                     'public/js/dist/app.min.js': ['public/js/dist/app.concat.js'],
                 }
             }
         },
+
         //css minifier
-        cssmin: {
+        'cssmin': {
             css: {
                 src: 'public/styles/dist/app.concat.css',
                 dest: 'public/styles/dist/app.min.css'
             }
         },
+
         //high quality code
-        jshint: {
+        'jshint': {
             gruntfile: {
                 src: 'gruntfile.js'
             },
@@ -61,7 +110,7 @@ module.exports = function(grunt) {
         },
 
         //clean folders pre-build
-        clean: {
+        'clean': {
             dist: {
                 src: ['public/js/dist/**/*', 'public/styles/dist/**/*'],
                 //filter: 'isFile',
@@ -73,7 +122,7 @@ module.exports = function(grunt) {
         },
 
         //set watchers on files
-        watch: {
+        'watch': {
             test: {
                 files: ['test/**/*.js'],
                 tasks: ['jshint:test'],
@@ -89,7 +138,7 @@ module.exports = function(grunt) {
         },
 
         //set express server
-        express: {
+        'express': {
             options: {
                 // Override defaults here
             },
@@ -100,8 +149,7 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    script: 'path/to/prod/server.js',
-                    node_env: 'production'
+                    script: 'path/to/prod/server.js'
                 }
             },
             test: {
@@ -112,7 +160,7 @@ module.exports = function(grunt) {
         },
 
         //Set Automation Tests
-        protractor: {
+        'protractor': {
             options: {
                 configFile: "protractor.conf.js", // Default config file 
                 keepAlive: true, // If false, the grunt process stops when the test fails. 
@@ -125,12 +173,14 @@ module.exports = function(grunt) {
                 all: {}
             },
         },
-        karma: {
+
+        'karma': {
             unit: {
                 configFile: 'karma.conf.js'
             }
         },
-        simplemocha: {
+
+        'simplemocha': {
             options: {
                 globals: ['should'],
                 timeout: 3000,
@@ -144,7 +194,7 @@ module.exports = function(grunt) {
             }
         },
 
-        bowercopy: {
+        'bowercopy': {
             options: {
                 // Task-specific options go here 
             },
@@ -162,7 +212,6 @@ module.exports = function(grunt) {
                     'angular-mocks.js': 'angular-mocks/angular-mocks.js',
                     'angular-resource.js': 'angular-resource/angular-resource.js',
                     'neosavvy-javascript-angular-core.js': 'neosavvy-javascript-angular-core/neosavvy-javascript-angular-core.js',
-
                 }
             },
             stylefiles: {
@@ -175,22 +224,36 @@ module.exports = function(grunt) {
             },
         },
 
-        copy: {
+        'copy': {
             main: {
                 files: [
                     // includes files within path
                     {
-                        //cwd: '../CurrProjIce/',
+                        //cwd: '',
                         expand: true,
-                        src: ['../CurrProjIce/**/*', '!**/bower_components/**', '!**/node_modules/**'], //'!**/bower_components/**', '!**/node_modules/**'
-                        dest: '../CashProjIce/',
+                        src: [''],
+                        dest: '',
                         //filter: 'isFile',
                     },
                 ],
             },
         },
 
+        'mytask': {
+            "main": {
+                filelist: "input.txt",
+                dest: "C:\\Work\\tmp"
+            },
+        },
+
+
     });
+
+    //debugger tasks
+    grunt.loadNpmTasks('grunt-node-inspector');
+    grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell');
+
 
     grunt.loadNpmTasks('grunt-contrib-concat');
 
@@ -218,8 +281,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-debug');
     //-------------------BUNDLES
 
-    grunt.registerTask('debug-mocha', ['debug', 'simplemocha']);
-
     //updates front end libraries, cleans folder before the copy
     grunt.registerTask('update-frontendlibs', ['clean:lib', 'bowercopy:jsfiles', 'bowercopy:stylefiles']);
 
@@ -231,6 +292,7 @@ module.exports = function(grunt) {
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
     grunt.registerTask('server-unit', ['simplemocha']);
+    grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
 
     //'grunt test' command will check the js files for syntax and 
     //after this it all the test methods will be run in consecutive bundle
@@ -247,4 +309,7 @@ module.exports = function(grunt) {
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
+
+    grunt.registerTask('debug-dev', ['shell:dev']);
+
 };
