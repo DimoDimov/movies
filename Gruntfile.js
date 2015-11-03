@@ -215,8 +215,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-simple-mocha');
-
+    grunt.loadNpmTasks('grunt-debug');
     //-------------------BUNDLES
+
+    grunt.registerTask('debug-mocha', ['debug', 'simplemocha']);
 
     //updates front end libraries, cleans folder before the copy
     grunt.registerTask('update-frontendlibs', ['clean:lib', 'bowercopy:jsfiles', 'bowercopy:stylefiles']);

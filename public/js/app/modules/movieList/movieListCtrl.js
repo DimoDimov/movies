@@ -49,7 +49,7 @@
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
 
-                            if ($scope.errorMessage) {
+                            if ($scope.errorMessage && !data.errorMessage) {
                                 $scope.errorMessage = '';
                             }
 
@@ -87,8 +87,8 @@
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
                 }
-
-                if (newVal === '' || newVal.length > 2) {
+                
+                if (newVal === '') {
                     $scope.errorMessage = '';
                 }
             });

@@ -1,6 +1,8 @@
 var Q = require('q');
+var path = require('path');
+var db = require(path.join(__dirname, '/../../data.json'));
 
-module.exports = function(req, res, db) {
+module.exports = function(req, res) {
     var deferred = Q.defer();
 
     //------------ Url Params ------------
