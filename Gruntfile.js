@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(grunt) {
 
     // Project configuration.++
@@ -8,7 +10,7 @@ module.exports = function(grunt) {
             'server-unit': {
                 options: {
                     'preload': false,
-                    'hidden': ['node_modules'],
+                    'hidden': ['node_modules', 'bower_components', 'module.js'],
                     'stack-trace-limit': 4,
                 }
             },
@@ -32,7 +34,7 @@ module.exports = function(grunt) {
                 options: {
                     stdout: true
                 },
-                command: "node-debug --hidden node_modules --no-preload ./server/index.js"
+                command: "node-debug --hidden node_modules --no-preload " + path.join(__dirname, '/server/index.js')
             },
         },
 
@@ -57,7 +59,6 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             distJS: {
-                // src: ['public/js/app/app.js', 'public/js/app/**/*.js', '!public/js/app/app-dependencies.js', 'public/js/app/app-dependencies.js'],
                 src: ['public/js/app/app-dependencies.js', 'public/js/app/app.js', 'public/js/app/**/*.js'],
                 dest: 'public/js/dist/app.concat.js',
             },

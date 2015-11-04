@@ -1,10 +1,14 @@
+//Detaching the middleware logic from the routes
+//by isolating the logic we can test it, 
+//not just testing the endpoints
+
 var Q = require('q');
 var path = require('path');
 var db = require(path.join(__dirname, '/../../data.json'));
 
 module.exports = function(req, res) {
     var deferred = Q.defer();
-
+   
     //------------ Url Params ------------
     var params = {};
     params.list = req.query.list;
@@ -95,7 +99,7 @@ module.exports = function(req, res) {
             result.totalfilteredMovies = filteredMovies.length;
             result.totalMoviesCount = db.movies.length;
             res.status(404).send(result);
-            deferred.resolve();
+            deferred.resolve(result);
             return;
         }
 
@@ -122,7 +126,7 @@ module.exports = function(req, res) {
         result.totalMoviesCount = db.movies.length;
 
         res.status(200).send(result);
-        deferred.resolve();
+        deferred.resolve(result);
     }
 
     return deferred.promise;
