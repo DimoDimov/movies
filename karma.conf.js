@@ -17,8 +17,10 @@ module.exports = function(config) {
             'public/js/app/**/*View.html',
             //load tests
             'test/unit/libs/test-helpers.js',
-            'test/unit/**/*.spec.js',
+            //'test/unit/**/*.spec.js',
+            'test/unit/APIServices/movieAPIServices.spec.js',
             //'test/unit/modelServices/movieModelServices.spec.js',
+
 
         ],
 

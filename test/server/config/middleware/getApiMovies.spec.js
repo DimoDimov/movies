@@ -113,6 +113,7 @@ describe('getApiMov with filter phrase', function() {
 
         req.query.list = 20;
         req.query.page = 1;
+        
         //search by phrase "week"
         req.query.q = "week";
 
@@ -143,6 +144,7 @@ describe('getApiMov with filter phrase when no movies found', function() {
 
         req.query.list = 20;
         req.query.page = 1;
+        
         //search by phrase "wsdk"
         req.query.q = "wsdk";
 

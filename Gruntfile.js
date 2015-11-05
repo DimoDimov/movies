@@ -28,6 +28,7 @@ module.exports = function(grunt) {
                 options: {
                     stdout: true
                 },
+                //windows debug
                 command: "node-debug c:\\Users\\Dimo\\AppData\\Roaming\\npm\\node_modules\\grunt-cli\\bin\\grunt server-unit"
             },
             'dev': {
@@ -239,15 +240,6 @@ module.exports = function(grunt) {
                 ],
             },
         },
-
-        'mytask': {
-            "main": {
-                filelist: "input.txt",
-                dest: "C:\\Work\\tmp"
-            },
-        },
-
-
     });
 
     //debugger tasks
@@ -262,6 +254,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-css');
 
+    //quality code watchers
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -270,6 +263,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    //front end version control managment (migght be applied to more libraries)
     grunt.loadNpmTasks('grunt-bowercopy');
 
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -312,5 +306,4 @@ module.exports = function(grunt) {
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
 
     grunt.registerTask('debug-dev', ['shell:dev']);
-
 };
