@@ -2,7 +2,7 @@
 
 var movieListPage = function() {
 
-    this.testLoadedMovied = function(tableRowsCount) {
+    this.testLoadedMoviesCount = function(tableRowsCount) {
 
          expect(tableRowsCount).toBe(20);
          //checking border cases confirms that our test data is correct

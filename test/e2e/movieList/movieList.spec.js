@@ -23,7 +23,7 @@ describe("Movie list testing", function() {
 
     describe("Should initialize the page with all needed data", function() {
         it("Should load 20 movies", function() {
-            movieListPage.testLoadedMovied(tableRowsCount);
+            movieListPage.testLoadedMoviesCount(tableRowsCount);
         });
     });
 });

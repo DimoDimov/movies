@@ -6,7 +6,7 @@
         <div class="errorMessage errMessageGeneral" ng-if="errorMessage">{{::errorMessage}}</div>
     </div>
     <br/>
-    <div class="hide-if-error">
+    <div ng-if="!errorMessage"> 
         <div class="searchAndPaginationTools">
             <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
             <br/>
