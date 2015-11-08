@@ -9,7 +9,7 @@ exports.config = {
 
     //Spec patterns are relative to the current working
     //when protractor is called 
-    specs: ['test/e2e/**/*.spec.js'],
+    specs: ['test/e2e/movieList/**/*.spec.js'],
 
     //the address of a running selenium address (default)
     seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -29,7 +29,7 @@ exports.config = {
             displaySpecDuration: true,
             displaySuiteNumber: true
         });
-        
+
         jasmine.getEnv().addReporter(reporter);
         browser.driver.manage().window().setSize(1440, 1000);
         browser.driver.manage().deleteAllCookies();
