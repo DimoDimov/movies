@@ -1,6 +1,8 @@
 describe("Movie list testing", function() {
-	var tableRows,
-		tableRowsCount;
+    var tableRows,
+        tableRowsCount,
+        expected,
+        notexpected;
 
     beforeEach(function() {
         browser.get('http://127.0.0.1:8000/');
@@ -8,8 +10,8 @@ describe("Movie list testing", function() {
         tableRows = element.all(by.css('.movie-list-wrapper tbody tr'));
 
         //resolve the tableRows, means we have the movie data loaded
-        tableRows.count().then(function (newCount) {
-        	tableRowsCount = newCount;
+        tableRows.count().then(function(newCount) {
+            tableRowsCount = newCount;
         });
     });
 
@@ -22,37 +24,59 @@ describe("Movie list testing", function() {
     var movieListPage = require('./movieListPage.js');
 
     describe("Should initialize the page with all needed data", function() {
-        
+
         it("Should contain message asking to input at least 3 charachters", function() {
-            movieListPage.testInput3CharachtersMsg();
+            expected = "Enter at least three characters to begin search";
+            existingEl = true;
+
+            movieListPage.testInput3CharachtersMsg(expected, existingEl);
         });
 
         it("Should hide the custom error message", function() {
-            movieListPage.testCustomErrorMsg();
+            expected = false;
+            movieListPage.testCustomErrorMsg(expected);
         });
 
         it("Should have the 'items per page' counter set on 20", function() {
-            movieListPage.testItemsPerPageCounter();
+            expected = 20;
+            notexpected = 21;
+
+            movieListPage.testItemsPerPageCounter(expected, notexpected);
         });
 
-     	it("Should have the pages counter set on 1", function() {
-            movieListPage.testPagesCounter();
+        it("Should have the pages counter set on 1", function() {
+            expected = 1;
+            notexpected = 0;
+
+            movieListPage.testPagesCounter(expected, notexpected);
         });
 
         it("Should have the total pages counter set on 8", function() {
-            movieListPage.testTotalPagesCounter();
+            expected = 8;
+            notexpected = 9;
+
+            movieListPage.testTotalPagesCounter(expected, notexpected);
         });
 
         it("Should have the custom pagination counter set on 1", function() {
-            movieListPage.testCustomPagesCounter();
+        	expected = 1;
+            notexpected = 0;
+
+            movieListPage.testCustomPaginationCounter(expected, notexpected);
         });
 
         it("Should have the 'matched movies' counter set on 160 as we match all of them", function() {
-            movieListPage.testMatchedMoviesCounter();
+          	expected = 160;
+            notexpected = 159;
+
+            movieListPage.testMatchedMoviesCounter(expected, notexpected);
         });
 
         it("Should have the 'total movies' counter set on 160 as all movies are matching empty string", function() {
-            movieListPage.testTotalMoviesCounter();
+          	expected = 160;
+            notexpected = 159;
+
+            movieListPage.testTotalMoviesCounter(expected, notexpected);
         });
 
         it("Should have loaded 20 movies", function() {

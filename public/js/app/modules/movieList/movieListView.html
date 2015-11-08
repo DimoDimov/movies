@@ -11,14 +11,14 @@
             <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
             <br/>
             <br/>
-            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of {{finalPage}}</span>
+            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of </span><b><span ng-bind="finalPage"></span></b>
             <br/>
             <!-- Custom Pagination -->
-            <pagination-dir class="pagination" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
+            <pagination-dir class="customPaginationWrapper" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             <br/>
             <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'-->
             <div>
-                Matched {{totalfilteredMovies}} of {{totalMoviesCount}} movies total
+                Matched <span ng-bind="totalfilteredMovies"></span> of <span ng-bind="totalMoviesCount"></span> movies total
             </div>
         </div>
         <div class="movie-list-wrapper">

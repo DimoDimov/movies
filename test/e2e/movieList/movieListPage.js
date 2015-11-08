@@ -2,99 +2,121 @@
 
 var movieListPage = function() {
 
-		//expected value
-	var asserted,
-		
-		//not expected value	
-		notAsserted,
-		
-		//expected value before being parsed
-		expectedText,
+    //selected element
+    var el,
 
-		//expected value being parsed successfully
-		expected;
+        //actual value before being parsed
+        actualText,
+
+        //actual value being parsed successfully
+        actual;
+
+    //if the 'search phrase' length is < 3 Should contain message asking to input at least 3 charachters
+    //if the 'search phrase' length is >= 3 the message is being hidden
+    this.testInput3CharachtersMsg = function(expected, existingEl) {
+        el = element(by.css('.errorMessage.leastThreeChar'));
+        expect(el.isPresent()).toBe(existingEl);
+
+        actual = el.getText();
+        expect(actual).toBe(expected);
+    };
+
+    //Should hide the custom error message if no error to display
+    this.testCustomErrorMsg = function(expected) {
+        el = element(by.css('.errorMessage.errMessageGeneral'));
+        expect(el.isPresent()).toBe(expected);
+    };
+
+    //Should have the 'items per page' counter set on expected
+    this.testItemsPerPageCounter = function(expected, notexpected) {
+        el = element(by.model('list'));
+        expect(el.isPresent()).toBe(true);
+
+        actualText = el.getAttribute('value');
+        actualText.then(function(newValue) {
+            actual = parseInt(newValue);
+            expect(actual).toEqual(expected);
+            expect(actual).not.toEqual(notexpected);
+        });
+    };
+
+    //Should have the pages counter set on expected
+    this.testPagesCounter = function(expected, notexpected) {
+        el = element(by.model('currentPage'));
+        expect(el.isPresent()).toBe(true);
+
+        actualText = el.getAttribute('value');
+        actualText.then(function(newValue) {
+            actual = parseInt(newValue);
+            expect(actual).toEqual(expected);
+            expect(actual).not.toEqual(notexpected);
+        });
+    };
+
+    //Should have the total pages counter set on expected
+    this.testTotalPagesCounter = function(expected, notexpected) {
+        el = element(by.binding('finalPage'));
+        expect(el.isPresent()).toBe(true);
+
+        actualText = el.getText();
+
+        actualText.then(function(newValue) {
+            actual = parseInt(newValue);
+            expect(actual).toEqual(expected);
+            expect(actual).not.toEqual(notexpected);
+        });
+    };
+
+    //Should have the custom pagination counter set on expected
+    this.testCustomPaginationCounter = function(expected, notexpected) {
+        el = element(by.css('.customPaginationWrapper li.active a'));
+        expect(el.isPresent()).toBe(true);
+
+        actualText = el.getText();
+
+        actualText.then(function(newValue) {
+            actual = parseInt(newValue);
+            expect(actual).toEqual(expected);
+            expect(actual).not.toEqual(notexpected);
+        });
+    };
+
+    //Should have the 'matched movies' counter set on expected
+    this.testMatchedMoviesCounter = function(expected, notexpected) {
+        el = element(by.binding('totalfilteredMovies'));
+        expect(el.isPresent()).toBe(true);
+
+        actualText = el.getText();
+
+        actualText.then(function(newValue) {
+            actual = parseInt(newValue);
+            expect(actual).toEqual(expected);
+            expect(actual).not.toEqual(notexpected);
+        });
+    };
+
+    // Should have the 'total movies' counter set on expected
+    this.testTotalMoviesCounter = function(expected, notexpected) {
+        el = element(by.binding('totalMoviesCount'));
+        expect(el.isPresent()).toBe(true);
+
+        actualText = el.getText();
+
+        actualText.then(function(newValue) {
+            actual = parseInt(newValue);
+            expect(actual).toEqual(expected);
+            expect(actual).not.toEqual(notexpected);
+        });
+    };
+
 
     this.testLoadedMoviesCount = function(tableRowsCount) {
 
-         expect(tableRowsCount).toBe(20);
+        expect(tableRowsCount).toBe(20);
 
-         //checking border cases confirms that our test data is correct
-         expect(tableRowsCount).not.toBe(19);
-         expect(tableRowsCount).not.toBe(21);
-    };
-
-    this.testInput3CharachtersMsg = function () {
-    	asserted = "Enter at least three characters to begin search";
-    	expected = element(by.css('.errorMessage.leastThreeChar')).getText();
-
-    	expect(expected).toBe(asserted);
-    };
-
-    this.testCustomErrorMsg = function () {
-    	expected = element(by.css('.errorMessage.errMessageGeneral'));
-
-    	expect(expected.isPresent()).toBeFalsy();
-    };
-
-    this.testItemsPerPageCounter = function () {
-    	asserted = 20;
-    	notAsserted = 21;
-
-    	expectedText = element(by.model('list')).getAttribute('value');
-
-    	expectedText.then(function (newValue) {
-    		expected = parseInt(newValue || 0);
-    		expect(expected).toEqual(asserted);
-    		expect(expected).not.toEqual(notAsserted);
-    	});    	
-    };
-
-    this.testPagesCounter = function () {
-    	asserted = 1;
-    	notAsserted = 0;
-
-    	expectedText = element(by.model('currentPage')).getAttribute('value');
-    	
-    	expectedText.then(function (newValue) {
-    		expected = parseInt(newValue || 0);
-    		expect(expected).toEqual(asserted);
-    		expect(expected).not.toEqual(notAsserted);
-    	});
-    };
-
-    this.testTotalPagesCounter = function () {
-    	// asserted = 1;
-    	// expected = element(by.model('currentPage')).getText();
-
-    	// expect(expected).toBe(asserted);
-    };
-
-    this.testCustomPagesCounter = function () {
-    	// asserted = 1;
-    	// expected = element(by.model('currentPage')).getText();
-
-    	// expect(expected).toBe(asserted);
-    };
-
-    this.testMatchedMoviesCounter = function () {
-    	// asserted = 1;
-    	// expected = element(by.model('currentPage')).getText();
-
-    	// expect(expected).toBe(asserted);
-    };
-
-    this.testTotalMoviesCounter = function () {
-    	// asserted = 1;
-    	// expected = element(by.model('currentPage')).getText();
-
-    	// expect(expected).toBe(asserted);
-    };
-
-    this.testLoadedMoviesCount = function () {
-    	// asserted = 1;
-    	// expected = element(by.model('currentPage')).getText();
-
-    	// expect(expected).toBe(asserted);
+        //checking border cases confirms that our test data is correct
+        expect(tableRowsCount).not.toBe(19);
+        expect(tableRowsCount).not.toBe(21);
     };
 };
 
