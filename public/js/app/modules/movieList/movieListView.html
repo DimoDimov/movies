@@ -18,12 +18,12 @@
     <div ng-show="!errorMessage">
         <div class="searchAndPaginationTools">
             <pre>{{totalfilteredMovies|json}}</pre>
-            <input class="numeric-input-50" type="number" ng-model="list" min="1" ng-maxlength="totalfilteredMovies"><span> per page</span>
+            <input class="numeric-input-50" type="number" ng-model="list" min="1" ><span> per page</span>
             <br/>
             <br/>
             <pre>{{finalPage|json}}</pre>
-            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ng-maxlength="finalPage"><span> page out of </span><b><span ng-bind="finalPage"></span></b>
-            <br/>
+            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ><span> page out of </span><b><span ng-bind="finalPage"></span></b>
+            <br/><!--  ng-maxlength="{{finalPage}}" -->
             <!-- Custom Pagination -->
             <pagination-dir class="customPaginationWrapper" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             <br/>

@@ -46,10 +46,13 @@
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
                 
-                if ($scope.searchPhrase.length > 2 || $scope.searchPhrase === '' || self.initializeData) {
+                if (searchPhrase.length < 3) {
+                    searchPhrase = '';
+                }
+
+                if (searchPhrase.length > 2 || searchPhrase === '' || self.initializeData) {
                     self.initializeData = false;
-                    //debugger;
-                   // console.log("---");
+
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
                              console.log("---");
@@ -105,6 +108,12 @@
             });
 
             $scope.$watch('list', function(newVal, oldVal) {
+                console.log(newVal +" "+oldVal);
+                console.log($scope.totalfilteredMovies);
+
+                if (newVal > $scope.totalfilteredMovies) {
+                    $scope.list = $scope.totalfilteredMovies;
+                }
 
                 if (newVal < 1) {
                     $scope.list = 1;
