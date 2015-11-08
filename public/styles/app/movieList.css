@@ -12,6 +12,10 @@
 	padding-left: 400px;
 }
 
+.movie-list-wrapper{
+    text-align: center;
+}
+
 .hide-if-error{
     display: none;
 }

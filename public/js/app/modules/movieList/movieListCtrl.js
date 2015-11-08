@@ -5,6 +5,8 @@
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
             self = this;
 
+            self.initializeData = false;
+
             self.scope = $scope;
             $scope.movieList = [];
             $scope.searchPhrase = '';
@@ -43,12 +45,14 @@
             })();
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
-          
-                if ($scope.searchPhrase.length > 2 || $scope.searchPhrase === '') {
-
+                
+                if ($scope.searchPhrase.length > 2 || $scope.searchPhrase === '' || self.initializeData) {
+                    self.initializeData = false;
+                    //debugger;
+                   // console.log("---");
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
-
+                             console.log("---");
                             if ($scope.errorMessage && !data.errorMessage) {
                                 $scope.errorMessage = '';
                             }
@@ -87,6 +91,13 @@
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
                 }
+
+                if (oldVal.length === 3 && newVal.length === 2) {
+                    self.initializeData = true;
+                    $scope.list = commonConstants.numberMoviesPageLoad;
+                    $scope.currentPage = 1;
+                    proccessMovies($scope.list, $scope.currentPage, '', false, 'search');
+                }
                 
                 if (newVal === '') {
                     $scope.errorMessage = '';
@@ -94,6 +105,7 @@
             });
 
             $scope.$watch('list', function(newVal, oldVal) {
+
                 if (newVal < 1) {
                     $scope.list = 1;
                 }
@@ -104,7 +116,8 @@
                     }
                 }
 
-                if (oldVal !== newVal && !doNotUpdateList) {
+                if (oldVal !== newVal && !doNotUpdateList && newVal <= $scope.totalfilteredMovies && oldVal <= $scope.totalfilteredMovies) {
+                    
                     proccessMovies(newVal, $scope.currentPage, $scope.searchPhrase, false, 'list');
                 }
                 else{
@@ -128,7 +141,7 @@
                     return;
                 }
 
-                if (oldVal !== newVal) {
+                if (oldVal !== newVal && newVal <= $scope.finalPage && oldVal <= $scope.finalPage) {
                     proccessMovies($scope.list, newVal, $scope.searchPhrase, false, 'currentPage');
                 }
             });

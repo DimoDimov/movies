@@ -95,7 +95,7 @@ var movieListPage = function() {
         });
     };
 
-    // Should have the 'total movies' counter set on expected
+    //Should have the 'total movies' counter set on expected
     this.testTotalMoviesCounter = function(expected, notexpected) {
         el = element(by.binding('totalMoviesCount'));
         expect(el.isPresent()).toBe(true);
@@ -109,14 +109,18 @@ var movieListPage = function() {
         });
     };
 
-
-    this.testLoadedMoviesCount = function(tableRowsCount) {
-
-        expect(tableRowsCount).toBe(20);
+    //Should have loaded 20 movies
+    this.testLoadedMoviesCount = function(tableRowsCount, expected, notexpected) {
+        expect(tableRowsCount).toBe(expected);
 
         //checking border cases confirms that our test data is correct
-        expect(tableRowsCount).not.toBe(19);
-        expect(tableRowsCount).not.toBe(21);
+        expect(tableRowsCount).not.toBe(notexpected);
+    };
+
+    //Should have loaded movies alphabetically. Test all fields for first movie from the page.
+    this.testFirstLoadedMovie = function (expected, filterDuration, filterActors, tableRows) {
+    	
+    	
     };
 };
 
