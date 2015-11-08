@@ -1,4 +1,4 @@
-<div>
+<div class="">
     <div class="searchAndPaginationTools">
         <input type="text" class="search-box" ng-model="searchPhrase">
         <br/>
@@ -21,25 +21,27 @@
                 Matched {{totalfilteredMovies}} of {{totalMoviesCount}} movies total
             </div>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th class="table-row">Title</th>
-                    <th class="table-row">Year</th>
-                    <th class="table-row">Rating</th>
-                    <th class="table-row">Duration(min)</th>
-                    <th class="table-row">Actors</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng:repeat="(k, movie) in movieList track by movie.title">
-                    <td class="table-row">{{movie.title}}</td>
-                    <td class="table-row">{{movie.year}}</td>
-                    <td class="table-row">{{movie.rating}}</td>
-                    <td class="table-row">{{movie.duration | filterDuration}}</td>
-                    <td class="table-row-actors">{{movie.actors | filterActors}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="movie-list-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="table-row">Title</th>
+                        <th class="table-row">Year</th>
+                        <th class="table-row">Rating</th>
+                        <th class="table-row">Duration(min)</th>
+                        <th class="table-row">Actors</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng:repeat="(k, movie) in movieList track by movie.title">
+                        <td class="table-row">{{movie.title}}</td>
+                        <td class="table-row">{{movie.year}}</td>
+                        <td class="table-row">{{movie.rating}}</td>
+                        <td class="table-row">{{movie.duration | filterDuration}}</td>
+                        <td class="table-row-actors">{{movie.actors | filterActors}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

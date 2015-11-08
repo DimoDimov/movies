@@ -37,6 +37,12 @@ module.exports = function(grunt) {
                 },
                 command: "node-debug --hidden node_modules --no-preload " + path.join(__dirname, '/server/index.js')
             },
+            'e2e':{
+                 options: {
+                    stdout: true
+                },
+                command: "protractor debug protractor.conf.js"
+            },
         },
 
         concurrent: {
@@ -274,6 +280,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-simple-mocha');
     grunt.loadNpmTasks('grunt-debug');
+    
     //-------------------BUNDLES
 
     //updates front end libraries, cleans folder before the copy
@@ -281,6 +288,8 @@ module.exports = function(grunt) {
 
     //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
     grunt.registerTask('e2e', ['protractor']);
+    grunt.registerTask('debug-e2e', ['shell:e2e']); //debug object - window.clientSideScripts
+
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
     grunt.registerTask('unit', ['karma']);
