@@ -300,7 +300,7 @@ module.exports = function(grunt) {
 
     //'grunt test' command will check the js files for syntax and 
     //after this it all the test methods will be run in consecutive bundle
-    grunt.registerTask('test', ['jshint', 'e2e', 'unit', 'simplemocha']);
+    grunt.registerTask('test', ['jshint', 'e2e', 'unit', 'server-unit']);
 
     //'grunt rebuild' command will activte the 'rebuild' bundle of processes
     //rebuild bundle - it cleans 'public/js/app/dist' and prepares the 'dist' directory

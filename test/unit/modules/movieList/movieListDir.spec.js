@@ -10,7 +10,7 @@ describe("movieListDir", function() {
         serviceCallback,
         el,
         $body = $('body'),
-        simpleHtml = '<movie-list class="movie-list-wrapper"></movie-list>';
+        simpleHtml = '<movie-list class="test-movie-wrapper"></movie-list>';
 
     //Controller Testing
     beforeEach(function() {
@@ -32,7 +32,7 @@ describe("movieListDir", function() {
         
         $body.append(el);
         $rootScope.$digest();
-        $el = $('.movie-list-wrapper');
+        $el = $('.test-movie-wrapper');
     });
 
     afterEach(function () {
@@ -44,8 +44,8 @@ describe("movieListDir", function() {
             expect(el).not.toBeNull();
         });
 
+        debugger;
         it("Should add el to DOM", function() {
-
             expect($el.length).toEqual(1);
         });
     });
