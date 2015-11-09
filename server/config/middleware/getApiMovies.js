@@ -105,8 +105,12 @@ module.exports = function(req, res) {
 
         var movieChunk = [];
 
+        if (params.page * params.list > filteredMovies.length) { 
+            params.page = Math.ceil(filteredMovies.length/params.list);
+        }
+
         var firstIndex = params.page * params.list - params.list;
-        var lastIndex = params.page * params.list;
+        var lastIndex = params.page * params.list; 
 
         //preventing bad data from throwing exceptions
         if (firstIndex > filteredMovies.length) {

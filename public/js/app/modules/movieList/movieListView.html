@@ -17,11 +17,11 @@
     <br/>
     <div ng-show="!errorMessage">
         <div class="searchAndPaginationTools">
-            <pre>{{totalfilteredMovies|json}}</pre>
+            <!-- <pre>{{totalfilteredMovies|json}}</pre> -->
             <input class="numeric-input-50" type="number" ng-model="list" min="1" ><span> per page</span>
             <br/>
             <br/>
-            <pre>{{finalPage|json}}</pre>
+            <!-- <pre>{{finalPage|json}}</pre> -->
             <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ><span> page out of </span><b><span ng-bind="finalPage"></span></b>
             <br/><!--  ng-maxlength="{{finalPage}}" -->
             <!-- Custom Pagination -->
@@ -33,6 +33,7 @@
             <table ng-if="searchPhrase.length < 3 && !errorMessage">
                 <thead>
                     <tr>
+                        <th class="table-row"></th>
                         <th class="table-row">Title</th>
                         <th class="table-row">Year</th>
                         <th class="table-row">Rating</th>
@@ -42,6 +43,7 @@
                 </thead>
                 <tbody>
                     <tr ng:repeat="(k, movie) in movieList track by movie.title">
+                        <td class="table-row">{{$index + list  * (currentPage - 1) }}</td>
                         <td class="table-row">{{movie.title}}</td>
                         <td class="table-row">{{movie.year}}</td>
                         <td class="table-row">{{movie.rating}}</td>
