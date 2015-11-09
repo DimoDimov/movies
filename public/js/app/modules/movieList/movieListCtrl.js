@@ -53,7 +53,7 @@
 
                 if (searchPhrase.length > 2 || searchPhrase === '' || self.initializeData) {
                     self.initializeData = false;
-
+                    
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
 
@@ -136,7 +136,6 @@
                 }
 
                 if (oldVal !== newVal && !doNotUpdateList) {
-                    console.log(oldVal + " "+ newVal);
                     //do not request final page many times
                     //optimisation of backend services
                     if (newVal && oldVal &&
@@ -171,7 +170,7 @@
                     return;
                 }
 
-                if (oldVal !== newVal && newVal <= $scope.finalPage && oldVal <= $scope.finalPage) {
+                if (oldVal !== newVal && newVal <= $scope.finalPage && oldVal !== $scope.finalPage + 1) {
                     proccessMovies($scope.list, newVal, $scope.searchPhrase, false, 'currentPage');
                 }
             });

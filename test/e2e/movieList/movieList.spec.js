@@ -9,12 +9,12 @@ describe("Movie list testing", function() {
 
     beforeEach(function() {
         browser.get('http://127.0.0.1:8000/');
-        inject(function($injector) {
-            $filter = $injector.get('$filter');
+        // inject(function($injector) {
+        //     $filter = $injector.get('$filter');
 
-            filterDuration = $filter('filterDuration');
-            filterActors = $filter('filterActors');
-        });
+        //     filterDuration = $filter('filterDuration');
+        //     filterActors = $filter('filterActors');
+        // });
     });
 
     it("Should navigate to the correct page", function() {
