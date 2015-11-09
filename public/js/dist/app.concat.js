@@ -42,11 +42,6 @@
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js
     var app = angular.module('app', appDep.AllDependencies); 
-        // 'app.constants', 
-        // 'app.services', 
-        // 'app.filters', 
-        // 'app.controllers', 
-        // 'app.directives']);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
@@ -55,11 +50,11 @@
     // Web Applications where hundreds
     // of Controllers, Directives and Views are being declared in the code.
 
-    //Organazing the code 'The Domain Style'
-    //With a complex domain model and hundreds of components, an enterprise
-    //application can easily become a mess if certain concerns are overlooked. One of the
-    //best ways to organize the code in this situation is by distributing each component in
-    //a domain-named folder structure. 
+    // Organazing the code 'The Domain Style'
+    // With a complex domain model and hundreds of components, an enterprise
+    // application can easily become a mess if certain concerns are overlooked. One of the
+    // best ways to organize the code in this situation is by distributing each component in
+    // a domain-named folder structure. 
 
     // app/ -> files of the application
     //  dist/ -> the concatenated js and css files
@@ -80,7 +75,7 @@
     //          movie.html -> movie view
     //  lib/ -> javascript libraries
     //      angular.js -> AngularJS script
-    //index.html -> main html file 
+    // index.html -> main html file 
 
     app.controller('MainCtrl', ['$scope', function($scope) {}]);
 
@@ -102,14 +97,14 @@
 })();
 ;(function() {
 
-    //API service provider. Responsible for declaring and offering 
-    //services to the backend using $http. It handles and saves (logs) 
-    //any errors related ot backend requests.
-    //It offers Layer of abstraction for dealing with backend manipulations.
-    //'APIservices' are being used together with the 'modelServices'. 
-    //Model services is another layer of abstraction for saving and updating
-    //any data with the backend. It offers to the controllers in the application reusable logic
-    //for saving and sharing temporary data models saved in the model services.
+    // API service provider. Responsible for declaring and offering 
+    // services to the backend using $http. It handles and saves (logs) 
+    // any errors related ot backend requests.
+    // It offers Layer of abstraction for dealing with backend manipulations.
+    // 'APIservices' are being used together with the 'modelServices'. 
+    // Model services is another layer of abstraction for saving and updating
+    // any data with the backend. It offers to the controllers in the application reusable logic
+    // for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
     appDep.Services.factory('movieAPIServices',
 
@@ -391,6 +386,7 @@
             $scope.totalfilteredMovies = $scope.list;
             $scope.totalMoviesCount = $scope.list;
 
+            //send this for custom pagination
             $scope.nextcallback = function() {
                 self.scope.currentPage++;
             }.bind(self);
@@ -423,15 +419,12 @@
 
                 if (searchPhrase.length > 2 || searchPhrase === '' || self.initializeData) {
                     self.initializeData = false;
-                    console.log('-----------------');
-                    console.log(list);
-                    console.log(currentPage);
-                    console.log(searchPhrase);
-
-
 
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
+
+                            //on each call we clear the errors
+                            //if we have more errors they will be loaded on the result
                             if ($scope.errorMessage && !data.errorMessage) {
                                 $scope.errorMessage = '';
                             }
@@ -440,8 +433,8 @@
                             $scope.totalMoviesCount = data.totalMoviesCount;
 
                             if (searchPhrase) {
-                                $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
                                 $scope.totalfilteredMovies = data.totalfilteredMovies;
+                                $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
                             } else {
                                 $scope.totalfilteredMovies = data.totalMoviesCount;
                                 $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
@@ -455,6 +448,7 @@
                         }, function(data) {
                             requestSent = false;
 
+                            //when error received we handle it
                             if (data.errorMessage) {
                                 $scope.errorMessage = data.errorMessage;
                                 $scope.movieList = [];
@@ -485,7 +479,7 @@
             });
 
             $scope.$watch('list', function(newVal, oldVal) {
-              
+                //handling any bad input data
                 if (!validationServices.isNumeric(newVal)) {
                     $scope.list = commonConstants.numberMoviesPageLoad;
                 }

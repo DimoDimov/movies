@@ -20,6 +20,7 @@
             $scope.totalfilteredMovies = $scope.list;
             $scope.totalMoviesCount = $scope.list;
 
+            //send this for custom pagination
             $scope.nextcallback = function() {
                 self.scope.currentPage++;
             }.bind(self);
@@ -52,15 +53,12 @@
 
                 if (searchPhrase.length > 2 || searchPhrase === '' || self.initializeData) {
                     self.initializeData = false;
-                    console.log('-----------------');
-                    console.log(list);
-                    console.log(currentPage);
-                    console.log(searchPhrase);
-
-
 
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
+
+                            //on each call we clear the errors
+                            //if we have more errors they will be loaded on the result
                             if ($scope.errorMessage && !data.errorMessage) {
                                 $scope.errorMessage = '';
                             }
@@ -69,8 +67,8 @@
                             $scope.totalMoviesCount = data.totalMoviesCount;
 
                             if (searchPhrase) {
-                                $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
                                 $scope.totalfilteredMovies = data.totalfilteredMovies;
+                                $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
                             } else {
                                 $scope.totalfilteredMovies = data.totalMoviesCount;
                                 $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
@@ -84,6 +82,7 @@
                         }, function(data) {
                             requestSent = false;
 
+                            //when error received we handle it
                             if (data.errorMessage) {
                                 $scope.errorMessage = data.errorMessage;
                                 $scope.movieList = [];
@@ -114,7 +113,7 @@
             });
 
             $scope.$watch('list', function(newVal, oldVal) {
-              
+                //handling any bad input data
                 if (!validationServices.isNumeric(newVal)) {
                     $scope.list = commonConstants.numberMoviesPageLoad;
                 }

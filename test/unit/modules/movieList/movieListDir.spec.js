@@ -44,7 +44,6 @@ describe("movieListDir", function() {
             expect(el).not.toBeNull();
         });
 
-        debugger;
         it("Should add el to DOM", function() {
             expect($el.length).toEqual(1);
         });
@@ -120,7 +119,7 @@ describe("movieListDir", function() {
                 $scope.currentPage++;
                 $scope.$digest();
             }
-
+            
             expect($scope.currentPage).toEqual($scope.finalPage);
         });
 

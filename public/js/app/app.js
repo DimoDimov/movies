@@ -4,11 +4,6 @@
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js
     var app = angular.module('app', appDep.AllDependencies); 
-        // 'app.constants', 
-        // 'app.services', 
-        // 'app.filters', 
-        // 'app.controllers', 
-        // 'app.directives']);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
@@ -17,11 +12,11 @@
     // Web Applications where hundreds
     // of Controllers, Directives and Views are being declared in the code.
 
-    //Organazing the code 'The Domain Style'
-    //With a complex domain model and hundreds of components, an enterprise
-    //application can easily become a mess if certain concerns are overlooked. One of the
-    //best ways to organize the code in this situation is by distributing each component in
-    //a domain-named folder structure. 
+    // Organazing the code 'The Domain Style'
+    // With a complex domain model and hundreds of components, an enterprise
+    // application can easily become a mess if certain concerns are overlooked. One of the
+    // best ways to organize the code in this situation is by distributing each component in
+    // a domain-named folder structure. 
 
     // app/ -> files of the application
     //  dist/ -> the concatenated js and css files
@@ -42,7 +37,7 @@
     //          movie.html -> movie view
     //  lib/ -> javascript libraries
     //      angular.js -> AngularJS script
-    //index.html -> main html file 
+    // index.html -> main html file 
 
     app.controller('MainCtrl', ['$scope', function($scope) {}]);
 
