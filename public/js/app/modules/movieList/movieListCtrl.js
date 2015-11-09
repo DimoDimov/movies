@@ -171,8 +171,8 @@
                     $scope.currentPage = $scope.finalPage;
                     return;
                 }
-
-                if (oldVal !== newVal && newVal <= $scope.finalPage && oldVal <= $scope.finalPage) {
+                
+                if (oldVal !== newVal && newVal <= $scope.finalPage && oldVal !== $scope.finalPage + 1) {
                     proccessMovies($scope.list, newVal, $scope.searchPhrase, false, 'currentPage');
                 }
             });

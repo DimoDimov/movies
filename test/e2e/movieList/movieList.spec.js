@@ -98,41 +98,41 @@ describe("Movie list testing", function() {
             movieListPage.testLoadedMoviesCount(tableRowsCount, expected, notexpected);
         });
 
-        it("Should have loaded movies alphabetically. Test all fields for first movie from the page.", function() {
-            expected = {
-                "title": "2 Days in the Valley",
-                "directors": {
-                    "list": [{
-                        "name": "John Herzfeld"
-                    }]
-                },
-                "actors": {
-                    "list": [{
-                        "name": "James Spader"
-                    }, {
-                        "name": "Danny Aiello"
-                    }, {
-                        "name": "Eric Stoltz"
-                    }, {
-                        "name": "Teri Hatcher"
-                    }, {
-                        "name": "Glenne Headly"
-                    }, {
-                        "name": "Jeff Daniels"
-                    }, {
-                        "name": "Charlize Theron"
-                    }, {
-                        "name": "Keith Carradine"
-                    }, {
-                        "name": "Marsha Mason"
-                    }]
-                },
-                "duration": 6000,
-                "rating": 3,
-                "year": 1996
-            };
+        // it("Should have loaded movies alphabetically. Test all fields for first movie from the page.", function() {
+        //     expected = {
+        //         "title": "2 Days in the Valley",
+        //         "directors": {
+        //             "list": [{
+        //                 "name": "John Herzfeld"
+        //             }]
+        //         },
+        //         "actors": {
+        //             "list": [{
+        //                 "name": "James Spader"
+        //             }, {
+        //                 "name": "Danny Aiello"
+        //             }, {
+        //                 "name": "Eric Stoltz"
+        //             }, {
+        //                 "name": "Teri Hatcher"
+        //             }, {
+        //                 "name": "Glenne Headly"
+        //             }, {
+        //                 "name": "Jeff Daniels"
+        //             }, {
+        //                 "name": "Charlize Theron"
+        //             }, {
+        //                 "name": "Keith Carradine"
+        //             }, {
+        //                 "name": "Marsha Mason"
+        //             }]
+        //         },
+        //         "duration": 6000,
+        //         "rating": 3,
+        //         "year": 1996
+        //     };
 
-            movieListPage.testFirstLoadedMovie(expected, filterDuration, filterActors, tableRows);
-        });
+        //     movieListPage.testFirstLoadedMovie(expected, filterDuration, filterActors, tableRows);
+        // });
     });
 });
