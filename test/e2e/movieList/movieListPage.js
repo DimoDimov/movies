@@ -118,9 +118,35 @@ var movieListPage = function() {
     };
 
     //Should have loaded movies alphabetically. Test all fields for first movie from the page.
-    this.testFirstLoadedMovie = function (expected, filterDuration, filterActors, tableRows) {
-    	
-    	
+    this.testFirstLoadedMovie = function(expected) {
+        element.all(by.repeater('movie in movieList')).then(function(movieList) {
+            var movieElement = movieList[0];
+
+            var title = movieElement.element(by.className('title')).getText();
+            var actors = movieElement.element(by.className('actors')).getText();
+            var duration = movieElement.element(by.className('duration')).getText();
+            var rating = movieElement.element(by.className('rating')).getText();
+            var year = movieElement.element(by.className('year')).getText();
+
+
+            title.then(function (val) {
+                expect(val).toEqual(expected.title);
+            });
+            actors.then(function (val) {
+                expect(val).toEqual(expected.actors);
+            });
+            duration.then(function (val) {
+                expect(parseInt(val)).toEqual(expected.duration);
+            });
+            rating.then(function (val) {
+                expect(parseInt(val)).toEqual(expected.rating);
+            });
+            year.then(function (val) {
+                expect(parseInt(val)).toEqual(expected.year);
+            });
+        });
+
+
     };
 };
 

@@ -101,38 +101,14 @@ describe("Movie list testing", function() {
         it("Should have loaded movies alphabetically. Test all fields for first movie from the page.", function() {
             expected = {
                 "title": "2 Days in the Valley",
-                "directors": {
-                    "list": [{
-                        "name": "John Herzfeld"
-                    }]
-                },
-                "actors": {
-                    "list": [{
-                        "name": "James Spader"
-                    }, {
-                        "name": "Danny Aiello"
-                    }, {
-                        "name": "Eric Stoltz"
-                    }, {
-                        "name": "Teri Hatcher"
-                    }, {
-                        "name": "Glenne Headly"
-                    }, {
-                        "name": "Jeff Daniels"
-                    }, {
-                        "name": "Charlize Theron"
-                    }, {
-                        "name": "Keith Carradine"
-                    }, {
-                        "name": "Marsha Mason"
-                    }]
-                },
-                "duration": 6000,
+                "directors": "John Herzfeld",
+                "actors": "James Spader, Danny Aiello, Eric Stoltz, Teri Hatcher, Glenne Headly, Jeff Daniels, Charlize Theron, Keith Carradine, Marsha Mason",
+                "duration": 100,
                 "rating": 3,
                 "year": 1996
             };
 
-            movieListPage.testFirstLoadedMovie(expected, filterDuration, filterActors, tableRows);
+            movieListPage.testFirstLoadedMovie(expected);
         });
     });
 });

@@ -1,22 +1,38 @@
-#main-container {
-    padding-left: 100px;
+@media only screen and (min-width: 768px) {
+    #main-container {
+        padding-left: 100px;
+    }
+    #main-container > h1 {
+        padding-left: 400px;
+    }
+    #main-container .searchAndPaginationTools {
+        padding-left: 400px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #main-container {
+        padding-left: 20px;
+    }
+    #main-container > h1 {
+        padding-left: 40px;
+    }
+    #main-container .searchAndPaginationTools {
+        padding-left: 40px;
+    }
 }
 
 #main-container > h1 {
     color: grey;
     font-weight: normal;
-    padding-left: 400px;
 }
 
-#main-container .searchAndPaginationTools{
-	padding-left: 400px;
+.movie-list-wrapper table {
+    margin: 0 auto;
+    /* or margin: 0 auto 0 auto */
 }
 
-.movie-list-wrapper{
-    text-align: center;
-}
-
-.hide-if-error{
+.hide-if-error {
     display: none;
 }
 
@@ -39,8 +55,8 @@
     text-align: center;
 }
 
-.table-row-actors{
-	width: 850px;
+.table-row.actors {
+    width: 850px;
     text-align: center;
 }
 

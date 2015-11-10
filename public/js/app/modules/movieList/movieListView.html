@@ -3,11 +3,10 @@
         <input type="text" class="search-box" ng-model="searchPhrase">
         <br/>
         <br/>
-        <!-- <pre>{{totalfilteredMovies|json}}</pre> -->
-        <!-- <pre>{{totalMoviesCount|json}}</pre> -->
-
         <div class="errorMessage leastThreeChar" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
-        <div class="errorMessage errMessageGeneral" ng-if="errorMessage">{{::errorMessage}}</div>
+        <div class="errorMessage errMessageGeneral" ng-if="errorMessage"><span ng-bind="errorMessage"></span> </div>
+
+         <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'-->
         <div ng-if="searchPhrase.length > 2 && !errorMessage">
             <b>
                 Matched <span ng-bind="totalfilteredMovies"></span> of <span ng-bind="totalMoviesCount"></span> movies total
@@ -17,23 +16,22 @@
     <br/>
     <div ng-show="!errorMessage">
         <div class="searchAndPaginationTools">
-            <!-- <pre>{{totalfilteredMovies|json}}</pre> -->
+
             <input class="numeric-input-50" type="number" ng-model="list" min="1" ><span> per page</span>
             <br/>
             <br/>
-            <!-- <pre>{{finalPage|json}}</pre> -->
+
             <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ><span> page out of </span><b><span ng-bind="finalPage"></span></b>
-            <br/><!--  ng-maxlength="{{finalPage}}" -->
+            <br/>
             <!-- Custom Pagination -->
             <pagination-dir class="customPaginationWrapper" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             <br/>
-            <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'-->
+           
         </div>
         <div class="movie-list-wrapper">
             <table ng-if="searchPhrase.length < 3 && !errorMessage">
                 <thead>
                     <tr>
-                        <th class="table-row"></th>
                         <th class="table-row">Title</th>
                         <th class="table-row">Year</th>
                         <th class="table-row">Rating</th>
@@ -41,17 +39,31 @@
                         <th class="table-row">Actors</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr ng:repeat="(k, movie) in movieList track by movie.title">
-                        <td class="table-row">{{$index + list  * (currentPage - 1) }}</td>
-                        <td class="table-row">{{movie.title}}</td>
-                        <td class="table-row">{{movie.year}}</td>
-                        <td class="table-row">{{movie.rating}}</td>
-                        <td class="table-row">{{movie.duration | filterDuration}}</td>
-                        <td class="table-row-actors">{{movie.actors | filterActors}}</td>
+                    <tr ng:repeat="movie in movieList track by movie.title">
+                        <td class="table-row title">{{movie.title}}</td>
+                        <td class="table-row year">{{movie.year}}</td>
+                        <td class="table-row rating">{{movie.rating}}</td>
+                        <td class="table-row duration">{{movie.duration | filterDuration}}</td>
+                        <td class="table-row actors">{{movie.actors | filterActors}}</td>
                     </tr>
                 </tbody>
             </table>
+
+            <table ng-if="searchPhrase.length >= 3 && !errorMessage">
+                <thead>
+                    <tr>
+                        <th class="table-row">Title</th>
+                        <th class="table-row">Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng:repeat="movie in movieList track by movie.title">
+                        <td class="table-row title">{{movie.title}}</td>
+                        <td class="table-row year">{{movie.year}}</td>
+                    </tr>
+                </tbody>
         </div>
     </div>
 </div>
