@@ -5,8 +5,7 @@
         <br/>
         <div class="errorMessage leastThreeChar" ng-if="searchPhrase.length < 3">Enter at least three characters to begin search</div>
         <div class="errorMessage errMessageGeneral" ng-if="errorMessage"><span ng-bind="errorMessage"></span> </div>
-
-         <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'-->
+        <!-- - When there is at least one matching movie: - The following text is displayed: 'Matched X of Y movies total'-->
         <div ng-if="searchPhrase.length > 2 && !errorMessage">
             <b>
                 Matched <span ng-bind="totalfilteredMovies"></span> of <span ng-bind="totalMoviesCount"></span> movies total
@@ -16,17 +15,14 @@
     <br/>
     <div ng-show="!errorMessage">
         <div class="searchAndPaginationTools">
-
-            <input class="numeric-input-50" type="number" ng-model="list" min="1" ><span> per page</span>
+            <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
             <br/>
             <br/>
-
-            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1" ><span> page out of </span><b><span ng-bind="finalPage"></span></b>
+            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of </span><b><span ng-bind="finalPage"></span></b>
             <br/>
             <!-- Custom Pagination -->
             <pagination-dir class="customPaginationWrapper" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             <br/>
-           
         </div>
         <div class="movie-list-wrapper">
             <table ng-if="searchPhrase.length < 3 && !errorMessage">
@@ -39,7 +35,6 @@
                         <th class="table-row">Actors</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <tr ng:repeat="movie in movieList track by movie.title">
                         <td class="table-row title">{{movie.title}}</td>
@@ -50,7 +45,6 @@
                     </tr>
                 </tbody>
             </table>
-
             <table ng-if="searchPhrase.length >= 3 && !errorMessage">
                 <thead>
                     <tr>
