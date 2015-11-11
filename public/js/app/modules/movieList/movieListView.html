@@ -1,5 +1,5 @@
 <div>
-    <div class="searchAndPaginationTools">
+    <div class="search-wrapper">
         <input type="text" class="search-box" ng-model="searchPhrase">
         <br/>
         <br/>
@@ -14,18 +14,18 @@
     </div>
     <br/>
     <div ng-show="!errorMessage">
-        <div class="searchAndPaginationTools">
-            <input class="numeric-input-50" type="number" ng-model="list" min="1"><span> per page</span>
+        <div class="pagination-tools-wrapper">
+            <input class="numeric-input-50 list-input" type="number" ng-model="list" min="1"><span> per page</span>
             <br/>
             <br/>
-            <input class="numeric-input-50" type="number" ng-model="currentPage" min="1"><span> page out of </span><b><span ng-bind="finalPage"></span></b>
+            <input class="numeric-input-50 page-input" type="number" ng-model="currentPage" min="1"><span> page out of </span><b><span ng-bind="finalPage"></span></b>
             <br/>
             <!-- Custom Pagination -->
             <pagination-dir class="customPaginationWrapper" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             <br/>
         </div>
         <div class="movie-list-wrapper">
-            <table ng-if="searchPhrase.length < 3 && !errorMessage">
+            <table class="big-table" ng-if="searchPhrase.length < 3 && !errorMessage">
                 <thead>
                     <tr>
                         <th class="table-row">Title</th>
@@ -45,7 +45,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table ng-if="searchPhrase.length >= 3 && !errorMessage">
+            <table class="small-table" ng-if="searchPhrase.length >= 3 && !errorMessage">
                 <thead>
                     <tr>
                         <th class="table-row">Title</th>

@@ -5,7 +5,11 @@
     #main-container > h1 {
         padding-left: 400px;
     }
-    #main-container .searchAndPaginationTools {
+    #main-container .search-wrapper {
+        padding-left: 400px;
+    }
+
+     #main-container .pagination-tools-wrapper {
         padding-left: 400px;
     }
 }
@@ -17,7 +21,11 @@
     #main-container > h1 {
         padding-left: 40px;
     }
-    #main-container .searchAndPaginationTools {
+    #main-container .pagination-tools-wrapper {
+        padding-left: 40px;
+    }
+
+     #main-container .search-wrapper {
         padding-left: 40px;
     }
 }
