@@ -37,8 +37,9 @@ describe("Movie list testing", function() {
         });
 
         it("Should hide the custom error message", function() {
-            expected = false;
-            movieListPage.testCustomErrorMsg(expected);
+            existingEl = false;
+
+            movieListPage.testCustomErrorMsg(expected, existingEl);
         });
 
         it("Should have the 'items per page' counter set on 20", function() {
@@ -68,20 +69,6 @@ describe("Movie list testing", function() {
 
             movieListPage.testCustomPaginationCounter(expected, notexpected);
         });
-
-        // it("Should have the 'matched movies' counter set on 160 as we match all of them", function() {
-        //     expected = 160;
-        //     notexpected = 159;
-
-        //     movieListPage.testMatchedMoviesCounter(expected, notexpected);
-        // });
-
-        // it("Should have the 'total movies' counter set on 160 as all movies are matching empty string", function() {
-        //     expected = 160;
-        //     notexpected = 159;
-
-        //     movieListPage.testTotalMoviesCounter(expected, notexpected);
-        // });
 
         it("Should have loaded 20 movies", function() {
             expected = 20;
@@ -134,8 +121,9 @@ describe("Movie list testing", function() {
         });
 
         it("Should hide the custom error message", function() {
-            expected = false;
-            movieListPage.testCustomErrorMsg(expected);
+            existingEl = false;
+
+            movieListPage.testCustomErrorMsg(expected, existingEl);
         });
 
         it("Should have the 'items per page' counter set on 20", function() {
@@ -221,8 +209,9 @@ describe("Movie list testing", function() {
         });
 
         it("Should hide the custom error message", function() {
-            expected = false;
-            movieListPage.testCustomErrorMsg(expected);
+            existingEl = false;
+
+            movieListPage.testCustomErrorMsg(expected, existingEl);
         });
 
         it("Should have the 'items per page' counter set on 20", function() {
@@ -340,7 +329,7 @@ describe("Movie list testing", function() {
 
             paginationNextBtn = element(by.css('.pagination-next a'));
 
-            element(by.binding('finalPage')).getText().then(function (data) {
+            element(by.binding('finalPage')).getText().then(function(data) {
 
                 finalPage = parseInt(data);
             });
@@ -378,91 +367,204 @@ describe("Movie list testing", function() {
             movieListPage.testFirstLoadedMovie(expected);
         });
     });
+    
+    //--------------------------------------------------------------
+    describe("Should be able to filter data by phrase 'Week'", function() {
+        var testPhrase = "Week";
 
-    // describe("Should initialize the first page with all needed data", function() {
+        beforeEach(function() {
+            element(by.model('searchPhrase')).sendKeys(testPhrase);
 
-    //     beforeEach(function() {
+            tableRows = element.all(by.css('.movie-list-wrapper tbody tr'));
 
-    //         tableRows = element.all(by.css('.movie-list-wrapper tbody tr'));
+            //resolve the tableRows, means we have the movie data loaded
+            tableRows.count().then(function(newCount) {
+                tableRowsCount = newCount;
+            });
+        });
 
-    //         //resolve the tableRows, means we have the movie data loaded
-    //         tableRows.count().then(function(newCount) {
-    //             tableRowsCount = newCount;
-    //         });
-    //     });
+        it("Should contain message asking to input at least 3 charachters", function() {
+            expected = "Enter at least three characters to begin search";
+            existingEl = false;
 
-    //     it("Should contain message asking to input at least 3 charachters", function() {
-    //         expected = "Enter at least three characters to begin search";
-    //         existingEl = true;
+            movieListPage.testInput3CharachtersMsg(expected, existingEl);
+        });
 
-    //         movieListPage.testInput3CharachtersMsg(expected, existingEl);
-    //     });
+        it("Should hide the custom error message", function() {
+            existingEl = false;
 
-    //     it("Should hide the custom error message", function() {
-    //         expected = false;
-    //         movieListPage.testCustomErrorMsg(expected);
-    //     });
+            movieListPage.testCustomErrorMsg(expected, existingEl);
+        });
 
-    //     it("Should have the 'items per page' counter set on 20", function() {
-    //         expected = 20;
-    //         notexpected = 21;
+        it("Should have the 'items per page' counter set on 20", function() {
+            expected = 2;
+            notexpected = 20;
 
-    //         movieListPage.testItemsPerPageCounter(expected, notexpected);
-    //     });
+            movieListPage.testItemsPerPageCounter(expected, notexpected);
+        });
 
-    //     it("Should have the pages counter set on 1", function() {
-    //         expected = 1;
-    //         notexpected = 0;
+        it("Should have the pages counter set on 1", function() {
+            expected = 1;
+            notexpected = 2;
 
-    //         movieListPage.testPagesCounter(expected, notexpected);
-    //     });
+            movieListPage.testPagesCounter(expected, notexpected);
+        });
 
-    //     it("Should have the total pages counter set on 8", function() {
-    //         expected = 8;
-    //         notexpected = 9;
+        it("Should have the total pages counter set on 1", function() {
+            expected = 1;
+            notexpected = 8;
 
-    //         movieListPage.testTotalPagesCounter(expected, notexpected);
-    //     });
+            movieListPage.testTotalPagesCounter(expected, notexpected);
+        });
 
-    //     it("Should have the custom pagination counter set on 1", function() {
-    //         expected = 1;
-    //         notexpected = 0;
+        it("Should have the custom pagination counter set on 1", function() {
+            expected = 1;
+            notexpected = 2;
 
-    //         movieListPage.testCustomPaginationCounter(expected, notexpected);
-    //     });
+            movieListPage.testCustomPaginationCounter(expected, notexpected);
+        });
 
-    //     // it("Should have the 'matched movies' counter set on 160 as we match all of them", function() {
-    //     //     expected = 160;
-    //     //     notexpected = 159;
+        it("Should have the 'matched movies' counter set on 2 as we match all of them", function() {
+            expected = 2;
+            notexpected = 160;
 
-    //     //     movieListPage.testMatchedMoviesCounter(expected, notexpected);
-    //     // });
+            movieListPage.testMatchedMoviesCounter(expected, notexpected);
+        });
 
-    //     // it("Should have the 'total movies' counter set on 160 as all movies are matching empty string", function() {
-    //     //     expected = 160;
-    //     //     notexpected = 159;
+        it("Should have the 'total movies' counter set on 160 as all movies are matching empty string", function() {
+            expected = 160;
+            notexpected = 2;
 
-    //     //     movieListPage.testTotalMoviesCounter(expected, notexpected);
-    //     // });
+            movieListPage.testTotalMoviesCounter(expected, notexpected);
+        });
 
-    //     it("Should have loaded 20 movies", function() {
-    //         expected = 20;
-    //         notexpected = 19;
+        it("Should have loaded 2 movies", function() {
+            expected = 2;
+            notexpected = 3;
 
-    //         movieListPage.testLoadedMoviesCount(tableRowsCount, expected, notexpected);
-    //     });
+            movieListPage.testLoadedMoviesCount(tableRowsCount, expected, notexpected);
+        });
 
-    //     it("Should have loaded movies alphabetically. Test all fields for first movie from the page.", function() {
-    //         expected = {
-    //             "title": "2 Days in the Valley",
-    //             "actors": "James Spader, Danny Aiello, Eric Stoltz, Teri Hatcher, Glenne Headly, Jeff Daniels, Charlize Theron, Keith Carradine, Marsha Mason",
-    //             "duration": 100,
-    //             "rating": 3,
-    //             "year": 1996
-    //         };
+        it("Should have loaded movies alphabetically. Test all fields for first movie from the page.", function() {
+            expected = {
+                "title": "28 Weeks Later",
+                "year": 2007
+            };
 
-    //         movieListPage.testFirstLoadedMovie(expected);
-    //     });
+            movieListPage.testFirstLoadedMovieSerch(expected);
+        });
+    });
+    
+    //--------------------------------------------------------------
+    describe("Should show error message if phrase not found when filtering", function() {
+        var testPhrase = "Wasd";
 
-    // });
+        beforeEach(function() {
+            element(by.model('searchPhrase')).sendKeys(testPhrase);
+
+            tableRows = element.all(by.css('.movie-list-wrapper tbody tr'));
+
+            //resolve the tableRows, means we have the movie data loaded
+            tableRows.count().then(function(newCount) {
+                tableRowsCount = newCount;
+            });
+        });
+
+        it("Should contain message asking to input at least 3 charachters", function() {
+            expected = "Enter at least three characters to begin search";
+            existingEl = false;
+
+            movieListPage.testInput3CharachtersMsg(expected, existingEl);
+        });
+
+        it("Should hide the custom error message", function() {
+            expected = "No matching items";
+            existingEl = true;
+
+            movieListPage.testCustomErrorMsg(expected, existingEl);
+        });
+
+        it("Test if search wrapper body is hidden", function() {
+            expected = false;
+
+            movieListPage.testIfSearchWrapperBodyIsHidden(expected, notexpected);
+        });
+    });
+    
+    //--------------------------------------------------------------
+    describe("Should stay on the same page if search phrase length is less than 3 charcter", function() {
+
+        beforeEach(function() {
+            var testPhrase = "Wa";
+
+            element(by.model('searchPhrase')).sendKeys(testPhrase);
+
+            tableRows = element.all(by.css('.movie-list-wrapper tbody tr'));
+
+            //resolve the tableRows, means we have the movie data loaded
+            tableRows.count().then(function(newCount) {
+                tableRowsCount = newCount;
+            });
+        });
+
+        it("Should contain message asking to input at least 3 charachters", function() {
+            expected = "Enter at least three characters to begin search";
+            existingEl = true;
+
+            movieListPage.testInput3CharachtersMsg(expected, existingEl);
+        });
+
+        it("Should hide the custom error message", function() {
+            existingEl = false;
+
+            movieListPage.testCustomErrorMsg(expected, existingEl);
+        });
+
+        it("Should have the 'items per page' counter set on 20", function() {
+            expected = 20;
+            notexpected = 21;
+
+            movieListPage.testItemsPerPageCounter(expected, notexpected);
+        });
+
+        it("Should have the pages counter set on 1", function() {
+            expected = 1;
+            notexpected = 0;
+
+            movieListPage.testPagesCounter(expected, notexpected);
+        });
+
+        it("Should have the total pages counter set on 8", function() {
+            expected = 8;
+            notexpected = 9;
+
+            movieListPage.testTotalPagesCounter(expected, notexpected);
+        });
+
+        it("Should have the custom pagination counter set on 1", function() {
+            expected = 1;
+            notexpected = 0;
+
+            movieListPage.testCustomPaginationCounter(expected, notexpected);
+        });
+
+        it("Should have loaded 20 movies", function() {
+            expected = 20;
+            notexpected = 19;
+
+            movieListPage.testLoadedMoviesCount(tableRowsCount, expected, notexpected);
+        });
+
+        it("Should have loaded movies alphabetically. Test all fields for first movie from the page.", function() {
+            expected = {
+                "title": "2 Days in the Valley",
+                "actors": "James Spader, Danny Aiello, Eric Stoltz, Teri Hatcher, Glenne Headly, Jeff Daniels, Charlize Theron, Keith Carradine, Marsha Mason",
+                "duration": 100,
+                "rating": 3,
+                "year": 1996
+            };
+
+            movieListPage.testFirstLoadedMovie(expected);
+        });
+    });
 });

@@ -17,14 +17,21 @@ var movieListPage = function() {
         el = element(by.css('.errorMessage.leastThreeChar'));
         expect(el.isPresent()).toBe(existingEl);
 
-        actual = el.getText();
-        expect(actual).toBe(expected);
+        if (existingEl) {
+            actual = el.getText();
+            expect(actual).toBe(expected);
+        }
     };
 
     //Should hide the custom error message if no error to display
-    this.testCustomErrorMsg = function(expected) {
+    this.testCustomErrorMsg = function(expected, existingEl) {
         el = element(by.css('.errorMessage.errMessageGeneral'));
-        expect(el.isPresent()).toBe(expected);
+        expect(el.isPresent()).toBe(existingEl);
+
+        if (existingEl) {
+            actual = el.getText();
+            expect(actual).toBe(expected);
+        }
     };
 
     //Should have the 'items per page' counter set on expected
@@ -129,24 +136,49 @@ var movieListPage = function() {
             var year = movieElement.element(by.className('year')).getText();
 
 
-            title.then(function (val) {
+            title.then(function(val) {
                 expect(val).toEqual(expected.title);
             });
-            actors.then(function (val) {
+            actors.then(function(val) {
                 expect(val).toEqual(expected.actors);
             });
-            duration.then(function (val) {
+            duration.then(function(val) {
                 expect(parseInt(val)).toEqual(expected.duration);
             });
-            rating.then(function (val) {
+            rating.then(function(val) {
                 expect(parseInt(val)).toEqual(expected.rating);
             });
-            year.then(function (val) {
+            year.then(function(val) {
                 expect(parseInt(val)).toEqual(expected.year);
             });
         });
+    };
+
+    //Should have loaded movies alphabetically by phrase. Test all fields for first movie from the page.
+    this.testFirstLoadedMovieSerch = function(expected) {
+        element.all(by.repeater('movie in movieList')).then(function(movieList) {
+            var movieElement = movieList[0];
+
+            var title = movieElement.element(by.className('title')).getText();
+            var year = movieElement.element(by.className('year')).getText();
 
 
+            title.then(function(val) {
+                expect(val).toEqual(expected.title);
+            });
+
+            year.then(function(val) {
+                expect(parseInt(val)).toEqual(expected.year);
+            });
+        });
+    };
+
+    //Should have loaded movies alphabetically by phrase. Test all fields for first movie from the page.
+    this.testIfSearchWrapperBodyIsHidden = function(expected) {
+        element(by.className('search-wrapper-body')).isDisplayed().then(function(actual) {
+            console.log(actual);
+            expect(actual).toEqual(expected);
+        });
     };
 };
 
