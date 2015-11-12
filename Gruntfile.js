@@ -124,7 +124,7 @@ module.exports = function(grunt) {
                 //filter: 'isFile',
             },
             lib: {
-                src: ['public/js/lib/**/*', 'public/styles/lib/**/*'],
+                src: ['public/js/lib/**/*', 'public/styles/lib/**/*', 'public/styles/fonts/**/*'],
                 //filter: 'isFile',
             }
         },
@@ -224,10 +224,11 @@ module.exports = function(grunt) {
             },
             stylefiles: {
                 options: {
-                    destPrefix: 'public/styles/lib'
+                    destPrefix: 'public/styles/'
                 },
                 files: {
-                    'bootstrap.css': 'bootstrap-css-only/css/bootstrap.css',
+                    'lib/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'fonts': 'bootstrap/dist/fonts/**/*',
                 }
             },
         },

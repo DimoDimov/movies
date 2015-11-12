@@ -548,8 +548,7 @@
             });
         }
     ]);
-})();
-;(function() {
+})();;(function() {
 
     appDep.Directives.directive('movieList', function() {
         return {
