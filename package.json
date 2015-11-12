@@ -69,7 +69,7 @@
     "protractor": "^2.1.0"
   },
   "scripts": {
-    "postinstall": "node_modules/protractor/bin/webdriver-manager update",
+    "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
     "start": "node server/index.js",
     "e2e": "protractor protractor.conf.js",
     "unit": "karma start karma.conf.js",
