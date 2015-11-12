@@ -35,10 +35,10 @@ module.exports = function(grunt) {
                 options: {
                     stdout: true
                 },
-                command: "node-debug --hidden node_modules --no-preload " + path.join(__dirname, '/server/index.js')
+                command: "node-debug --hidden node_modules --no-preload " + path.resolve('/server/index.js')
             },
-            'e2e':{
-                 options: {
+            'e2e': {
+                options: {
                     stdout: true
                 },
                 command: "protractor debug protractor.conf.js"
@@ -66,40 +66,39 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             distJS: {
-                src: ['public/js/app/app-dependencies.js', 'public/js/app/app.js', 'public/js/app/**/*.js'],
-                dest: 'public/js/dist/app.concat.js',
+                src: [path.resolve('public/js/app/app-dependencies.js'), path.resolve('public/js/app/app.js'), path.resolve('public/js/app/**/*.js')],
+                dest: path.resolve('public/js/dist/app.concat.js'),
             },
             distCSS: {
-                src: ['public/styles/app/**/*.css'],
-                dest: 'public/styles/dist/app.concat.css',
+                src: [path.resolve('public/styles/app/**/*.css')],
+                dest: path.resolve('public/styles/dist/app.concat.css'),
             }
         },
 
         //js minifier
         'uglify': {
             dist: {
-                files: {
-                    'public/js/dist/app.min.js': ['public/js/dist/app.concat.js'],
-                }
+                src: [path.resolve('public/js/dist/app.concat.js')],
+                dest: path.resolve('public/js/dist/app.min.js'),
             }
         },
 
         //css minifier
         'cssmin': {
             css: {
-                src: 'public/styles/dist/app.concat.css',
-                dest: 'public/styles/dist/app.min.css'
+                src: path.resolve('public/styles/dist/app.concat.css'),
+                dest: path.resolve('public/styles/dist/app.min.css')
             }
         },
 
         //high quality code
         'jshint': {
             gruntfile: {
-                src: 'gruntfile.js'
+                src: path.resolve('gruntfile.js')
             },
-            test: ['test/**/*.js'],
-            beforeconcat: ['public/js/app/**/*.js', 'server/**/*.js'],
-            afterconcat: ['public/js/dist/**/*concat.js'],
+            test: [path.resolve('test/**/*.js')],
+            beforeconcat: [path.resolve('public/js/app/**/*.js'), path.resolve('server/**/*.js')],
+            afterconcat: [path.resolve('public/js/dist/**/*concat.js')],
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
@@ -120,11 +119,11 @@ module.exports = function(grunt) {
         //clean folders pre-build
         'clean': {
             dist: {
-                src: ['public/js/dist/**/*', 'public/styles/dist/**/*'],
+                src: [path.resolve('public/js/dist/**/*'), path.resolve('public/styles/dist/**/*')],
                 //filter: 'isFile',
             },
             lib: {
-                src: ['public/js/lib/**/*', 'public/styles/lib/**/*', 'public/styles/fonts/**/*'],
+                src: [path.resolve('public/js/lib/**/*'), path.resolve('public/styles/lib/**/*'), path.resolve('public/styles/fonts/**/*')],
                 //filter: 'isFile',
             }
         },
@@ -132,11 +131,11 @@ module.exports = function(grunt) {
         //set watchers on files
         'watch': {
             test: {
-                files: ['test/**/*.js'],
-                tasks: ['jshint:test'],
+                files: [path.resolve('test/**/*.js')],
+                tasks: [path.resolve('jshint:test')],
             },
             express: {
-                files: ['public/**/*', 'server/**/*', 'Gruntfile.js', '!public/js/dist/*', '!public/styles/dist/*'],
+                files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*')],
                 tasks: ['start'],
                 options: {
                     spawn: false,
@@ -152,17 +151,17 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    script: 'server/index.js',
+                    script: path.resolve('server/index.js'),
                 }
             },
             prod: {
                 options: {
-                    script: 'path/to/prod/server.js'
+                    script: path.resolve('path/to/prod/server.js')
                 }
             },
             test: {
                 options: {
-                    script: 'path/to/test/server.js'
+                    script: path.resolve('path/to/test/server.js')
                 }
             }
         },
@@ -170,7 +169,7 @@ module.exports = function(grunt) {
         //Set Automation Tests
         'protractor': {
             options: {
-                configFile: "protractor.conf.js", // Default config file 
+                configFile: path.resolve("protractor.conf.js"), // Default config file 
                 keepAlive: true, // If false, the grunt process stops when the test fails. 
                 noColor: false, // If true, protractor will not use colors in its output. 
                 args: {
@@ -184,7 +183,7 @@ module.exports = function(grunt) {
 
         'karma': {
             unit: {
-                configFile: 'karma.conf.js'
+                configFile: path.resolve('karma.conf.js')
             }
         },
 
@@ -198,7 +197,7 @@ module.exports = function(grunt) {
             },
 
             all: {
-                src: 'test/server/**/*.spec.js'
+                src: path.resolve('test/server/**/*.spec.js')
             }
         },
 
@@ -210,7 +209,7 @@ module.exports = function(grunt) {
             // Javascript 
             jsfiles: {
                 options: {
-                    destPrefix: 'public/js/lib'
+                    destPrefix: path.resolve('public/js/lib')
                 },
                 files: {
                     'jquery.js': 'jquery/jquery.js',
@@ -224,7 +223,7 @@ module.exports = function(grunt) {
             },
             stylefiles: {
                 options: {
-                    destPrefix: 'public/styles/'
+                    destPrefix: path.resolve('public/styles/')
                 },
                 files: {
                     'lib/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
@@ -281,7 +280,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-simple-mocha');
     grunt.loadNpmTasks('grunt-debug');
-    
+
     //-------------------BUNDLES
 
     //updates front end libraries, cleans folder before the copy
