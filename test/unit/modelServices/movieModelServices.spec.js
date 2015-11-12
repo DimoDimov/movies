@@ -78,7 +78,6 @@ describe("movieModelServices", function() {
 
             expect(function () {
                 factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {
-                    console.log(data);
                     expect(data).toBeDefined(); 
                 });  
                 $rootScope.$digest();   
@@ -90,7 +89,6 @@ describe("movieModelServices", function() {
 
             expect(function () {
                 factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {
-                    console.log(data);
                     expect(data).toBeDefined(); 
                 });  
                 $rootScope.$digest();   
@@ -103,7 +101,6 @@ describe("movieModelServices", function() {
 
             expect(function () {
                 factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {
-                    console.log(data);
                     expect(data).toBeDefined(); 
                 });  
                 $rootScope.$digest();   

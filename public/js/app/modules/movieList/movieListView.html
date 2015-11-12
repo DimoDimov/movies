@@ -47,19 +47,13 @@
                     </div>
                 </form>
             </div>
-            <!-- <form class="form-inline"> -->
-            <!-- <div class="form-group row">
-                <input id="page-input-box" class="form-control numeric-input-80 page-input" type="number" ng-model="currentPage" min="1">
-                <label for="page-input-box"><span> pages out of </span><b><span ng-bind="finalPage"></span></b></label>
-            </div> -->
-            <!-- </form> -->
             <div class="row">
                 <!-- Custom Pagination -->
                 <pagination-dir class="customPaginationWrapper" nextcallback="nextcallback()" previouscallback="previouscallback()" finalpage="finalPage" currentpage="currentPage"></pagination-dir>
             </div>
         </div>
         <div class="movie-list-wrapper row">
-            <table class="big-table" ng-if="searchPhrase.length < 3 && !errorMessage">
+            <table class="big-table table-hover" ng-if="searchPhrase.length < 3 && !errorMessage">
                 <thead>
                     <tr>
                         <th class="table-row">Title</th>
@@ -79,7 +73,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="small-table" ng-if="searchPhrase.length >= 3 && !errorMessage">
+            <table class="small-table table-hover" ng-if="searchPhrase.length >= 3 && !errorMessage">
                 <thead>
                     <tr>
                         <th class="table-row">Title</th>
