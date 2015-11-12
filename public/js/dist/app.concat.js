@@ -324,7 +324,7 @@
 
             //if Not Valid numberOfItemsToReturn then throw ex
             if (numberOfItemsToReturn !== undefined && !_isNumeric(numberOfItemsToReturn)) {
-                console.log(numberOfItemsToReturn);
+                console.warn(numberOfItemsToReturn);
                 throw "Please provide valid integer for number of items to return.";
             }
 
@@ -339,7 +339,7 @@
 
             //if Not Valid pageNumber then throw ex
             if (pageNumber !== undefined && !_isNumeric(pageNumber)) {
-                console.log(pageNumber);
+                console.warn(pageNumber);
                 throw "Please provide valid integer for page number.";
             }
 
@@ -371,8 +371,6 @@
         function($scope, movieModelServices, commonConstants, validationServices) { //) {
             self = this;
 
-            self.initializeData = false;
-
             self.scope = $scope;
             $scope.movieList = [];
             $scope.searchPhrase = '';
@@ -395,7 +393,6 @@
                 self.scope.currentPage--;
             }.bind(self);
 
-            var doNotUpdateList = false;
 
             //self invoked to load 20 movies on page load
             // - On page load, you should display first 20 movies, 
@@ -416,9 +413,8 @@
                 if (searchPhrase.length < 3) {
                     searchPhrase = '';
                 }
-
-                if (searchPhrase.length > 2 || searchPhrase === '' || self.initializeData) {
-                    self.initializeData = false;
+                
+                if (searchPhrase.length > 2 || searchPhrase === '') {
                     
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
                         .then(function(data) {
@@ -441,7 +437,6 @@
                             }
 
                             if ($scope.totalfilteredMovies < $scope.list) {
-                                doNotUpdateList = true;
 
                                 $scope.list = $scope.totalfilteredMovies;
                             }
@@ -458,23 +453,22 @@
             };
 
             $scope.$watch('searchPhrase', function(newVal, oldVal) {
-                if (oldVal && oldVal.length && oldVal.length > 0 && newVal.length === 0) {
+                //if search phrase not valid do not call the backend
+                if (oldVal && oldVal.length && oldVal.length > 0 && newVal.length < 3) {
                     $scope.list = commonConstants.numberMoviesPageLoad;
+                    $scope.errorMessage = '';
                 }
 
+                //if the search phrase have changed do request
                 if (oldVal !== newVal) {
                     proccessMovies($scope.list, $scope.currentPage, newVal, false, 'search');
+                    return;
                 }
 
                 if (oldVal.length === 3 && newVal.length === 2) {
-                    self.initializeData = true;
                     $scope.list = commonConstants.numberMoviesPageLoad;
                     $scope.currentPage = 1;
                     proccessMovies($scope.list, $scope.currentPage, '', false, 'search');
-                }
-
-                if (newVal === '') {
-                    $scope.errorMessage = '';
                 }
             });
 
@@ -482,28 +476,28 @@
                 //handling any bad input data
                 if (!validationServices.isNumeric(newVal)) {
                     $scope.list = commonConstants.numberMoviesPageLoad;
-                }
-
-                if (newVal > $scope.totalfilteredMovies) {
-                 
-                    $scope.list = $scope.totalfilteredMovies;
-                    $scope.currentPage = Math.ceil($scope.totalfilteredMovies / $scope.list);
-                    $scope.finalPage = Math.ceil($scope.totalfilteredMovies / $scope.list);
+                    $scope.totalfilteredMovies = 0;
                 }
 
                 if (newVal < 1) {
                     $scope.list = 1;
                 }
 
+                if (newVal > $scope.totalMoviesCount) {
+                    $scope.list = $scope.totalMoviesCount;
+                }
+                
+                //if search phrase valid then update $scope.list
                 if ($scope.searchPhrase && $scope.searchPhrase.length && $scope.searchPhrase.length > 2) {
                     if ($scope.list > $scope.totalfilteredMovies && $scope.totalfilteredMovies > 0) {
                         $scope.list = $scope.totalfilteredMovies;
                     }
                 }
 
-                if (oldVal !== newVal && !doNotUpdateList) {
-                    //do not request final page many times
-                    //optimisation of backend services
+                //do not request final page many times
+                //optimisation for uneeded calls
+                if (oldVal !== newVal) {
+                    
                     if (newVal && oldVal &&
                         (newVal > $scope.totalfilteredMovies && oldVal === $scope.totalfilteredMovies  ||
                          newVal >= $scope.totalfilteredMovies && oldVal >= $scope.totalfilteredMovies)) {
@@ -515,9 +509,7 @@
                         return;
                     }
                     proccessMovies(newVal, $scope.currentPage, $scope.searchPhrase, false, 'list');
-                } else {
-                    doNotUpdateList = false;
-                }
+                } 
             });
 
             $scope.$watch('currentPage', function(newVal, oldVal) {

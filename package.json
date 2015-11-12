@@ -1,5 +1,11 @@
 {
-  "description": "Iceberg",
+  "name": "Iceberg",
+  "description": "Best Practices Applied",
+  "author": "dimov dimo.ivanov.dimov@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DimoDimov/movies"
+  },
   "dependencies": {
     "chai": "^3.2.0",
     "express": "^4.13.3",

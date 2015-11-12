@@ -26,7 +26,7 @@
 
             //if Not Valid numberOfItemsToReturn then throw ex
             if (numberOfItemsToReturn !== undefined && !_isNumeric(numberOfItemsToReturn)) {
-                console.log(numberOfItemsToReturn);
+                console.warn(numberOfItemsToReturn);
                 throw "Please provide valid integer for number of items to return.";
             }
 
@@ -41,7 +41,7 @@
 
             //if Not Valid pageNumber then throw ex
             if (pageNumber !== undefined && !_isNumeric(pageNumber)) {
-                console.log(pageNumber);
+                console.warn(pageNumber);
                 throw "Please provide valid integer for page number.";
             }
 
