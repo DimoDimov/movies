@@ -4,8 +4,22 @@
   "author": "dimov dimo.ivanov.dimov@gmail.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DimoDimov/movies"
+    "url": "https://github.com/dimodimov/movies"
   },
+  "keywords": [
+    "angular",
+    "node",
+    "express",
+    "testing",
+    "best",
+    "practices",
+    "responsive",
+    "front-end",
+    "back-end",
+    "iceberg"
+  ],
+  "homepage": "",
+  "license": "MIT",
   "dependencies": {
     "chai": "^3.2.0",
     "express": "^4.13.3",
