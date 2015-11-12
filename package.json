@@ -33,6 +33,7 @@
   "dependencies": {
     "chai": "^3.2.0",
     "express": "^4.13.3",
+    "mout": "^0.11.1",
     "q": "^1.4.1",
     "tough-cookie": "^2.2.0"
   },
