@@ -16,7 +16,17 @@
     "responsive",
     "front-end",
     "back-end",
-    "iceberg"
+    "iceberg",
+    "chai",
+    "chai-as-promised",
+    "mocha",
+    "jasmine",
+    "karma",
+    "protractor",
+    "grunt",
+    "bower",
+    "q",
+    "promises"
   ],
   "homepage": "",
   "license": "MIT",
