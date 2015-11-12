@@ -246,7 +246,23 @@ module.exports = function(grunt) {
                 ],
             },
         },
+
+        mout: {
+            dist: {
+                options: {
+                    modules: [
+                        path.resolve('mout/array'),
+                        path.resolve('mout/object'),
+                        path.resolve('mout/string/typecast'),
+                        path.resolve('mout/time/convert')
+                    ]
+                },
+                dest: path.resolve('./.tmp/mout.js')
+            }
+        }
     });
+
+    grunt.loadNpmTasks('grunt-mout');
 
     //debugger tasks
     grunt.loadNpmTasks('grunt-node-inspector');
