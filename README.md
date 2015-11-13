@@ -83,8 +83,8 @@ Resuable modules. I believe that what works together should live together. All n
 With a complex domain model and hundreds of components, an enterprise application can easily become a mess if certain concerns are overlooked. One of the best ways to organize the code in this situation is by distributing each component in a domain-named folder structure.
 
 Example:
-    app/ -> files of the application
-     dist/ -> the concatenated js and css files
+	app/ -> files of the application
+	dist/ -> the concatenated js and css files
      	app.min.css -> main application stylesheet, consists of concatenated and minified css files
      	app.min.js -> main application java script, consists of concatenated and minified js files
     ReusableModules/
