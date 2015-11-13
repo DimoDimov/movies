@@ -123,7 +123,7 @@ Example:
 			angular.js -> AngularJS script
 
 		index.html -> main html file
-	
+
 	Implementation
 	
 	For the front end I prefer to break down the logic for gathering data from
