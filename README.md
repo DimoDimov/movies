@@ -83,29 +83,49 @@ Resuable modules. I believe that what works together should live together. All n
 With a complex domain model and hundreds of components, an enterprise application can easily become a mess if certain concerns are overlooked. One of the best ways to organize the code in this situation is by distributing each component in a domain-named folder structure.
 
 Example:
+
 	app/ -> files of the application
+
 	dist/ -> the concatenated js and css files
+
 		app.min.css -> main application stylesheet, consists of concatenated and minified css files
+
 		app.min.js -> main application java script, consists of concatenated and minified js files
+
 	ReusableModules/
+
 		login/ -> login module directory
+
 			login.css -> login stylesheet
+
 			loginCtrl.js -> login controller
+
 			login.html -> login view
+
 		listMovies/ -> listMovies module directory
+
 			listMovies.css -> listMovies stylesheet
+
 			listMovies.js -> listMovies controller
+
 			listMovies.html -> listMovies view
+
 		movie/ -> movie module directory
+
 			movie.css -> movie stylesheet
+
 			movieCtrl.js -> movie controller
+
 			movie.html -> movie view
+
 		lib/ -> javascript libraries
+
 			angular.js -> AngularJS script
+
 		index.html -> main html file
-
+	
 	Implementation
-
+	
 	For the front end I prefer to break down the logic for gathering data from
 backend:
 
