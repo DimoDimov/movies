@@ -1,29 +1,53 @@
 Dev in Test 
+
 Technical Details:
+
 1. OS – Windows
+
 2. Platform – Sublime Text 3
+
 3. Front end technologies used: Angular, jQuery, Bootstrap, CSS3, HTML5. Responsiveness of the design is being implemented.
+
 4. Back end technologies used: Node, Express.
+
 5. Testing technologies and tools:  front layer - Jasmine, Karma; business layer: Chai, Chai-As-Promised, Mocha; e2e testing – Protractor;
+
 6. Task runner: Grunt
+
 7. Helpers: grunt-contrib-concat, grunt-contrib-uglify, grunt-css, grunt-contrib-jshint, grunt-contrib-clean, grunt-express-server, grunt-contrib-watch, grunt-bowercopy, grunt-protractor-runner, grunt-karma, grunt-simple-mocha, grunt-debug, grunt-node-inspector, grunt-concurrent, grunt-shell
+
 8. Bower for version control of the front end libs
+
 9. Version control system – Git
+
 10. GitHub account - https://github.com/DimoDimov/movies
 
 Steps to Follow To Run The Project:
+
 1. Copy the project to a project directory
+
 2. Operating System:
+
 2.1 If you are using Windows leave it like this
+
 2.2 If you are using Unix based OS edit the “package.json” and replace the line
+
 "postinstall": "bash -c 'node_modules/protractor/bin/webdriver-manager update'"
+
 With
+
 "postinstall": "node_modules/protractor/bin/webdriver-manager update"
+
 3. Open Git bash terminal and run the command “npm install” – to instal npm modules
+
 4. Run the command “bower install” – to instal bower components
+
 5. Run the command “grunt update-frontendlibs” – to update the front end libraries
+
 6. Run the command “grunt rebuild” – to rebuild the project
+
 7. Run the command “grunt start” – to start the server
+
 8. Open another Git bash terminal and Run the command “grunt test” – to start all the tests (for e2e testing we need to have the server up)
 
 Structure
@@ -31,25 +55,33 @@ Structure
 For the hereby “Movie List” project I am using classical, three layered architecture including Angular for the Client (Front End) layer, Node for the Business (Middle) layer and I am using a Data.json file as a mock for the Data (Back) End layer. 
 
 Business (Middle) layer
+
 Creating services with Node and Express is simple and fun. What I like to do is to use promise libraries such as Q. A promise is an abstraction for asychronous programming. I also prefer to detach my logic into separate, middleware files. I do this on purpose. I create different modules of logic. One or combination of several modules might implement the endpoint logic.
 
-Implementation: 
+Implementation:
 - The server is  serving server/data.json when a request is made to /api/movies
+
 - Clients are being able to request a subset of data
 		- Allowed limiting the number of items returned – list parameter
 		- Allowed pagination of data – page parameter
 
 Testing:
+
  I really would like not to just test my endpoints, but to test each of the logic modules. Once I am sure my modules are doing fine I am attaching them to my endpoint and microservices.  The Behavior Driven Development (which is extension of the Test Driven Development) is the core motivation.
+
 For testing my Q promises nicely I am using the extension for Chai – Chai-As-Promised and Mocha. In the tests you can find various scenarious where I am showing the very Best Practices for testing promises. The comments are all around the implementation and the testing logic.
 
 
-
 Client (Front End) layer
+
 Structure:
+
 Resuable modules. I believe that what works together should live together. All necessary files of each single module are in one being stored in folder, Example: 'public/js/app/modules/…’. This helps to easily store and find all the build files of each module (Controllers, Directive, Views). This work great for average or huge Web Applications where the logic of hundreds of Controllers, Directives and Views are being declared in the code.
+
     Organazing the code 'The Domain Style'
-With a complex domain model and hundreds of components, an enterprise application can easily become a mess if certain concerns are overlooked. One of the best ways to organize the code in this situation is by distributing each component in a domain-named folder structure. 
+
+With a complex domain model and hundreds of components, an enterprise application can easily become a mess if certain concerns are overlooked. One of the best ways to organize the code in this situation is by distributing each component in a domain-named folder structure.
+
 Example:
     app/ -> files of the application
      dist/ -> the concatenated js and css files
