@@ -213,7 +213,7 @@ module.exports = function(grunt) {
                     destPrefix: path.resolve('public/js/lib/')
                 },
                 files: {
-                    'jquery.js': 'jquery/jquery.js',
+                    'jquery.js': 'jquery/dist/jquery.js',
                     'bootstrap.js': 'bootstrap/dist/js/bootstrap.js',
                     'angular.js': 'angular/angular.js',
                     'angular-route.js': 'angular-route/angular-route.js',
