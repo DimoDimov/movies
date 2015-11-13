@@ -46,6 +46,13 @@ body {
     background-image: url('../../content/pastel.jpg');
 }
 
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
 #main-container > h1 {
     color: grey;
     font-weight: normal;
@@ -74,6 +81,10 @@ body {
     width: 80px;
 }
 
+.table{
+    background-color: white;
+}
+
 .table-row {
     width: 150px;
     text-align: center;
@@ -82,11 +93,4 @@ body {
 .table-row.actors {
     width: 850px;
     text-align: center;
-}
-
-table,
-th,
-td {
-    border: 1px solid black;
-    border-collapse: collapse;
 }
