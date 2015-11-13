@@ -78,49 +78,55 @@ Structure:
 
 Resuable modules. I believe that what works together should live together. All necessary files of each single module are in one being stored in folder, Example: 'public/js/app/modules/…’. This helps to easily store and find all the build files of each module (Controllers, Directive, Views). This work great for average or huge Web Applications where the logic of hundreds of Controllers, Directives and Views are being declared in the code.
 
-    Organazing the code 'The Domain Style'
+	Organazing the code 'The Domain Style'
 
 With a complex domain model and hundreds of components, an enterprise application can easily become a mess if certain concerns are overlooked. One of the best ways to organize the code in this situation is by distributing each component in a domain-named folder structure.
 
 Example:
     app/ -> files of the application
      dist/ -> the concatenated js and css files
-         app.min.css -> main application stylesheet, consists of concatenated and minified css files
-         app.min.js -> main application java script, consists of concatenated and minified js files 
-     ReusableModules/
-         login/ -> login module directory
-             login.css -> login stylesheet
-             loginCtrl.js -> login controller
-             login.html -> login view
-         listMovies/ -> listMovies module directory
-             listMovies.css -> listMovies stylesheet
-             listMovies.js -> listMovies controller
-             listMovies.html -> listMovies view
-         movie/ -> movie module directory
-             movie.css -> movie stylesheet
-             carCtrl.js -> movie controller
-             movie.html -> movie view
-     lib/ -> javascript libraries
-         angular.js -> AngularJS script
-    index.html -> main html file
-Implementation
-For the front end I prefer to break down the logic for gathering data from backend:
+     	app.min.css -> main application stylesheet, consists of concatenated and minified css files
+     	app.min.js -> main application java script, consists of concatenated and minified js files
+    ReusableModules/
+    	login/ -> login module directory
+    		login.css -> login stylesheet
+    		loginCtrl.js -> login controller
+    		login.html -> login view
+    	listMovies/ -> listMovies module directory
+    		listMovies.css -> listMovies stylesheet
+    		listMovies.js -> listMovies controller
+    		listMovies.html -> listMovies view
+    	movie/ -> movie module directory
+    		movie.css -> movie stylesheet
+    		movieCtrl.js -> movie controller
+    		movie.html -> movie view
+    lib/ -> javascript libraries
+    	angular.js -> AngularJS script
+    	index.html -> main html file
+
+    	Implementation
+
+	For the front end I prefer to break down the logic for gathering data from
+backend:
 - I am having an ‘API Service’ layer, which is only responsible for doing the CRUD operations and to handle the communication with the servers. API service provider. Responsible for declaring and offering services to the backend using $http. It handles and saves (logs) any errors related to backend oeprations. It offers Layer of abstraction for dealing with backend manipulations. 'APIservices' are being used together with the 'modelServices'. ‘Model services’ is another layer of abstraction for saving and updating any data with the backend. It offers to the controllers in the application reusable logic for saving and sharing temporary data models saved in the model services.
-    randomController => modelService => APIService => server operation request.
+	randomController => modelService => APIService => server operation request.
 - I use add another layer of abstraction the ‘Model Service’ layer which delegates the CRUD operations to the an ‘API Service’ layer and stores the received models (might be a simple or more complex object, or collection of objects). The received model might be updated and changed in the front end. When we are ready with the changes we are pushing the updated model to the ‘API Service’ layer for further manipulations with the ‘Business and Data Layers’.
-All the requests between all the different layers of abstraction are being done with $q, which is the promise library for working with Angular. 
+	All the requests between all the different layers of abstraction are being done
+with $q, which is the promise library for working with Angular. 
+
 Testing 
+
 I am testing my ‘Front End Layer’ with Jasmine and Karma. Protractor is nice tool as well. In protractor test I am showing how to isolate the test logic (movieListPage.js) and reuse it in different tests (movieList.spec.js). Creating reusable, easy maintanable code for the test services is essential for boosting the development of the test. 
 Acceptance Criteria Covered
- 	- On page load, you I  display first 20 movies, ordered alphabetically by title.
- 	- For each movie list: title, year, rating, duration in minutes and all actors.
- 	- If the search box contains less than three characters, but more than 0, the following message is being displayed: 'Enter at least three characters to begin search'.
+	- On page load, you I  display first 20 movies, ordered alphabetically by title.
+	- For each movie list: title, year, rating, duration in minutes and all actors.
+	- If the search box contains less than three characters, but more than 0, the following message is being displayed: 'Enter at least three characters to begin search'.
 	- When the user enters a search phrase of three characters or more, a list of movies is displayed below the search box, filtered down to the ones whose title field contains the phrase entered.
 		- The match is case-insensitive.
- 		- The search is being performed as the user types.
+		- The search is being performed as the user types.
 
 - When there is at least one matching movie:
- 	- The following text is displayed: 'Matched X of Y movies total'
+	- The following text is displayed: 'Matched X of Y movies total'
 	- Where X is the number of movies found and Y is the total number of movies
 	- For each movie, both Title and Year are displayed
 		 
