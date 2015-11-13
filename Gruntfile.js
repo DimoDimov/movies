@@ -209,7 +209,8 @@ module.exports = function(grunt) {
             // Javascript 
             jsfiles: {
                 options: {
-                    destPrefix: path.resolve('public/js/lib')
+                    srcPrefix: path.resolve('bower_components/'),
+                    destPrefix: path.resolve('public/js/lib/')
                 },
                 files: {
                     'jquery.js': 'jquery/jquery.js',
@@ -221,15 +222,17 @@ module.exports = function(grunt) {
                     'neosavvy-javascript-angular-core.js': 'neosavvy-javascript-angular-core/neosavvy-javascript-angular-core.js',
                 }
             },
+
             stylefiles: {
                 options: {
+                    srcPrefix: path.resolve('bower_components/'),
                     destPrefix: path.resolve('public/styles/')
                 },
                 files: {
                     'lib/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
                     'fonts': 'bootstrap/dist/fonts/**/*',
                 }
-            },
+            }
         },
 
         'copy': {
