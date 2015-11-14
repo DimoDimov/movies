@@ -59,7 +59,8 @@ Business (Middle) layer
 Creating services with Node and Express is simple and fun. What I like to do is to use promise libraries such as Q. A promise is an abstraction for asychronous programming. I also prefer to detach my logic into separate, middleware files. I do this on purpose. I create different modules of logic. One or combination of several modules might implement the endpoint logic.
 
 Implementation:
-- The server is  serving server/data.json when a request is made to /api/movies
+
+- The server is serving server/data.json when a request is made to /api/movies
 
 - Clients are being able to request a subset of data
 		- Allowed limiting the number of items returned – list parameter
