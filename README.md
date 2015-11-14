@@ -120,11 +120,11 @@ Example:
 
 			movie.html -> movie view
 
-		lib/ -> javascript libraries
+	lib/ -> javascript libraries
 
-			angular.js -> AngularJS script
+		angular.js -> AngularJS script
 
-		index.html -> main html file
+	index.html -> main html file
 
 Implementation
 	
