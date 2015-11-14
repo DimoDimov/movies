@@ -131,12 +131,6 @@ Example:
 	For the front end I prefer to break down the logic for gathering data from
 backend:
 
-	Implementation
-	
-	For the front end I prefer to break down the logic for gathering data from
-backend:
-
-
 - I am having an ‘API Service’ layer, which is only responsible for doing the CRUD operations and to handle the communication with the servers. API service provider. Responsible for declaring and offering services to the backend using $http. It handles and saves (logs) any errors related to backend oeprations. It offers Layer of abstraction for dealing with backend manipulations. 'APIservices' are being used together with the 'modelServices'. ‘Model services’ is another layer of abstraction for saving and updating any data with the backend. It offers to the controllers in the application reusable logic for saving and sharing temporary data models saved in the model services.
 	randomController => modelService => APIService => server operation request.
 - I use add another layer of abstraction the ‘Model Service’ layer which delegates the CRUD operations to the an ‘API Service’ layer and stores the received models (might be a simple or more complex object, or collection of objects). The received model might be updated and changed in the front end. When we are ready with the changes we are pushing the updated model to the ‘API Service’ layer for further manipulations with the ‘Business and Data Layers’.
