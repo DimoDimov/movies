@@ -67,6 +67,14 @@ Implementation:
 		- Allowed limiting the number of items returned – list parameter
 		- Allowed pagination of data – page parameter
 
+Implementation:
+
+- The server is serving server/data.json when a request is made to /api/movies
+
+- Clients are being able to request a subset of data
+		- Allowed limiting the number of items returned – list parameter
+		- Allowed pagination of data – page parameter
+
 Testing:
 
  I really would like not to just test my endpoints, but to test each of the logic modules. Once I am sure my modules are doing fine I am attaching them to my endpoint and microservices.  The Behavior Driven Development (which is extension of the Test Driven Development) is the core motivation.
