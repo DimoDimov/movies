@@ -80,7 +80,7 @@ describe("APIService", function() {
         });
     });
 
-    describe("Loading no movies, get call with phrase query with no matching films, error message returned (filtering)", function() {
+    describe("Loading no movies, get call with phrase query with no matching films, error message returned 'No matching items'", function() {
         beforeEach(function() {
             module.apply(module, appDep.TestDependencies);
 
@@ -90,7 +90,9 @@ describe("APIService", function() {
             });
 
               $httpBackend.when('GET', '/api/movies?list=20&page=1&q=abcdefg')
-                .respond(404, {"movies":[],"errorMessage":"No matching items","totalfilteredMovies":0,"totalMoviesCount":160});
+                .respond(function (method, url, data, headers) {
+                    return [404, {"movies":[],"errorMessage":"No matching items","totalfilteredMovies":0,"totalMoviesCount":160}, {}, ''];
+                });
         });
 
         it("Should return no movies", function() {
@@ -100,14 +102,52 @@ describe("APIService", function() {
             searchPhrase = "abcdefg";
 
             movieAPIServices.getAllMovies(maxList, page, searchPhrase)
-                .then(function(data) {
-                    
-                },function (data) {
+                .then(function(data, status) {
+ 
+                },function (data, status) {
+ 
                     expect(data).toBeDefined();
                     expect(data.movies.length).toBe(0);
                     expect(data.errorMessage.length).not.toBe(0);
                     expect(data.errorMessage).toEqual("No matching items");
                     expect(data).toEqual({"movies":[],"errorMessage":"No matching items","totalfilteredMovies":0,"totalMoviesCount":160});
+                });
+
+            $httpBackend.flush();
+        });
+    });
+
+    describe("When server is down error message 'Server problems. Please try again later'", function() {
+        beforeEach(function() {
+            module.apply(module, appDep.TestDependencies);
+
+            inject(function($injector) {
+                $httpBackend = $injector.get('$httpBackend');
+                movieAPIServices = $injector.get('movieAPIServices');
+            });
+
+              $httpBackend.when('GET', '/api/movies?list=20&page=1&q=abcdefg')
+                .respond(function (method, url, data, headers) {
+                    return [405, {"movies":[],"errorMessage":"No matching items","totalfilteredMovies":0,"totalMoviesCount":160}, {}, ''];
+                });
+        });
+
+        it("Should return no movies", function() {
+          
+            maxList = 20;
+            page = 1;
+            searchPhrase = "abcdefg";
+
+            movieAPIServices.getAllMovies(maxList, page, searchPhrase)
+                .then(function(data, status) {
+ 
+                },function (data, status) {
+                    debugger;
+                    expect(data).toBeDefined();
+                    expect(data.movies.length).toBe(0);
+                    expect(data.errorMessage.length).not.toBe(0);
+                    expect(data.errorMessage).toEqual("Server problems. Please try again later");
+                    expect(data).toEqual({"movies":[],"errorMessage":"Server problems. Please try again later","totalfilteredMovies":0,"totalMoviesCount":160});
                 });
 
             $httpBackend.flush();

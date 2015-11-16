@@ -52,12 +52,14 @@
                             deferred.resolve(data);
                         })
                         .error(function(data, status, headers, config, statusText) {
+
                             if (status === 404) {
                                 console.warn("No movies found.");
                                 deferred.reject(data, status);
                             } else {
                                 //we can save and log the problem for history and error tracking purposes
                                 console.warn("Error in movieAPIServices _getAllMovies");
+                                data.errorMessage = "Server problems. Please try again later";
                                 deferred.reject(data);
                             }
                         });

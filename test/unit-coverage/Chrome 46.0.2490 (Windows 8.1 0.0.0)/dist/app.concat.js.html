@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.65% </span>
+        <span class="strong">86.55% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>203/237</span>
+        <span class='fraction'>206/238</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">74.24% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>98/132</span>
+        <span class='fraction'>99/132</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">90% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>54/60</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.65% </span>
+        <span class="strong">86.55% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>203/237</span>
+        <span class='fraction'>206/238</span>
       </div>
     </div>
   </div>
@@ -697,7 +697,9 @@
 652
 653
 654
-655</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+655
+656
+657</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -811,15 +813,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">21×</span>
-<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -848,20 +850,22 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">22×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1502,13 +1506,15 @@
                             deferred.resolve(data);
                         })
                         .error(function(data, status, headers, config, statusText) {
-                            <span class="missing-if-branch" title="else path not taken" >E</span>if (status === 404) {
+&nbsp;
+                            if (status === 404) {
                                 console.warn("No movies found.");
                                 deferred.reject(data, status);
                             } else {
                                 //we can save and log the problem for history and error tracking purposes
-<span class="cstat-no" title="statement not covered" >                                console.warn("Error in movieAPIServices _getAllMovies");</span>
-<span class="cstat-no" title="statement not covered" >                                deferred.reject(data);</span>
+                                console.warn("Error in movieAPIServices _getAllMovies");
+                                data.errorMessage = "Server problems. Please try again later";
+                                deferred.reject(data);
                             }
                         });
 &nbsp;
@@ -2011,7 +2017,7 @@
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 16 2015 17:54:58 GMT+0000 (GMT Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 16 2015 21:07:51 GMT+0000 (GMT Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

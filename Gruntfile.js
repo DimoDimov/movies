@@ -96,7 +96,7 @@ module.exports = function(grunt) {
             gruntfile: {
                 src: path.resolve('gruntfile.js')
             },
-            test: [path.resolve('test/**/*.js')],
+            test: [path.resolve('test/**/*.js'), '!' + path.resolve('test/*-coverage/**/*')],
             beforeconcat: [path.resolve('public/js/app/**/*.js'), path.resolve('server/**/*.js')],
             afterconcat: [path.resolve('public/js/dist/**/*concat.js')],
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
@@ -126,23 +126,24 @@ module.exports = function(grunt) {
                 src: [path.resolve('public/js/lib/**/*'), path.resolve('public/styles/lib/**/*'), path.resolve('public/styles/fonts/**/*')],
                 //filter: 'isFile',
             },
-            'unit-coverage':{
+            'unit-coverage': {
                 src: [path.resolve('test/unit-coverage/**/*')],
-            } 
+            }
         },
 
         //set watchers on files
         'watch': {
             test: {
-                files: [path.resolve('test/**/*.js')],
-                tasks: [path.resolve('jshint:test')],
+                files: [path.resolve('test/**/*.js'), '!' + path.resolve('test/*-coverage/**/*')],
+                tasks: ['jshint:test'],
             },
             express: {
                 files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
-                tasks: ['start'],
+                tasks: ['express:dev'],
                 options: {
                     spawn: false,
-                    livereload: true
+                    //l ivereload: true,
+                    // serverreload: true,
                 }
             }
         },
@@ -298,7 +299,7 @@ module.exports = function(grunt) {
 
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
-    grunt.registerTask('unit', ['clean:unit-coverage','karma']);
+    grunt.registerTask('unit', ['clean:unit-coverage', 'karma']);
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
     grunt.registerTask('server-unit', ['simplemocha']);
