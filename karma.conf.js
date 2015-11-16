@@ -13,15 +13,13 @@ module.exports = function(config) {
 
             //main js entry
             'public/js/dist/app.concat.js',
+
             //load html templates for html2js
             'public/js/app/**/*View.html',
+
             //load tests
             'test/unit/libs/test-helpers.js',
             'test/unit/**/*.spec.js',
-            //'test/unit/APIServices/movieAPIServices.spec.js',
-            //'test/unit/modelServices/movieModelServices.spec.js',
-
-
         ],
 
         // list of files to exclude
@@ -82,7 +80,7 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        //singleRun: true
+        singleRun: true
 
     });
 };

@@ -142,7 +142,6 @@ describe("APIService", function() {
                 .then(function(data, status) {
  
                 },function (data, status) {
-                    debugger;
                     expect(data).toBeDefined();
                     expect(data.movies.length).toBe(0);
                     expect(data.errorMessage.length).not.toBe(0);

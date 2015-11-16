@@ -20,11 +20,15 @@
 
             //send this for custom pagination
             $scope.nextcallback = function() {
-                self.scope.currentPage++;
+                if (self.scope.finalPage > self.scope.currentPage) {
+                    self.scope.currentPage++;
+                }   
             }.bind(self);
 
             $scope.previouscallback = function() {
-                self.scope.currentPage--;
+                if (1 < self.scope.currentPage) {
+                    self.scope.currentPage--;
+                }
             }.bind(self);
 
 
@@ -147,6 +151,7 @@
             });
 
             $scope.$watch('currentPage', function(newVal, oldVal) {
+                
                 if (!validationServices.isNumeric(newVal)) {
                     $scope.currentPage = 1;
                     return;
