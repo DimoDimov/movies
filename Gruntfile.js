@@ -125,7 +125,10 @@ module.exports = function(grunt) {
             lib: {
                 src: [path.resolve('public/js/lib/**/*'), path.resolve('public/styles/lib/**/*'), path.resolve('public/styles/fonts/**/*')],
                 //filter: 'isFile',
-            }
+            },
+            'unit-coverage':{
+                src: [path.resolve('test/unit-coverage/**/*')],
+            } 
         },
 
         //set watchers on files
@@ -135,7 +138,7 @@ module.exports = function(grunt) {
                 tasks: [path.resolve('jshint:test')],
             },
             express: {
-                files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*')],
+                files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
                 tasks: ['start'],
                 options: {
                     spawn: false,
@@ -249,23 +252,7 @@ module.exports = function(grunt) {
                 ],
             },
         },
-
-        mout: {
-            dist: {
-                options: {
-                    modules: [
-                        path.resolve('mout/array'),
-                        path.resolve('mout/object'),
-                        path.resolve('mout/string/typecast'),
-                        path.resolve('mout/time/convert')
-                    ]
-                },
-                dest: path.resolve('./.tmp/mout.js')
-            }
-        }
     });
-
-    grunt.loadNpmTasks('grunt-mout');
 
     //debugger tasks
     grunt.loadNpmTasks('grunt-node-inspector');
@@ -311,7 +298,7 @@ module.exports = function(grunt) {
 
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
-    grunt.registerTask('unit', ['karma']);
+    grunt.registerTask('unit', ['clean:unit-coverage','karma']);
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
     grunt.registerTask('server-unit', ['simplemocha']);

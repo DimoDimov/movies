@@ -33,9 +33,7 @@
   "dependencies": {
     "chai": "^3.2.0",
     "express": "^4.13.3",
-    "mout": "^0.11.1",
-    "q": "^1.4.1",
-    "tough-cookie": "^2.2.0"
+    "q": "^1.4.1"
   },
   "devDependencies": {
     "chai-as-promised": "^5.1.0",
@@ -52,7 +50,6 @@
     "grunt-debug": "0.0.3",
     "grunt-express-server": "^0.5.1",
     "grunt-karma": "^0.12.1",
-    "grunt-mout": "^1.0.1",
     "grunt-node-inspector": "^0.4.1",
     "grunt-nodemon": "^0.4.0",
     "grunt-protractor-runner": "^2.1.0",
@@ -61,8 +58,9 @@
     "jasmine-core": "^2.3.4",
     "jasmine-reporters": "2.0.6",
     "jasmine-spec-reporter": "^2.2.3",
-    "karma": "^0.13.14",
+    "karma": "^0.13.15",
     "karma-chrome-launcher": "^0.2.0",
+    "karma-coverage": "^0.5.3",
     "karma-jasmine": "^0.3.5",
     "karma-mocha-reporter": "^1.0.2",
     "karma-ng-html2js-preprocessor": "^0.2.0",
@@ -73,7 +71,6 @@
   },
   "scripts": {
     "postinstall": "bower install && webdriver-manager update && grunt update-frontendlibs",
-
     "start": "node server/index.js",
     "e2e": "protractor protractor.conf.js",
     "unit": "karma start karma.conf.js",

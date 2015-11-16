@@ -90,10 +90,10 @@ describe("APIService", function() {
             });
 
               $httpBackend.when('GET', '/api/movies?list=20&page=1&q=abcdefg')
-                .respond(200, {"movies":[],"errorMessage":"No matching items","totalfilteredMovies":0,"totalMoviesCount":160});
+                .respond(404, {"movies":[],"errorMessage":"No matching items","totalfilteredMovies":0,"totalMoviesCount":160});
         });
 
-        it("Should return 2 movies", function() {
+        it("Should return no movies", function() {
           
             maxList = 20;
             page = 1;
@@ -101,6 +101,8 @@ describe("APIService", function() {
 
             movieAPIServices.getAllMovies(maxList, page, searchPhrase)
                 .then(function(data) {
+                    
+                },function (data) {
                     expect(data).toBeDefined();
                     expect(data.movies.length).toBe(0);
                     expect(data.errorMessage.length).not.toBe(0);

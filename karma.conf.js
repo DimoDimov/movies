@@ -29,7 +29,14 @@ module.exports = function(config) {
 
         //using the ng-html2js makes the directive testing trivial
         preprocessors: {
-            'public/**/*View.html': ['ng-html2js']
+            'public/**/*View.html': ['ng-html2js'],
+            'public/js/dist/app.concat.js': ['coverage']
+        },
+
+        // optionally, configure the reporter 
+        coverageReporter: {
+            type: 'html',
+            dir: 'test/unit-coverage/'
         },
 
         ngHtml2JsPreprocessor: {
@@ -63,18 +70,19 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-mocha-reporter',
             'karma-ng-html2js-preprocessor',
+            'karma-coverage'
         ],
 
         // Test results reporter to use
         // possible values: 'dots', 'progress', 'mocha', 'junit', 'growl', 'coverage'
-        reporters: ['mocha'],
+        reporters: ['mocha', 'coverage'],
 
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: true
+        //singleRun: true
 
     });
 };
