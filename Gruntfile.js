@@ -139,11 +139,11 @@ module.exports = function(grunt) {
             },
             express: {
                 files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
-                tasks: ['express:dev'],
+                tasks: ['rebuild'],
                 options: {
                     spawn: false,
-                    //l ivereload: true,
-                    // serverreload: true,
+                    livereload: true,
+                    serverreload: true,
                 }
             }
         },
