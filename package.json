@@ -72,7 +72,7 @@
     "protractor": "^2.1.0"
   },
   "scripts": {
-    "postinstall": "bower install && webdriver-manager update",
+    "postinstall": "bower install && webdriver-manager update && grunt update-frontendlibs",
 
     "start": "node server/index.js",
     "e2e": "protractor protractor.conf.js",
