@@ -34,7 +34,7 @@ module.exports = function(config) {
         // optionally, configure the reporter 
         coverageReporter: {
             type: 'html',
-            dir: 'test/unit-coverage/'
+            dir: 'test-coverage/unit-coverage/'
         },
 
         ngHtml2JsPreprocessor: {

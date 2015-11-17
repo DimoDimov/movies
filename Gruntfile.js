@@ -96,7 +96,7 @@ module.exports = function(grunt) {
             gruntfile: {
                 src: path.resolve('gruntfile.js')
             },
-            test: [path.resolve('test/**/*.js'), '!' + path.resolve('test/*-coverage/**/*')],
+            test: [path.resolve('test/**/*.js')],
             beforeconcat: [path.resolve('public/js/app/**/*.js'), path.resolve('server/**/*.js')],
             afterconcat: [path.resolve('public/js/dist/**/*concat.js')],
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
@@ -127,10 +127,10 @@ module.exports = function(grunt) {
                 //filter: 'isFile',
             },
             'unit-coverage': {
-                src: [path.resolve('test/unit-coverage/**/*')],
+                src: [path.resolve('test-coverage/unit-coverage/**/*')],
             },
             'server-coverage': {
-                src: [path.resolve('test/server-coverage/**/*')],
+                src: [path.resolve('test-coverage/server-coverage/**/*')],
             }
         },
 
@@ -160,17 +160,17 @@ module.exports = function(grunt) {
                 options: {
                     script: path.resolve('server/index.js'),
                 },
-                runtime: {
-                    options: {
-                        middleware: function(connect) {
-                            return [
-                                lrSnippet,
-                                mountFolder(connect, 'instrumented'),
-                                mountFolder(connect, '.......')
-                            ];
-                        }
-                    }
-                }
+                // runtime: {
+                //     options: {
+                //         middleware: function(connect) {
+                //             return [
+                //                 lrSnippet,
+                //                 mountFolder(connect, 'instrumented'),
+                //                 mountFolder(connect, '.......')
+                //             ];
+                //         }
+                //     }
+                // }
             },
             prod: {
                 options: {
@@ -244,41 +244,41 @@ module.exports = function(grunt) {
         },
 
         //----------------Protractor Coverage-------------
-        instrument: {
-            files: 'server/**/*.js',
-            options: {
-                lazy: true,
-                basePath: "instrumented"
-            }
-        },
-        protractor_coverage: {
-            options: {
-                keepAlive: true,
-                noColor: false,
-                coverageDir: 'test/e2e-coverage/',
-                args: {
-                    baseUrl: 'http://localhost:8000'
-                }
-            },
-            local: {
-                options: {
-                    configFile: path.resolve("protractor.conf.js")
-                }
-            },
-            // travis: {
-            //     options: {
-            //         configFile: 'path/to/protractor-travis.conf.js'
-            //     }
-            // }
-        },
-        makeReport: {
-            src: 'test/e2e-coverage/*.json',
-            options: {
-                type: 'lcov',
-                dir: 'test/e2e-coverage/',
-                print: 'detail'
-            }
-        },
+        // instrument: {
+        //     files: 'server/**/*.js',
+        //     options: {
+        //         lazy: true,
+        //         basePath: "instrumented"
+        //     }
+        // },
+        // protractor_coverage: {
+        //     options: {
+        //         keepAlive: true,
+        //         noColor: false,
+        //         coverageDir: 'test/e2e-coverage/',
+        //         args: {
+        //             baseUrl: 'http://localhost:8000'
+        //         }
+        //     },
+        //     local: {
+        //         options: {
+        //             configFile: path.resolve("protractor.conf.js")
+        //         }
+        //     },
+        //     // travis: {
+        //     //     options: {
+        //     //         configFile: 'path/to/protractor-travis.conf.js'
+        //     //     }
+        //     // }
+        // },
+        // makeReport: {
+        //     src: 'test/e2e-coverage/*.json',
+        //     options: {
+        //         type: 'lcov',
+        //         dir: 'test/e2e-coverage/',
+        //         print: 'detail'
+        //     }
+        // },
 
         //Set Automation Tests
         'protractor': {
@@ -303,7 +303,7 @@ module.exports = function(grunt) {
 
                 options: {
                     // coverage: true,
-                    coverageFolder: 'test/server-coverage',
+                    coverageFolder: 'test-coverage/server-coverage',
                     reportFormats: ['cobertura', 'lcovonly']
                 }
             }
@@ -312,7 +312,7 @@ module.exports = function(grunt) {
         istanbul_check_coverage: {
             default: {
                 options: {
-                    coverageFolder: path.resolve('test/server-coverage/'), // will check both coverage folders and merge the coverage results
+                    coverageFolder: path.resolve('test-coverage/server-coverage/'), // will check both coverage folders and merge the coverage results
                     check: {
                         lines: 80,
                         statements: 80
