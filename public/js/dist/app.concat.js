@@ -563,16 +563,17 @@
 })();
 ;(function() {
 
-    appDep.Controllers.controller('paginationCtrl', 
-    	['$scope', 'paginationService', 
-        function($scope, paginationService) {  
-        	$scope.$watch("finalPage", function (newVal, oldVal) {
-        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope.nextcallback, $scope.previouscallback);
-        	});
+    appDep.Controllers.controller('paginationCtrl', ['$scope', 'paginationService',
+        function($scope, paginationService) {
 
-        	$scope.$watch("currentPage", function (newVal, oldVal) {	
-        		$scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope.nextcallback, $scope.previouscallback);
-        	});
+            //needs to have the next and previous callback functions defined on the scope
+            $scope.$watch("finalPage", function(newVal, oldVal) {
+                $scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope.nextcallback, $scope.previouscallback);
+            });
+
+            $scope.$watch("currentPage", function(newVal, oldVal) {
+                $scope.pagination = paginationService.Pagination($scope.finalPage, $scope.currentPage, $scope.nextcallback, $scope.previouscallback);
+            });
         }
     ]);
 })();
@@ -614,6 +615,11 @@
                 this.nextcallback = nextcallback;
                 this.previouscallback = previouscallback;
 
+                if (!validationServices.isFunction(this.nextcallback) ||
+                    !validationServices.isFunction(this.previouscallback)) {
+                    throw "Please provide a next and previous callback functions";
+                }
+
                 this.max = function() {
                     return _maxCount;
                 };
@@ -623,24 +629,14 @@
                 this.next = function() {
                     if (this.hasNext()) {
                         _counter++;
-                        if (validationServices.isFunction(nextcallback)) {
-                            nextcallback();
-                        }
-                        else{
-                        	throw "Please provide a next callback function";
-                        }
+                        nextcallback();
+
                     }
                 };
                 this.previous = function() {
                     if (this.hasPrevious()) {
                         _counter--;
-
-                        if (validationServices.isFunction(this.previouscallback)) {
-                             this.previouscallback();
-                        }
-                        else{
-                        	throw "Please provide a previous callback function";
-                        }
+                        this.previouscallback();
                     }
                 };
                 this.hasPrevious = function() {

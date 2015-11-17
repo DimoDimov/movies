@@ -13,6 +13,19 @@ describe("paginationCtrl", function() {
         inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
+
+            //set the next and previous callbacks for pagination
+            nextcallbackResult = "nextcallback";
+            $scope.nextcallback = function() {
+                return nextcallbackResult;
+            };
+
+            previousCallbackResult = "previousCallback";
+
+            $scope.previouscallback = function() {
+                return previousCallbackResult;
+            };
+
             controller = $injector.get('$controller')("paginationCtrl", {
                 $scope: $scope
             });

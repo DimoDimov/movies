@@ -11,6 +11,11 @@
                 this.nextcallback = nextcallback;
                 this.previouscallback = previouscallback;
 
+                if (!validationServices.isFunction(this.nextcallback) ||
+                    !validationServices.isFunction(this.previouscallback)) {
+                    throw "Please provide a next and previous callback functions";
+                }
+
                 this.max = function() {
                     return _maxCount;
                 };
@@ -20,24 +25,14 @@
                 this.next = function() {
                     if (this.hasNext()) {
                         _counter++;
-                        if (validationServices.isFunction(nextcallback)) {
-                            nextcallback();
-                        }
-                        else{
-                        	throw "Please provide a next callback function";
-                        }
+                        nextcallback();
+
                     }
                 };
                 this.previous = function() {
                     if (this.hasPrevious()) {
                         _counter--;
-
-                        if (validationServices.isFunction(this.previouscallback)) {
-                             this.previouscallback();
-                        }
-                        else{
-                        	throw "Please provide a previous callback function";
-                        }
+                        this.previouscallback();
                     }
                 };
                 this.hasPrevious = function() {

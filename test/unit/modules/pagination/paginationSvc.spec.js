@@ -58,7 +58,7 @@ describe("paginationService", function() {
 
             pagination.previous();
             expect(pagination.current()).toEqual(1);
-            
+
             pagination.previous();
             expect(pagination.current()).toEqual(1);
         });
@@ -98,6 +98,19 @@ describe("paginationService", function() {
 
         it("The previouscallback should return the expected result", function() {
             expect(pagination.previouscallback()).toEqual(previousCallbackResult);
+        });
+    });
+
+    describe("Error on Initialization", function() {
+        beforeEach(function() {
+            nextCallback = "not a function";
+
+            previousCallback = "not a function";
+        });
+        it("Should throw an error", function() {
+            expect(function() {
+                pagination = factory.Pagination(finalPage, currentPage, nextCallback, previousCallback);
+            }).toThrow();
         });
     });
 });

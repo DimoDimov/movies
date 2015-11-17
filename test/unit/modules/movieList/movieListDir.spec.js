@@ -8,6 +8,7 @@ describe("movieListDir", function() {
         deffered,
         movieModelServicesSpy,
         serviceCallback,
+        commonConstants,
         el,
         $body = $('body'),
         simpleHtml = '<movie-list class="test-movie-wrapper"></movie-list>';
@@ -22,6 +23,8 @@ describe("movieListDir", function() {
             $compile = $injector.get('$compile');
             el = $compile(angular.element(simpleHtml))($scope);
             
+            commonConstants = $injector.get('commonConstants');
+
             $q = $injector.get('$q');
             deferred = $q.defer();
 
@@ -47,11 +50,19 @@ describe("movieListDir", function() {
         it("Should add el to DOM", function() {
             expect($el.length).toEqual(1);
         });
+
+        it("Should have no error message", function() {
+            expect($scope.errorMessage).toEqual('');
+        });
+        
     });
     
     describe("Action Handlers", function() {
         it("Should call movieModelServices.getAllMovies() to feed the movie data on the page load", function() {
+            expect(commonConstants.numberMoviesPageLoad).toEqual(20);
+
             expect(movieModelServicesSpy).toHaveBeenCalled();
+            expect(movieModelServicesSpy).toHaveBeenCalledWith(commonConstants.numberMoviesPageLoad);
         });
 
         it("Should get movies on page load", function() {
