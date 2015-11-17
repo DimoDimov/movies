@@ -128,6 +128,9 @@ module.exports = function(grunt) {
             },
             'unit-coverage': {
                 src: [path.resolve('test/unit-coverage/**/*')],
+            },
+            'server-coverage': {
+                src: [path.resolve('test/server-coverage/**/*')],
             }
         },
 
@@ -156,6 +159,17 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     script: path.resolve('server/index.js'),
+                },
+                runtime: {
+                    options: {
+                        middleware: function(connect) {
+                            return [
+                                lrSnippet,
+                                mountFolder(connect, 'instrumented'),
+                                mountFolder(connect, '.......')
+                            ];
+                        }
+                    }
                 }
             },
             prod: {
@@ -167,43 +181,6 @@ module.exports = function(grunt) {
                 options: {
                     script: path.resolve('path/to/test/server.js')
                 }
-            }
-        },
-
-        //Set Automation Tests
-        'protractor': {
-            options: {
-                configFile: path.resolve("protractor.conf.js"), // Default config file 
-                keepAlive: true, // If false, the grunt process stops when the test fails. 
-                noColor: false, // If true, protractor will not use colors in its output. 
-                args: {
-                    // Arguments passed to the command 
-                }
-            },
-            your_target: { // Grunt requires at least one target to run so we can simply put 'all: {}' here too. 
-                all: {}
-            },
-        },
-
-        'karma': {
-            unit: {
-                configFile: path.resolve('karma.conf.js'),
-                // background: true,
-                singleRun: true
-            }
-        },
-
-        'simplemocha': {
-            options: {
-                globals: ['should'],
-                timeout: 3000,
-                ignoreLeaks: false,
-                ui: 'bdd',
-                reporter: 'tap'
-            },
-
-            all: {
-                src: path.resolve('test/server/**/*.spec.js')
             }
         },
 
@@ -255,6 +232,96 @@ module.exports = function(grunt) {
                 ],
             },
         },
+
+        //----------------Testing----------------->
+
+        'karma': {
+            unit: {
+                configFile: path.resolve('karma.conf.js'),
+                // background: true,
+                singleRun: true
+            }
+        },
+
+        //----------------Protractor Coverage-------------
+        instrument: {
+            files: 'server/**/*.js',
+            options: {
+                lazy: true,
+                basePath: "instrumented"
+            }
+        },
+        protractor_coverage: {
+            options: {
+                keepAlive: true,
+                noColor: false,
+                coverageDir: 'test/e2e-coverage/',
+                args: {
+                    baseUrl: 'http://localhost:8000'
+                }
+            },
+            local: {
+                options: {
+                    configFile: path.resolve("protractor.conf.js")
+                }
+            },
+            // travis: {
+            //     options: {
+            //         configFile: 'path/to/protractor-travis.conf.js'
+            //     }
+            // }
+        },
+        makeReport: {
+            src: 'test/e2e-coverage/*.json',
+            options: {
+                type: 'lcov',
+                dir: 'test/e2e-coverage/',
+                print: 'detail'
+            }
+        },
+
+        //Set Automation Tests
+        'protractor': {
+            options: {
+                configFile: path.resolve("protractor.conf.js"), // Default config file 
+                keepAlive: true, // If false, the grunt process stops when the test fails. 
+                noColor: false, // If true, protractor will not use colors in its output. 
+                args: {
+                    // Arguments passed to the command 
+                }
+            },
+            your_target: { // Grunt requires at least one target to run so we can simply put 'all: {}' here too. 
+                all: {}
+            },
+        },
+
+
+        //--------Mocha Coverage ------------->
+        mocha_istanbul: {
+            coverage: {
+                src: [path.resolve('test/server/**/*')], // a folder works nicely
+
+                options: {
+                    // coverage: true,
+                    coverageFolder: 'test/server-coverage',
+                    reportFormats: ['cobertura', 'lcovonly']
+                }
+            }
+        },
+
+        istanbul_check_coverage: {
+            default: {
+                options: {
+                    coverageFolder: path.resolve('test/server-coverage/'), // will check both coverage folders and merge the coverage results
+                    check: {
+                        lines: 80,
+                        statements: 80
+                    }
+                }
+            }
+        }
+        //<-------Mocha Coverage -------------/
+
     });
 
     //debugger tasks
@@ -286,9 +353,15 @@ module.exports = function(grunt) {
     //Finally we need a Selenium server. If we don't have one set up already, we can install a local standalone version with this command:
     //./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-protractor-coverage');
+
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-simple-mocha');
+
     grunt.loadNpmTasks('grunt-debug');
+
+    grunt.loadNpmTasks('grunt-mocha-istanbul');
+
+    grunt.registerTask('server-coverage', ['mocha_istanbul:coverage']);
 
     //-------------------BUNDLES
 
@@ -304,7 +377,8 @@ module.exports = function(grunt) {
     grunt.registerTask('unit', ['clean:unit-coverage', 'karma']);
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
-    grunt.registerTask('server-unit', ['simplemocha']);
+    grunt.registerTask('server-unit', ['clean:server-coverage', 'server-coverage']);
+
     grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
 
     //'grunt test' command will check the js files for syntax and 

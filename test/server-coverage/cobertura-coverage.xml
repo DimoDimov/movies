@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage lines-valid="68"  lines-covered="60"  line-rate="0.8824"  branches-valid="37"  branches-covered="29"  branch-rate="0.7837999999999999"  timestamp="1447762650877" complexity="0" version="0.1">
+<sources>
+	<source>d:\CurrProjIce</source>
+</sources>
+<packages>
+	<package name="middleware"  line-rate="0.8824"  branch-rate="0.7837999999999999" >
+	<classes>
+		<class name="getApiMovies.js"  filename="server\config\middleware\getApiMovies.js"  line-rate="0.8824"  branch-rate="0.7837999999999999" >
+		<methods>
+			<method name="(anonymous_1)"  hits="15"  signature="()V" >
+				<lines><line number="9"  hits="15" /></lines>
+			</method>
+			<method name="(anonymous_2)"  hits="30"  signature="()V" >
+				<lines><line number="27"  hits="30" /></lines>
+			</method>
+			<method name="validateInput"  hits="15"  signature="()V" >
+				<lines><line number="39"  hits="15" /></lines>
+			</method>
+			<method name="filterByPhrase"  hits="15"  signature="()V" >
+				<lines><line number="78"  hits="15" /></lines>
+			</method>
+			<method name="filterByPageAndList"  hits="15"  signature="()V" >
+				<lines><line number="96"  hits="15" /></lines>
+			</method>
+		</methods>
+		<lines>
+			<line number="5"  hits="1"  branch="false" />
+			<line number="6"  hits="1"  branch="false" />
+			<line number="7"  hits="1"  branch="false" />
+			<line number="9"  hits="1"  branch="false" />
+			<line number="10"  hits="15"  branch="false" />
+			<line number="13"  hits="15"  branch="false" />
+			<line number="14"  hits="15"  branch="false" />
+			<line number="15"  hits="15"  branch="false" />
+			<line number="16"  hits="15"  branch="false" />
+			<line number="19"  hits="15"  branch="false" />
+			<line number="20"  hits="15"  branch="false" />
+			<line number="21"  hits="15"  branch="false" />
+			<line number="22"  hits="15"  branch="false" />
+			<line number="27"  hits="15"  branch="false" />
+			<line number="28"  hits="30"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="32"  hits="15"  branch="false" />
+			<line number="34"  hits="15"  branch="false" />
+			<line number="36"  hits="15"  branch="false" />
+			<line number="39"  hits="1"  branch="false" />
+			<line number="40"  hits="15"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="41"  hits="15"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="42"  hits="0"  branch="false" />
+			<line number="44"  hits="15"  branch="true"  condition-coverage="75% (3/4)" />
+			<line number="45"  hits="0"  branch="false" />
+			<line number="49"  hits="15"  branch="false" />
+			<line number="51"  hits="0"  branch="false" />
+			<line number="54"  hits="15"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="55"  hits="15"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="56"  hits="0"  branch="false" />
+			<line number="58"  hits="15"  branch="true"  condition-coverage="75% (3/4)" />
+			<line number="59"  hits="0"  branch="false" />
+			<line number="63"  hits="15"  branch="false" />
+			<line number="65"  hits="0"  branch="false" />
+			<line number="68"  hits="15"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="69"  hits="0"  branch="false" />
+			<line number="72"  hits="15"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="73"  hits="6"  branch="false" />
+			<line number="78"  hits="1"  branch="false" />
+			<line number="79"  hits="15"  branch="true"  condition-coverage="100% (5/5)" />
+			<line number="83"  hits="6"  branch="false" />
+			<line number="84"  hits="960"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="85"  hits="6"  branch="false" />
+			<line number="90"  hits="9"  branch="false" />
+			<line number="96"  hits="1"  branch="false" />
+			<line number="97"  hits="15"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="98"  hits="3"  branch="false" />
+			<line number="99"  hits="3"  branch="false" />
+			<line number="100"  hits="3"  branch="false" />
+			<line number="101"  hits="3"  branch="false" />
+			<line number="102"  hits="3"  branch="false" />
+			<line number="103"  hits="3"  branch="false" />
+			<line number="106"  hits="12"  branch="false" />
+			<line number="108"  hits="12"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="109"  hits="3"  branch="false" />
+			<line number="112"  hits="12"  branch="false" />
+			<line number="113"  hits="12"  branch="false" />
+			<line number="116"  hits="12"  branch="true"  condition-coverage="50% (1/2)" />
+			<line number="117"  hits="0"  branch="false" />
+			<line number="120"  hits="12"  branch="true"  condition-coverage="100% (2/2)" />
+			<line number="121"  hits="3"  branch="false" />
+			<line number="124"  hits="12"  branch="false" />
+			<line number="125"  hits="186"  branch="false" />
+			<line number="128"  hits="12"  branch="false" />
+			<line number="129"  hits="12"  branch="false" />
+			<line number="130"  hits="12"  branch="false" />
+			<line number="132"  hits="12"  branch="false" />
+			<line number="133"  hits="12"  branch="false" />
+			<line number="136"  hits="15"  branch="false" />
+		</lines>
+		</class>
+	</classes>
+	</package>
+</packages>
+</coverage>

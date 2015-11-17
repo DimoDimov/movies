@@ -48,8 +48,8 @@
         });
 
         $routeProvider.
-        when("/", {
-            templateUrl: "/js/app/htmlTemplates/movieListTemplate.html",
+        when('/', {
+            templateUrl: '/js/app/htmlTemplates/movieListTemplate.html',
             controller: 'MainCtrl'
         }).
         otherwise({
