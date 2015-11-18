@@ -125,7 +125,7 @@ module.exports = function(grunt) {
             },
             express: {
                 files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
-                tasks: ['rebuild'],
+                tasks: ['restart'],
                 options: {
                     spawn: false,
                     livereload: true,
@@ -155,14 +155,7 @@ module.exports = function(grunt) {
                 options: {
                     script: path.resolve('path/to/test/server.js')
                 }
-            },
-            coverageE2E: {
-                options: {
-                        port: 9000,
-                        script: path.resolve('test-coverage/e2e-coverage/instrumented/server/index.js'),
-                        //debug: true
-                }
-            },
+            }
         },
 
 
@@ -222,57 +215,13 @@ module.exports = function(grunt) {
         },
 
         'copy': {
-            instrument: {
-                options: {
-                    srcPrefix: path.resolve('/'),
-                    destPrefix: path.resolve('/')
-                },
-                files: [{
-                    src: ['public/**/*', '!public/js/app/**/*.js', '!public/js/dist/**/*.js'],
-                    dest: 'test-coverage/e2e-coverage/instrumented/'
-                }]
-            },
+           
         },
 
         //----------------Testing----------------->
 
         //----------------Protractor-------------
-        instrument: {
-            files: ['server/**/*.js', 'public/js/dist/app.concat.js'],
-            options: {
-                lazy: true,
-                basePath: path.resolve('test-coverage/e2e-coverage/instrumented/'),
-                coverageVariable: '__coverage__' //<<--- sets it to specific value
-            }
-        },
-
-        protractor_coverage: {
-            options: {
-                collectorPort: 3001,
-                keepAlive: true, // If false, the grunt process stops when the test fails.
-                noColor: false, // If true, protractor will not use colors in its output.
-                coverageDir: path.resolve('test-coverage/e2e-coverage/instrumented/'),
-                args: {
-                    seleniumPort : 9000,
-                    baseUrl: 'http://localhost:9000'
-                }
-            },
-            local: {
-                options: {
-                    configFile: path.resolve('protractor.conf.js'), // Default config file
-                }
-            }
-        },
-
-        makeReport: {
-            src: 'test-coverage/e2e-coverage/instrumented/*.json',
-            options: {
-                type: 'lcov',
-                dir: 'test-coverage/e2e-coverage/reports',
-                print: 'detail'
-            }
-        },
-
+       
         //Set Automation Tests
         'protractor': {
             options: {
@@ -304,12 +253,12 @@ module.exports = function(grunt) {
         //--------Mocha Coverage ------------->
         mocha_istanbul: {
             coverage: {
-                src: [path.resolve('test/server/**/*')], // a folder works nicely
+                src: [path.resolve('test/server/config/**/*')], // a folder works nicely
 
                 options: {
                     // coverage: true,
                     coverageFolder: 'test-coverage/server-coverage',
-                    reportFormats: ['cobertura', 'lcovonly']
+                    reportFormats: ['text','lcov','lcovonly']
                 }
             }
         },
@@ -317,7 +266,7 @@ module.exports = function(grunt) {
         istanbul_check_coverage: {
             default: {
                 options: {
-                    coverageFolder: path.resolve('test-coverage/server-coverage/'), // will check both coverage folders and merge the coverage results
+                    coverageFolder: path.resolve('test-coverage/server-coverage'), // will check both coverage folders and merge the coverage results
                     check: {
                         lines: 80,
                         statements: 80
@@ -363,10 +312,8 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-debug');
     grunt.loadNpmTasks('grunt-istanbul');
-    grunt.loadNpmTasks('grunt-protractor-coverage');
 
     grunt.loadNpmTasks('grunt-mocha-istanbul');
-    grunt.registerTask('server-coverage', ['mocha_istanbul:coverage']);
 
     //-------------------BUNDLES
 
@@ -375,7 +322,6 @@ module.exports = function(grunt) {
 
     //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
     grunt.registerTask('e2e', ['protractor']);
-    grunt.registerTask('e2et', ['clean:e2e-coverage', 'instrument', 'express:coverageE2E', 'protractor_coverage', 'makeReport']); //'copy:instrument', 
 
     grunt.registerTask('debug-e2e', ['shell:e2e-coverage']); //debug object - window.clientSideScripts
 
@@ -384,6 +330,7 @@ module.exports = function(grunt) {
     grunt.registerTask('unit', ['clean:unit-coverage', 'karma']);
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
+    grunt.registerTask('server-coverage', ['mocha_istanbul:coverage', 'istanbul_check_coverage']);
     grunt.registerTask('server-unit', ['clean:server-coverage', 'server-coverage']);
 
     grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
@@ -403,7 +350,7 @@ module.exports = function(grunt) {
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
-    grunt.registerTask('start-test', ['rebuild', 'express:coverageE2E', 'watch']);
+    grunt.registerTask('restart', ['express:dev']);
 
     grunt.registerTask('debug-dev', ['shell:dev']);
 };

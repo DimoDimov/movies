@@ -53,8 +53,6 @@
     "grunt-karma": "^0.12.1",
     "grunt-mocha-istanbul": "^3.0.1",
     "grunt-node-inspector": "^0.4.1",
-    "grunt-nodemon": "^0.4.0",
-    "grunt-protractor-coverage": "^0.2.15",
     "grunt-protractor-runner": "^2.1.0",
     "grunt-shell": "^1.1.2",
     "istanbul": "^0.4.0",
