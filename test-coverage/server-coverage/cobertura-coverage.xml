@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="68"  lines-covered="60"  line-rate="0.8824"  branches-valid="37"  branches-covered="29"  branch-rate="0.7837999999999999"  timestamp="1447763254294" complexity="0" version="0.1">
+<coverage lines-valid="68"  lines-covered="60"  line-rate="0.8824"  branches-valid="37"  branches-covered="29"  branch-rate="0.7837999999999999"  timestamp="1447834971471" complexity="0" version="0.1">
 <sources>
 	<source>d:\CurrProjIce</source>
 </sources>

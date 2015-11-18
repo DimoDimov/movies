@@ -116,23 +116,6 @@ module.exports = function(grunt) {
             }
         },
 
-        //clean folders pre-build
-        'clean': {
-            dist: {
-                src: [path.resolve('public/js/dist/**/*'), path.resolve('public/styles/dist/**/*')],
-                //filter: 'isFile',
-            },
-            lib: {
-                src: [path.resolve('public/js/lib/**/*'), path.resolve('public/styles/lib/**/*'), path.resolve('public/styles/fonts/**/*')],
-                //filter: 'isFile',
-            },
-            'unit-coverage': {
-                src: [path.resolve('test-coverage/unit-coverage/**/*')],
-            },
-            'server-coverage': {
-                src: [path.resolve('test-coverage/server-coverage/**/*')],
-            }
-        },
 
         //set watchers on files
         'watch': {
@@ -158,19 +141,10 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
+                    port: 8000,
+                    bases: 'public',
                     script: path.resolve('server/index.js'),
-                },
-                // runtime: {
-                //     options: {
-                //         middleware: function(connect) {
-                //             return [
-                //                 lrSnippet,
-                //                 mountFolder(connect, 'instrumented'),
-                //                 mountFolder(connect, '.......')
-                //             ];
-                //         }
-                //     }
-                // }
+                }
             },
             prod: {
                 options: {
@@ -181,6 +155,35 @@ module.exports = function(grunt) {
                 options: {
                     script: path.resolve('path/to/test/server.js')
                 }
+            },
+            coverageE2E: {
+                options: {
+                        port: 9000,
+                        script: path.resolve('test-coverage/e2e-coverage/instrumented/server/index.js'),
+                        //debug: true
+                }
+            },
+        },
+
+
+        //clean folders pre-build
+        'clean': {
+            dist: {
+                src: [path.resolve('public/js/dist/**/*'), path.resolve('public/styles/dist/**/*')],
+                //filter: 'isFile',
+            },
+            lib: {
+                src: [path.resolve('public/js/lib/**/*'), path.resolve('public/styles/lib/**/*'), path.resolve('public/styles/fonts/**/*')],
+                //filter: 'isFile',
+            },
+            'unit-coverage': {
+                src: [path.resolve('test-coverage/unit-coverage/**/*')],
+            },
+            'server-coverage': {
+                src: [path.resolve('test-coverage/server-coverage/**/*')],
+            },
+            'e2e-coverage': {
+                src: [path.resolve('test-coverage/e2e-coverage/**/*')],
             }
         },
 
@@ -219,66 +222,56 @@ module.exports = function(grunt) {
         },
 
         'copy': {
-            main: {
-                files: [
-                    // includes files within path
-                    {
-                        //cwd: '',
-                        expand: true,
-                        src: [''],
-                        dest: '',
-                        //filter: 'isFile',
-                    },
-                ],
+            instrument: {
+                options: {
+                    srcPrefix: path.resolve('/'),
+                    destPrefix: path.resolve('/')
+                },
+                files: [{
+                    src: ['public/**/*', '!public/js/app/**/*.js', '!public/js/dist/**/*.js'],
+                    dest: 'test-coverage/e2e-coverage/instrumented/'
+                }]
             },
         },
 
         //----------------Testing----------------->
 
-        'karma': {
-            unit: {
-                configFile: path.resolve('karma.conf.js'),
-                // background: true,
-                singleRun: true
+        //----------------Protractor-------------
+        instrument: {
+            files: ['server/**/*.js', 'public/js/dist/app.concat.js'],
+            options: {
+                lazy: true,
+                basePath: path.resolve('test-coverage/e2e-coverage/instrumented/'),
+                coverageVariable: '__coverage__' //<<--- sets it to specific value
             }
         },
 
-        //----------------Protractor Coverage-------------
-        // instrument: {
-        //     files: 'server/**/*.js',
-        //     options: {
-        //         lazy: true,
-        //         basePath: "instrumented"
-        //     }
-        // },
-        // protractor_coverage: {
-        //     options: {
-        //         keepAlive: true,
-        //         noColor: false,
-        //         coverageDir: 'test/e2e-coverage/',
-        //         args: {
-        //             baseUrl: 'http://localhost:8000'
-        //         }
-        //     },
-        //     local: {
-        //         options: {
-        //             configFile: path.resolve("protractor.conf.js")
-        //         }
-        //     },
-        //     // travis: {
-        //     //     options: {
-        //     //         configFile: 'path/to/protractor-travis.conf.js'
-        //     //     }
-        //     // }
-        // },
-        // makeReport: {
-        //     src: 'test/e2e-coverage/*.json',
-        //     options: {
-        //         type: 'lcov',
-        //         dir: 'test/e2e-coverage/',
-        //         print: 'detail'
-        //     }
-        // },
+        protractor_coverage: {
+            options: {
+                collectorPort: 3001,
+                keepAlive: true, // If false, the grunt process stops when the test fails.
+                noColor: false, // If true, protractor will not use colors in its output.
+                coverageDir: path.resolve('test-coverage/e2e-coverage/instrumented/'),
+                args: {
+                    seleniumPort : 9000,
+                    baseUrl: 'http://localhost:9000'
+                }
+            },
+            local: {
+                options: {
+                    configFile: path.resolve('protractor.conf.js'), // Default config file
+                }
+            }
+        },
+
+        makeReport: {
+            src: 'test-coverage/e2e-coverage/instrumented/*.json',
+            options: {
+                type: 'lcov',
+                dir: 'test-coverage/e2e-coverage/reports',
+                print: 'detail'
+            }
+        },
 
         //Set Automation Tests
         'protractor': {
@@ -291,8 +284,20 @@ module.exports = function(grunt) {
                 }
             },
             your_target: { // Grunt requires at least one target to run so we can simply put 'all: {}' here too. 
-                all: {}
+                all: {
+                    //seleniumPort : 9000,
+                    baseUrl: 'http://localhost:9000'
+                }
             },
+        },
+
+        //------------------Karma-----------------
+        'karma': {
+            unit: {
+                configFile: path.resolve('karma.conf.js'),
+                // background: true,
+                singleRun: true
+            }
         },
 
 
@@ -353,14 +358,14 @@ module.exports = function(grunt) {
     //Finally we need a Selenium server. If we don't have one set up already, we can install a local standalone version with this command:
     //./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update
     grunt.loadNpmTasks('grunt-protractor-runner');
-    grunt.loadNpmTasks('grunt-protractor-coverage');
 
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.loadNpmTasks('grunt-debug');
+    grunt.loadNpmTasks('grunt-istanbul');
+    grunt.loadNpmTasks('grunt-protractor-coverage');
 
     grunt.loadNpmTasks('grunt-mocha-istanbul');
-
     grunt.registerTask('server-coverage', ['mocha_istanbul:coverage']);
 
     //-------------------BUNDLES
@@ -370,7 +375,9 @@ module.exports = function(grunt) {
 
     //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
     grunt.registerTask('e2e', ['protractor']);
-    grunt.registerTask('debug-e2e', ['shell:e2e']); //debug object - window.clientSideScripts
+    grunt.registerTask('e2et', ['clean:e2e-coverage', 'instrument', 'express:coverageE2E', 'protractor_coverage', 'makeReport']); //'copy:instrument', 
+
+    grunt.registerTask('debug-e2e', ['shell:e2e-coverage']); //debug object - window.clientSideScripts
 
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
@@ -396,6 +403,7 @@ module.exports = function(grunt) {
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
+    grunt.registerTask('start-test', ['rebuild', 'express:coverageE2E', 'watch']);
 
     grunt.registerTask('debug-dev', ['shell:dev']);
 };

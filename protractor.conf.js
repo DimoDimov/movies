@@ -2,6 +2,8 @@ var SpecReporter = require('jasmine-spec-reporter');
 var reporters = require('jasmine-reporters');
 var JUnitXmlReporter = reporters.JUnitXmlReporter;
 
+var path = require('path');
+
 exports.config = {
 
     framework: 'jasmine2',
@@ -9,7 +11,7 @@ exports.config = {
 
     //Spec patterns are relative to the current working
     //when protractor is called 
-    specs: ['test/e2e/movieList/**/*.spec.js'],
+    specs: [path.resolve('test/e2e/movieList/**/*.spec.js')],
 
     //the address of a running selenium address (default)
     seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -18,7 +20,7 @@ exports.config = {
     capabilities: {
         browserName: 'chrome'
     },
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:3001',
     allScriptsTimeout: 500000,
     restartBrowserBetweenTests: false,
 
