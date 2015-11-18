@@ -5,6 +5,7 @@
 var Q = require('q');
 var path = require('path');
 var db = require(path.resolve('server/data.json'));
+var validate = require(path.resolve('server/config/middleware/validate.js'));
 
 module.exports = function(req, res) {
     var deferred = Q.defer();
@@ -30,8 +31,8 @@ module.exports = function(req, res) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
 
+    // params = validate.input(params);
     validateInput();
-
     filterByPhrase();
 
     filterByPageAndList();

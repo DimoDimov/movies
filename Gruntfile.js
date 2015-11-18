@@ -268,8 +268,8 @@ module.exports = function(grunt) {
                 options: {
                     coverageFolder: path.resolve('test-coverage/server-coverage'), // will check both coverage folders and merge the coverage results
                     check: {
-                        lines: 80,
-                        statements: 80
+                        lines: 90,
+                        statements: 90
                     }
                 }
             }
@@ -320,24 +320,31 @@ module.exports = function(grunt) {
     //updates front end libraries, cleans folder before the copy
     grunt.registerTask('update-frontendlibs', ['clean:lib', 'bowercopy:jsfiles', 'bowercopy:stylefiles']);
 
+    //------------E2E Tests ----------------
+
     //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
-    grunt.registerTask('e2e', ['protractor']);
+    grunt.registerTask('e2e-test', ['protractor']);
 
     grunt.registerTask('debug-e2e', ['shell:e2e-coverage']); //debug object - window.clientSideScripts
 
+    //------------Front End Tests ----------------
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
-    grunt.registerTask('unit', ['clean:unit-coverage', 'karma']);
+    grunt.registerTask('unit-test', ['clean:unit-coverage', 'karma']);
+
+    //------------Back End Tests ----------------
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
-    grunt.registerTask('server-coverage', ['mocha_istanbul:coverage', 'istanbul_check_coverage']);
-    grunt.registerTask('server-unit', ['clean:server-coverage', 'server-coverage']);
+    grunt.registerTask('server-test-coverage', ['mocha_istanbul:coverage', 'istanbul_check_coverage']);
+    grunt.registerTask('server-test', ['clean:server-coverage', 'server-test-coverage']);
 
-    grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
+    //grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
+
+    //------------Test Bundle-----------------------
 
     //'grunt test' command will check the js files for syntax and 
     //after this it all the test methods will be run in consecutive bundle
-    grunt.registerTask('test', ['jshint', 'e2e', 'unit', 'server-unit']);
+    grunt.registerTask('test', ['jshint', 'e2e-test', 'unit-test', 'server-test']);
 
     //'grunt rebuild' command will activte the 'rebuild' bundle of processes
     //rebuild bundle - it cleans 'public/js/app/dist' and prepares the 'dist' directory
@@ -350,7 +357,7 @@ module.exports = function(grunt) {
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
-    grunt.registerTask('restart', ['express:dev']);
+    grunt.registerTask('restart', ['rebuild']);
 
     grunt.registerTask('debug-dev', ['shell:dev']);
 };
