@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome 46.0.2490 (Windows 8.1 0.0.0)" package="" timestamp="2015-11-18T21:10:23" id="0" hostname="BabyBird" tests="56" errors="0" failures="0" time="0.646">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"/>
+  </properties>
+  <testcase name="The functuon getAllMovies is defined" time="0.026" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).APIService"/>
+  <testcase name="Should return 20 movies" time="0.009" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).APIService"/>
+  <testcase name="Should return 2 movies" time="0.01" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).APIService"/>
+  <testcase name="Should return no movies" time="0.004" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).APIService"/>
+  <testcase name="Should return no movies" time="0.007" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).APIService"/>
+  <testcase name="Should return undefined when undefined is passed in" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter duration tests"/>
+  <testcase name="Should return null when null is passed in" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter duration tests"/>
+  <testcase name="Should return empty string when empty string is passed in" time="0.001" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter duration tests"/>
+  <testcase name="Should return 120 min when 7200 seconds are passed in" time="0.001" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter duration tests"/>
+  <testcase name="Should return integer 120 min when 7200.5 seconds are passed in" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter duration tests"/>
+  <testcase name="Should return empty string when undefined is passed in" time="0.001" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter actors tests"/>
+  <testcase name="Should return empty string when null is passed in" time="0.001" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter actors tests"/>
+  <testcase name="Should return empty string when empty string is passed in" time="0.006" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter actors tests"/>
+  <testcase name="Should return 'John, Mary, Betty' when {list:[{name:'John'},{name:'Mary'},{name:'Betty'}]} passed in" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter actors tests"/>
+  <testcase name="Should return empty string when list is empty" time="0.001" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Filter actors tests"/>
+  <testcase name="Should make a unsuccessful call to movieAPIServices if the wrong search phrase is given" time="0.012" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieModelServices"/>
+  <testcase name="Should make a successful call to movieAPIServices if the right parameters are given" time="0.006" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieModelServices"/>
+  <testcase name="Should make a successful call to movieAPIServices if the right parameters are given, cache the result and return it if requested, without call to API" time="0.01" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieModelServices"/>
+  <testcase name="Should throw an exception when a call to movieAPIServices when maxList parameter is wrong" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieModelServices"/>
+  <testcase name="Should throw an exception when a call to movieAPIServices when page parameter is wrong" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieModelServices"/>
+  <testcase name="Should throw an exception when a call to movieAPIServices when maxList and page parameters are wrong" time="0.007" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieModelServices"/>
+  <testcase name="Should instantiate movie list to equal 20" time="0.01" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListCtrl"/>
+  <testcase name="Should instantiate current page to equal 1" time="0.007" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListCtrl"/>
+  <testcase name="Should increment currentPage when nextcallback() is being called" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListCtrl"/>
+  <testcase name="Should increment currentPage when nextcallback() is being called but should not be able to go above the final page" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListCtrl"/>
+  <testcase name="Should decrement currentPage when previouscallback() is being called but should not be able to go below 1" time="0.004" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListCtrl"/>
+  <testcase name="Should decrement currentPage when previouscallback() is being called" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListCtrl"/>
+  <testcase name="Should compile el" time="0.084" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should add el to DOM" time="0.034" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should have no error message" time="0.036" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should call movieModelServices.getAllMovies() to feed the movie data on the page load" time="0.036" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should get movies on page load" time="0.037" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should get exactly 20 movies on page load" time="0.033" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should not allow 'list' value to go bellow 1" time="0.029" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should not allow 'list' value to go above 'totalMoviesCount'" time="0.037" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should not allow 'list' value to exceed the maximum of the 'totalFilteredMovies' " time="0.032" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should not allow current page to go beyond the final page" time="0.035" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="The counter should not go below 1. Even if pagination.previous() is being applied" time="0.032" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).movieListDir"/>
+  <testcase name="Should not have defined pagination" time="0.004" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationCtrl"/>
+  <testcase name="Should not have defined finalPage" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationCtrl"/>
+  <testcase name="Should not have defined currentPage" time="0.004" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationCtrl"/>
+  <testcase name="Should instantiate pagination when currentPage and finalPage have been defined" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationCtrl"/>
+  <testcase name="Should compile el" time="0.01" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationDir"/>
+  <testcase name="Should add el to DOM" time="0.013" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationDir"/>
+  <testcase name="Should try to compile element and to throw exception" time="0.016" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationDir"/>
+  <testcase name="Should change the current page (1) to next (2) and then back to previous(1)." time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="Should stop counting on the final page even if more pagination.next() clicks are being applied." time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="The counter should not go below 1. Even if pagination.previous() is being applied" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="Check the border cases for the pagination.hasPrevious and pagination.hasNext methods" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="Should instantiate pagination" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="Should set pagination.maxCount equal to final page" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="Should set pagination.current equal to current page" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="The nextcallback should return the expected result" time="0.001" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="The previouscallback should return the expected result" time="0.003" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="Should throw an error" time="0.002" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).paginationService"/>
+  <testcase name="nowtv.com equals nowtv.com" time="0" classname="Chrome_46_0_2490_(Windows_8_1_0_0_0).Sanity check"/>
+  <system-out>
+    <![CDATA[Chrome 46.0.2490 (Windows 8.1 0.0.0) WARN: 'No movies found.'
+,Chrome 46.0.2490 (Windows 8.1 0.0.0) WARN: 'Error in movieAPIServices _getAllMovies'
+,Chrome 46.0.2490 (Windows 8.1 0.0.0) WARN: 'I am wrong'
+,Chrome 46.0.2490 (Windows 8.1 0.0.0) WARN: 'I am wrong'
+,Chrome 46.0.2490 (Windows 8.1 0.0.0) WARN: 'I am wrong'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

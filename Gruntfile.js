@@ -125,7 +125,7 @@ module.exports = function(grunt) {
             },
             express: {
                 files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
-                tasks: ['restart'],
+                tasks: ['start'],
                 options: {
                     spawn: false,
                     livereload: true,
@@ -357,7 +357,11 @@ module.exports = function(grunt) {
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
-    grunt.registerTask('restart', ['rebuild']);
+    // grunt.registerTask('stop-server', function() {
+    //     process.exit(1);
+    // });
+
+    // grunt.registerTask('restart-server', ['stop-server', 'start']);
 
     grunt.registerTask('debug-dev', ['shell:dev']);
 };

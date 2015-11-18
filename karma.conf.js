@@ -33,15 +33,52 @@ module.exports = function(config) {
 
         // optionally, configure the reporter 
         coverageReporter: {
-            type: 'html',
-            dir: 'test-coverage/unit-coverage/'
+            //type: 'html',
+            dir: 'test-coverage/unit-coverage/',
+            reporters: [
+                // reporters not supporting the `file` property
+                {
+                    type: 'html',
+                    subdir: 'report-html'
+                }, {
+                    type: 'lcov',
+                    subdir: 'report-lcov'
+                },
+                // reporters supporting the `file` property, use `subdir` to directly
+                // output them in the `dir` directory
+                {
+                    type: 'cobertura',
+                    subdir: '.',
+                    file: 'cobertura.txt'
+                }, {
+                    type: 'lcovonly',
+                    subdir: '.',
+                    file: 'report-lcovonly.txt'
+                }, {
+                    type: 'teamcity',
+                    subdir: '.',
+                    file: 'teamcity.txt'
+                }, {
+                    type: 'text',
+                    //hide this to output on console
+                    // subdir: '.',
+                    // file: 'text.txt'
+                }, {
+                    type: 'text-summary',
+                    // subdir: '.',
+                    // file: 'text-summary.txt'
+                },
+            ]
         },
 
         ngHtml2JsPreprocessor: {
             stripPrefix: 'public/',
             moduleName: 'templates'
         },
-
+        loggers: [{
+            type: 'console',
+            pattern: '%d{HH:mm:ss} %m'
+        }],
         proxies: {},
 
         // web server port
@@ -74,7 +111,7 @@ module.exports = function(config) {
         // Test results reporter to use
         // possible values: 'dots', 'progress', 'mocha', 'junit', 'growl', 'coverage'
         reporters: ['mocha', 'coverage'],
-
+        
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
 
