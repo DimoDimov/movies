@@ -102,7 +102,7 @@ module.exports = function(grunt) {
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
-                debug: true,
+                debug: false,
                 globals: {
                     jQuery: true,
                     console: true,
@@ -245,7 +245,7 @@ module.exports = function(grunt) {
             unit: {
                 configFile: path.resolve('karma.conf.js'),
                 // background: true,
-                //singleRun: true
+                singleRun: true
             }
         },
 
@@ -357,11 +357,6 @@ module.exports = function(grunt) {
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
-    // grunt.registerTask('stop-server', function() {
-    //     process.exit(1);
-    // });
-
-    // grunt.registerTask('restart-server', ['stop-server', 'start']);
 
     grunt.registerTask('debug-dev', ['shell:dev']);
 };
