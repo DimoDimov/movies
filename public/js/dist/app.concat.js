@@ -419,17 +419,20 @@
 
             //exposing the callback functions for testing
             self.getAllMoviesSuccess = function(data) {
-
+                
                 //on each call we clear the errors
                 //if we have more errors they will be loaded on the result
-                if ($scope.errorMessage && !data.errorMessage) {
+                if (!data.errorMessage) {
                     $scope.errorMessage = '';
+                }
+                else{
+                    $scope.errorMessage = data.errorMessage;
                 }
 
                 $scope.movieList = data.movies;
                 $scope.totalMoviesCount = data.totalMoviesCount;
 
-                if (searchPhrase) {
+                if ($scope.searchPhrase) {
                     $scope.totalfilteredMovies = data.totalfilteredMovies;
                     $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
                 } else {
@@ -441,7 +444,7 @@
 
                     $scope.list = $scope.totalfilteredMovies;
                 }
-            };
+            }.bind(self);
             
             //exposing the callback functions for testing
             self.getAllMoviesError = function(data) {
@@ -452,7 +455,7 @@
                     $scope.errorMessage = data.errorMessage;
                     $scope.movieList = [];
                 }
-            };
+            }.bind(self);
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
 
