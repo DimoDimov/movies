@@ -2,7 +2,7 @@
 
     appDep.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
-        function($scope, movieModelServices, commonConstants, validationServices) { //) {
+        function($scope, movieModelServices, commonConstants, validationServices) {
             self = this;
 
             self.scope = $scope;
@@ -22,7 +22,7 @@
             $scope.nextcallback = function() {
                 if (self.scope.finalPage > self.scope.currentPage) {
                     self.scope.currentPage++;
-                }   
+                }
             }.bind(self);
 
             $scope.previouscallback = function() {
@@ -35,7 +35,7 @@
             //self invoked to load 20 movies on page load
             // - On page load, you should display first 20 movies, 
             // ordered alphabetically by title.
-            (function() {
+            var loadMoviesOnInit = function() {
                 movieModelServices.getAllMovies(commonConstants.numberMoviesPageLoad)
                     .then(function(data) {
                         $scope.movieList = data.movies;
@@ -44,49 +44,57 @@
                         $scope.totalMoviesCount = data.totalMoviesCount;
                         $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
                     });
-            })();
+            };
+
+            loadMoviesOnInit();
+
+            //exposing the callback functions for testing
+            self.getAllMoviesSuccess = function(data) {
+
+                //on each call we clear the errors
+                //if we have more errors they will be loaded on the result
+                if ($scope.errorMessage && !data.errorMessage) {
+                    $scope.errorMessage = '';
+                }
+
+                $scope.movieList = data.movies;
+                $scope.totalMoviesCount = data.totalMoviesCount;
+
+                if (searchPhrase) {
+                    $scope.totalfilteredMovies = data.totalfilteredMovies;
+                    $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
+                } else {
+                    $scope.totalfilteredMovies = data.totalMoviesCount;
+                    $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
+                }
+
+                if ($scope.totalfilteredMovies < $scope.list) {
+
+                    $scope.list = $scope.totalfilteredMovies;
+                }
+            };
+            
+            //exposing the callback functions for testing
+            self.getAllMoviesError = function(data) {
+                requestSent = false;
+
+                //when error received we handle it
+                if (data.errorMessage) {
+                    $scope.errorMessage = data.errorMessage;
+                    $scope.movieList = [];
+                }
+            };
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
 
                 if (searchPhrase.length < 3) {
                     searchPhrase = '';
                 }
-                
+
                 if (searchPhrase.length > 2 || searchPhrase === '') {
-                    
+
                     movieModelServices.getAllMovies(list, currentPage, searchPhrase)
-                        .then(function(data) {
-
-                            //on each call we clear the errors
-                            //if we have more errors they will be loaded on the result
-                            if ($scope.errorMessage && !data.errorMessage) {
-                                $scope.errorMessage = '';
-                            }
-
-                            $scope.movieList = data.movies;
-                            $scope.totalMoviesCount = data.totalMoviesCount;
-
-                            if (searchPhrase) {
-                                $scope.totalfilteredMovies = data.totalfilteredMovies;
-                                $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
-                            } else {
-                                $scope.totalfilteredMovies = data.totalMoviesCount;
-                                $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
-                            }
-
-                            if ($scope.totalfilteredMovies < $scope.list) {
-
-                                $scope.list = $scope.totalfilteredMovies;
-                            }
-                        }, function(data) {
-                            requestSent = false;
-
-                            //when error received we handle it
-                            if (data.errorMessage) {
-                                $scope.errorMessage = data.errorMessage;
-                                $scope.movieList = [];
-                            }
-                        });
+                        .then(self.getAllMoviesSuccess, self.getAllMoviesError);
                 }
             };
 
@@ -124,7 +132,7 @@
                 if (newVal > $scope.totalMoviesCount) {
                     $scope.list = $scope.totalMoviesCount;
                 }
-                
+
                 //if search phrase valid then update $scope.list
                 if ($scope.searchPhrase && $scope.searchPhrase.length && $scope.searchPhrase.length > 2) {
                     if ($scope.list > $scope.totalfilteredMovies && $scope.totalfilteredMovies > 0) {
@@ -135,23 +143,23 @@
                 //do not request final page many times
                 //optimisation for uneeded calls
                 if (oldVal !== newVal) {
-                    
+
                     if (newVal && oldVal &&
-                        (newVal > $scope.totalfilteredMovies && oldVal === $scope.totalfilteredMovies  ||
-                         newVal >= $scope.totalfilteredMovies && oldVal >= $scope.totalfilteredMovies)) {
+                        (newVal > $scope.totalfilteredMovies && oldVal === $scope.totalfilteredMovies ||
+                            newVal >= $scope.totalfilteredMovies && oldVal >= $scope.totalfilteredMovies)) {
                         return;
                     }
 
                     //when no change do not update
-                    if (newVal === oldVal){
+                    if (newVal === oldVal) {
                         return;
                     }
                     proccessMovies(newVal, $scope.currentPage, $scope.searchPhrase, false, 'list');
-                } 
+                }
             });
 
             $scope.$watch('currentPage', function(newVal, oldVal) {
-                
+
                 if (!validationServices.isNumeric(newVal)) {
                     $scope.currentPage = 1;
                     return;

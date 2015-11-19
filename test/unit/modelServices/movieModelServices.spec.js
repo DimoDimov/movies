@@ -141,11 +141,11 @@ describe("movieModelServices", function() {
     });   
 });
 
-//-------------Error Handling And Logging Tests------------
+//-------------Error Handling And Error Logging Tests------------
 
 //testing console.warn or in real life test the Logger
 describe("When no data return console.warn (Log the problem)", function() {
-    var $httpBackend,
+    var movieAPIServices,
         movieAPIServicesSpy,
         deferred,
         movieModelServicesSpy,
@@ -192,7 +192,7 @@ describe("When no data return console.warn (Log the problem)", function() {
 
 //when rejected data from API service should be rejected from the movieModelService
 describe("Should reject data from movieModelService, when it was rejected by API service", function() {
-    var $httpBackend,
+    var movieAPIServices,
         movieAPIServicesSpy,
         deferred,
         movieModelServicesSpy,
