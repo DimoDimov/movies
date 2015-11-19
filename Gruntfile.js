@@ -245,7 +245,7 @@ module.exports = function(grunt) {
             unit: {
                 configFile: path.resolve('karma.conf.js'),
                 // background: true,
-                singleRun: true
+                //singleRun: true
             }
         },
 

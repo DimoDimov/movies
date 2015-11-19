@@ -49,6 +49,7 @@
 
                                     deferred.resolve(data);
                                 } else {
+                                    deferred.resolve(data);
                                     //we can save and log the problem for history and error tracking purposes
                                     console.warn("Error in movieModelServices _getAllMovies");
                                 }

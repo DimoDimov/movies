@@ -1,4 +1,5 @@
 spyOnAngularService = function (service, methodName, deferred) {
+
 	return spyOn(service, methodName).and.returnValue(deferred.promise);
 };
 

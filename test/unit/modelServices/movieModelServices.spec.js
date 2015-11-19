@@ -138,5 +138,100 @@ describe("movieModelServices", function() {
                 $rootScope.$digest();   
             }).toThrow();                   
         });
+    });   
+});
+
+//-------------Error Handling And Logging Tests------------
+
+//testing console.warn or in real life test the Logger
+describe("When no data return console.warn (Log the problem)", function() {
+    var $httpBackend,
+        movieAPIServicesSpy,
+        deferred,
+        movieModelServicesSpy,
+        factory,
+        $rootScope,
+        $q;
+
+
+    beforeEach(function() {
+        module.apply(module, appDep.TestDependencies);
+        inject(function($injector) {
+            $rootScope = $injector.get('$rootScope');
+            $q = $injector.get('$q');
+            factory = $injector.get('movieModelServices');
+            movieModelServicesSpy = spyOn(factory, 'getAllMovies').and.callThrough();
+            //movieModelServicesSpy.and.callThrough();
+
+            deferred = $q.defer();
+            movieAPIServices = $injector.get('movieAPIServices');
+            movieAPIServicesSpy = spyOnAngularService(movieAPIServices, 'getAllMovies', deferred);
+            
+            deferred.resolve(null);
+        });
+
+        consoneWarnSpy = spyOn(console, 'warn');
+    });
+
+    it("Should console.warn that no data returned by the server", function() {
+        maxList = 20;
+        page = 1;
+        searchPhrase = "";
+        factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {
+   
+            expect(movieAPIServicesSpy).toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalledWith("Error in movieModelServices _getAllMovies"); 
+            expect(data).toBeNull();            
+        },
+        function (argument) {
+        });
+        $rootScope.$digest();  
+    });
+});
+
+
+//testing console.warn or in real life test the Logger
+describe("When no data return console.warn (Log the problem)", function() {
+    var $httpBackend,
+        movieAPIServicesSpy,
+        deferred,
+        movieModelServicesSpy,
+        factory,
+        $rootScope,
+        $q;
+
+
+    beforeEach(function() {
+        module.apply(module, appDep.TestDependencies);
+        inject(function($injector) {
+            $rootScope = $injector.get('$rootScope');
+            $q = $injector.get('$q');
+            factory = $injector.get('movieModelServices');
+            movieModelServicesSpy = spyOn(factory, 'getAllMovies').and.callThrough();
+            //movieModelServicesSpy.and.callThrough();
+
+            deferred = $q.defer();
+            movieAPIServices = $injector.get('movieAPIServices');
+            movieAPIServicesSpy = spyOnAngularService(movieAPIServices, 'getAllMovies', deferred);
+            
+            deferred.reject(null);
+        });
+
+        consoneWarnSpy = spyOn(console, 'warn');
+    });
+
+    it("Should console.warn that no data returned by the server", function() {
+        maxList = 20;
+        page = 1;
+        searchPhrase = "";
+        factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {  
+
+        },
+        function (data) {
+            expect(movieAPIServicesSpy).toHaveBeenCalled();
+            expect(data).toBeNull();     
+        });
+        $rootScope.$digest();  
     });
 });

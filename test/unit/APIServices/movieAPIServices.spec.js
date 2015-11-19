@@ -152,4 +152,40 @@ describe("APIService", function() {
             $httpBackend.flush();
         });
     });
+    
+    //testing console.warn or in real life test the Logger
+    describe("When no data return console.warn (Log the problem)", function() {
+        beforeEach(function() {
+            module.apply(module, appDep.TestDependencies);
+
+            inject(function($injector) {
+                $httpBackend = $injector.get('$httpBackend');
+                movieAPIServices = $injector.get('movieAPIServices');
+            });
+
+            $httpBackend.when('GET', '/api/movies?list=20&page=1&q=')
+                .respond(function (method, url, data, headers) {
+                    return [200, null];
+                });
+
+            consoneWarnSpy = spyOn(console, 'warn');
+        });
+
+        it("Should console.warn that no data returned by the server", function() {
+            maxList = 20;
+            page = 1;
+            searchPhrase = "";
+
+            movieAPIServices.getAllMovies(maxList, page, searchPhrase)
+                .then(function(data, status) {
+                    expect(console.warn).toHaveBeenCalled();
+                    expect(console.warn).toHaveBeenCalledWith("Error in movieAPIServices _getAllMovies");
+                    expect(data).toBeNull();
+                },
+                function (data, status) {
+                });
+
+            $httpBackend.flush();
+        });
+    });
 });
