@@ -149,7 +149,7 @@ describe("When no data return console.warn (Log the problem)", function() {
         movieAPIServicesSpy,
         deferred,
         movieModelServicesSpy,
-        factory,
+        movieModelServices,
         $rootScope,
         $q;
 
@@ -159,8 +159,8 @@ describe("When no data return console.warn (Log the problem)", function() {
         inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $q = $injector.get('$q');
-            factory = $injector.get('movieModelServices');
-            movieModelServicesSpy = spyOn(factory, 'getAllMovies').and.callThrough();
+            movieModelServices = $injector.get('movieModelServices');
+            movieModelServicesSpy = spyOn(movieModelServices, 'getAllMovies').and.callThrough();
             //movieModelServicesSpy.and.callThrough();
 
             deferred = $q.defer();
@@ -170,18 +170,17 @@ describe("When no data return console.warn (Log the problem)", function() {
             deferred.resolve(null);
         });
 
-        consoneWarnSpy = spyOn(console, 'warn');
+        consoleWarnSpy = spyOn(console, 'warn');
     });
 
     it("Should console.warn that no data returned by the server", function() {
         maxList = 20;
         page = 1;
         searchPhrase = "";
-        factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {
-   
+        movieModelServices.getAllMovies(maxList, page, searchPhrase).then(function (data) {
             expect(movieAPIServicesSpy).toHaveBeenCalled();
-            expect(console.warn).toHaveBeenCalled();
-            expect(console.warn).toHaveBeenCalledWith("Error in movieModelServices _getAllMovies"); 
+            expect(consoleWarnSpy).toHaveBeenCalled();
+            expect(consoleWarnSpy).toHaveBeenCalledWith("Error in movieModelServices _getAllMovies"); 
             expect(data).toBeNull();            
         },
         function (argument) {
@@ -191,13 +190,13 @@ describe("When no data return console.warn (Log the problem)", function() {
 });
 
 
-//testing console.warn or in real life test the Logger
-describe("When no data return console.warn (Log the problem)", function() {
+//when rejected data from API service should be rejected from the movieModelService
+describe("Should reject data from movieModelService, when it was rejected by API service", function() {
     var $httpBackend,
         movieAPIServicesSpy,
         deferred,
         movieModelServicesSpy,
-        factory,
+        movieModelServices,
         $rootScope,
         $q;
 
@@ -207,9 +206,8 @@ describe("When no data return console.warn (Log the problem)", function() {
         inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $q = $injector.get('$q');
-            factory = $injector.get('movieModelServices');
-            movieModelServicesSpy = spyOn(factory, 'getAllMovies').and.callThrough();
-            //movieModelServicesSpy.and.callThrough();
+            movieModelServices = $injector.get('movieModelServices');
+            movieModelServicesSpy = spyOn(movieModelServices, 'getAllMovies').and.callThrough();
 
             deferred = $q.defer();
             movieAPIServices = $injector.get('movieAPIServices');
@@ -217,15 +215,13 @@ describe("When no data return console.warn (Log the problem)", function() {
             
             deferred.reject(null);
         });
-
-        consoneWarnSpy = spyOn(console, 'warn');
     });
 
-    it("Should console.warn that no data returned by the server", function() {
+    it("Should reject data from API service", function() {
         maxList = 20;
         page = 1;
         searchPhrase = "";
-        factory.getAllMovies(maxList, page, searchPhrase).then(function (data) {  
+        movieModelServices.getAllMovies(maxList, page, searchPhrase).then(function (data) {  
 
         },
         function (data) {
