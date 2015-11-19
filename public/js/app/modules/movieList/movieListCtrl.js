@@ -42,7 +42,7 @@
                         $scope.list = commonConstants.numberMoviesPageLoad;
                         $scope.totalfilteredMovies = data.totalMoviesCount;
                         $scope.totalMoviesCount = data.totalMoviesCount;
-                        $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
+                        $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list) || 1;
                     });
             };
 
@@ -65,10 +65,10 @@
 
                 if ($scope.searchPhrase) {
                     $scope.totalfilteredMovies = data.totalfilteredMovies;
-                    $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list);
+                    $scope.finalPage = Math.ceil(data.totalfilteredMovies / $scope.list) || 1;
                 } else {
                     $scope.totalfilteredMovies = data.totalMoviesCount;
-                    $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list);
+                    $scope.finalPage = Math.ceil(data.totalMoviesCount / $scope.list) || 1;
                 }
 
                 if ($scope.totalfilteredMovies < $scope.list) {
@@ -162,7 +162,7 @@
             });
 
             $scope.$watch('currentPage', function(newVal, oldVal) {
-
+            
                 if (!validationServices.isNumeric(newVal)) {
                     $scope.currentPage = 1;
                     return;
