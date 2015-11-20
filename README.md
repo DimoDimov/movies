@@ -24,21 +24,29 @@ Technical Details:
 
 
 Steps to Follow To Run The Project:
+
 1. Copy the project to a project directory.
+
 2. Make sure npm is up to date – Start Git Bash terminal and copy the following “npm update -g npm” 
+
 3. Install Grunt globally – Start Git Bash terminal and copy the following “npm install -g grunt-cli”
+
 4. Install Protractor globally – Start Git Bash terminal and copy the following “npm install -g protractor”
+
 5. Open Git bash terminal and run the command “npm install” – to instal npm modules, bower modules will install automatically. Selenium will check to updates automatically. All necessary libraries will be copied to the project.
 6. Start two Git Bash terminals from the project directory.
+
 7. Run the command “grunt start” – to start the server from the first Git Bash terminal.
+
 8. From the second Git Bash terminal run the command “grunt test” – to start all the tests.
+
 9. Code coverage of the test – summary on the console. The complete reports are in ‘test-coverage’ folder
 
 Approach
-	Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
-	Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
 
-
+Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
+	
+Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
 
 Approach
 	Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
