@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     appDep.Filters.filter('filterActors', ['validationServices',
         function(validationServices) {
 

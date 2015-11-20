@@ -1,8 +1,11 @@
 (function() {
+    'use strict';
     //we are breaking down the dependencies for mid and huge applications
     //in the current example we will just add all the dependecies in a bulk
-    var self = this;
-
+    
+    //in 'strict mode' used within IIF the 'this' key word was 
+    //activley replaced by self. So strange.
+    //setting global variable
     self.appDep = self.appDep || {};
 
     //namespacing

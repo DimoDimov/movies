@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     //Declaring routes that are being used by the API Services
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly

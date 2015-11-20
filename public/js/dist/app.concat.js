@@ -1,8 +1,11 @@
 (function() {
+    'use strict';
     //we are breaking down the dependencies for mid and huge applications
     //in the current example we will just add all the dependecies in a bulk
-    var self = this;
-
+    
+    //in 'strict mode' used within IIF the 'this' key word was 
+    //activley replaced by self. So strange.
+    //setting global variable
     self.appDep = self.appDep || {};
 
     //namespacing
@@ -36,8 +39,9 @@
             'app.tests'
         ]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     // Organizing the code
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js
@@ -95,8 +99,9 @@
         });
     }]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     // API service provider. Responsible for declaring and offering 
     // services to the backend using $http. It handles and saves (logs) 
     // any errors related ot backend requests.
@@ -106,6 +111,7 @@
     // any data with the backend. It offers to the controllers in the application reusable logic
     // for saving and sharing temporary data models saved in the model services.
     // randomController => modelService => APIService => backend request. 
+
     appDep.Services.factory('movieAPIServices',
 
         //inline array annotation. Best way for minification approach
@@ -170,8 +176,9 @@
             }
         ]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     //Declaring routes that are being used by the API Services
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly
@@ -185,8 +192,9 @@
         numberMoviesPageLoad: 20,
     });
 })();
-;(function() {
 
+(function() {
+    'use strict';
     appDep.Filters.filter('filterActors', ['validationServices',
         function(validationServices) {
 
@@ -228,8 +236,9 @@
         }
     ]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
     //any errors related ot backend requests.
@@ -299,8 +308,9 @@
             }
         ]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     appDep.Services.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
@@ -346,7 +356,7 @@
                 throw "Please provide valid integer for page number.";
             }
 
-            //the pafenumber int should be >= 1
+            //the pagenumber int should be >= 1
             pageNumber = pageNumber < 1 || pageNumber === undefined ? 1 : pageNumber;
 
             //we make sure we have a int for pageNumber
@@ -367,8 +377,9 @@
         };
     }]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     appDep.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) {
@@ -399,7 +410,6 @@
                     self.scope.currentPage--;
                 }
             }.bind(self);
-
 
             //self invoked to load 20 movies on page load
             // - On page load, you should display first 20 movies, 
@@ -448,8 +458,7 @@
             
             //exposing the callback functions for testing
             var getAllMoviesError = function(data) {
-                requestSent = false;
-
+                
                 //when error received we handle it
                 if (data.errorMessage) {
                     $scope.errorMessage = data.errorMessage;
@@ -458,7 +467,6 @@
             };
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
-
                 if (searchPhrase.length < 3) {
                     searchPhrase = '';
                 }
@@ -553,8 +561,9 @@
         }
     ]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     appDep.Directives.directive('movieList', function() {
         return {
             restrict: 'E',
@@ -567,8 +576,9 @@
     });
 
 })();
-;(function() {
 
+(function() {
+    'use strict';
     appDep.Controllers.controller('paginationCtrl', ['$scope', 'paginationService',
         function($scope, paginationService) {
 
@@ -583,7 +593,9 @@
         }
     ]);
 })();
-;(function() {
+
+(function() {
+    'use strict';
     appDep.Directives.directive('paginationDir', [
         function() {
             return {
@@ -608,8 +620,9 @@
         }
     ]);
 })();
-;(function() {
 
+(function() {
+    'use strict';
     appDep.Services.factory('paginationService', ['validationServices',
         function(validationServices) {
 
@@ -618,37 +631,39 @@
                 var _maxCount = maxCount;
                 var _counter = current;
 
-                this.nextcallback = nextcallback;
-                this.previouscallback = previouscallback;
+                var self = this;
 
-                if (!validationServices.isFunction(this.nextcallback) ||
-                    !validationServices.isFunction(this.previouscallback)) {
+                self.nextcallback = nextcallback;
+                self.previouscallback = previouscallback;
+
+                if (!validationServices.isFunction(self.nextcallback) ||
+                    !validationServices.isFunction(self.previouscallback)) {
                     throw "Please provide a next and previous callback functions";
                 }
 
-                this.max = function() {
+                self.max = function() {
                     return _maxCount;
                 };
-                this.current = function() {
+                self.current = function() {
                     return _counter;
                 };
-                this.next = function() {
-                    if (this.hasNext()) {
+                self.next = function() {
+                    if (self.hasNext()) {
                         _counter++;
                         nextcallback();
 
                     }
                 };
-                this.previous = function() {
-                    if (this.hasPrevious()) {
+                self.previous = function() {
+                    if (self.hasPrevious()) {
                         _counter--;
-                        this.previouscallback();
+                        self.previouscallback();
                     }
                 };
-                this.hasPrevious = function() {
+                self.hasPrevious = function() {
                     return _counter > 1;
                 };
-                this.hasNext = function() {
+                self.hasNext = function() {
                     return _counter < _maxCount;
                 };
             };

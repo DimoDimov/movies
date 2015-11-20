@@ -2,139 +2,12 @@ var path = require('path');
 
 module.exports = function(grunt) {
 
-    // Project configuration.++
+    // Project configuration.
     grunt.initConfig({
         //package Json
         pkg: grunt.file.readJSON('package.json'),
-        'node-inspector': {
-            'server-unit': {
-                options: {
-                    'preload': false,
-                    'hidden': ['node_modules', 'bower_components', 'module.js'],
-                    'stack-trace-limit': 4,
-                }
-            },
-            'dev': {
-                options: {
-                    'preload': false,
-                    'hidden': ['node_modules'],
-                    'stack-trace-limit': 4,
-                }
-            }
-        },
 
-        shell: {
-            'server-unit': {
-                options: {
-                    stdout: true
-                },
-                //windows debug
-                command: "node-debug c:\\Users\\Dimo\\AppData\\Roaming\\npm\\node_modules\\grunt-cli\\bin\\grunt server-unit"
-            },
-            'dev': {
-                options: {
-                    stdout: true
-                },
-                command: "node-debug --hidden node_modules --no-preload " + path.resolve('/server/index.js')
-            },
-            'e2e': {
-                options: {
-                    stdout: true
-                },
-                command: "protractor debug protractor.conf.js"
-            },
-        },
-
-        concurrent: {
-            'server-unit': {
-                tasks: ['node-inspector:server-unit', 'shell:server-unit'],
-                options: {
-                    logConcurrentOutput: true
-                }
-            },
-            'dev': {
-                tasks: ['node-inspector:dev', 'shell:dev'],
-                options: {
-                    logConcurrentOutput: true
-                }
-            },
-        },
-
-        //file manipulations - concatenation, minification, syntax validity checking
-        'concat': {
-            options: {
-                separator: ';'
-            },
-            distJS: {
-                src: [path.resolve('public/js/app/app-dependencies.js'), path.resolve('public/js/app/app.js'), path.resolve('public/js/app/**/*.js')],
-                dest: path.resolve('public/js/dist/app.concat.js'),
-            },
-            distCSS: {
-                src: [path.resolve('public/styles/app/**/*.css')],
-                dest: path.resolve('public/styles/dist/app.concat.css'),
-            }
-        },
-
-        //js minifier
-        'uglify': {
-            dist: {
-                src: [path.resolve('public/js/dist/app.concat.js')],
-                dest: path.resolve('public/js/dist/app.min.js'),
-            }
-        },
-
-        //css minifier
-        'cssmin': {
-            css: {
-                src: path.resolve('public/styles/dist/app.concat.css'),
-                dest: path.resolve('public/styles/dist/app.min.css')
-            }
-        },
-
-        //high quality code
-        'jshint': {
-            gruntfile: {
-                src: path.resolve('gruntfile.js')
-            },
-            test: [path.resolve('test/**/*.js')],
-            beforeconcat: [path.resolve('public/js/app/**/*.js'), path.resolve('server/**/*.js')],
-            afterconcat: [path.resolve('public/js/dist/**/*concat.js')],
-            //all: ['public/js/app/**/*.js', 'server/**/*.js'],
-            options: {
-                // options here to override JSHint defaults
-                debug: false,
-                globals: {
-                    jQuery: true,
-                    console: true,
-                    module: true,
-                    document: true,
-                    curly: true,
-                    eqeqeq: true,
-                    eqnull: true,
-                    browser: true,
-                }
-            }
-        },
-
-
-        //set watchers on files
-        'watch': {
-            test: {
-                files: [path.resolve('test/**/*.js'), '!' + path.resolve('test/*-coverage/**/*')],
-                tasks: ['jshint:test'],
-            },
-            express: {
-                files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
-                tasks: ['start'],
-                options: {
-                    spawn: false,
-                    livereload: true,
-                    serverreload: true,
-                }
-            }
-        },
-
-        //set express server
+        //------------ Express Server Options ------------>
         'express': {
             options: {
                 // Override defaults here
@@ -158,6 +31,79 @@ module.exports = function(grunt) {
             }
         },
 
+        //------------ Front End Options - Concatenation, Minification, Syntax validity check ------------------------------>
+        //concatenates js and css files
+        'concat': {
+            options: {
+                //separator: ';'
+            },
+            distJS: {
+                src: [path.resolve('public/js/app/app-dependencies.js'), path.resolve('public/js/app/app.js'), path.resolve('public/js/app/**/*.js')],
+                dest: path.resolve('public/js/dist/app.concat.js'),
+            },
+            distCSS: {
+                src: [path.resolve('public/styles/app/**/*.css')],
+                dest: path.resolve('public/styles/dist/app.concat.css'),
+            }
+        },
+
+        //minifies the js files
+        'uglify': {
+            dist: {
+                src: [path.resolve('public/js/dist/app.concat.js')],
+                dest: path.resolve('public/js/dist/app.min.js'),
+            }
+        },
+
+        //minifies the css
+        'cssmin': {
+            css: {
+                src: path.resolve('public/styles/dist/app.concat.css'),
+                dest: path.resolve('public/styles/dist/app.min.css')
+            }
+        },
+
+        //high quality code
+        'jshint': {
+            gruntfile: {
+                src: path.resolve('gruntfile.js')
+            },
+            test: [path.resolve('test/**/*.js')],
+            beforeconcat: [path.resolve('public/js/app/**/*.js'), path.resolve('server/**/*.js')],
+            afterconcat: [path.resolve('public/js/dist/**/*concat.js')],
+            //all: ['public/js/app/**/*.js', 'server/**/*.js'],
+            options: {
+                // options here to override JSHint defaults
+                debug: true,
+                globals: {
+                    jQuery: true,
+                    console: true,
+                    module: true,
+                    document: true,
+                    curly: true,
+                    eqeqeq: true,
+                    eqnull: true,
+                    browser: true,
+                }
+            }
+        },
+
+        //set watchers on files for running tasks on file change
+        'watch': {
+            test: {
+                files: [path.resolve('test/**/*.js'), '!' + path.resolve('test/*-coverage/**/*')],
+                tasks: ['jshint:test'],
+            },
+            express: {
+                files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
+                tasks: ['start'],
+                options: {
+                    spawn: false,
+                    livereload: true,
+                    serverreload: true,
+                }
+            }
+        },
 
         //clean folders pre-build
         'clean': {
@@ -175,17 +121,15 @@ module.exports = function(grunt) {
             'server-coverage': {
                 src: [path.resolve('test-coverage/server-coverage/**/*')],
             },
-            'e2e-coverage': {
-                src: [path.resolve('test-coverage/e2e-coverage/**/*')],
-            }
         },
 
+        //updates my libraries
         'bowercopy': {
             options: {
                 // Task-specific options go here 
             },
 
-            // Javascript 
+            // js
             jsfiles: {
                 options: {
                     srcPrefix: path.resolve('bower_components/'),
@@ -202,6 +146,7 @@ module.exports = function(grunt) {
                 }
             },
 
+            //css
             stylefiles: {
                 options: {
                     srcPrefix: path.resolve('bower_components/'),
@@ -214,13 +159,9 @@ module.exports = function(grunt) {
             }
         },
 
-        'copy': {
-           
-        },
+        //>---------------Testing--------------------------------------->
 
-        //----------------Testing----------------->
-
-        //----------------Protractor-------------
+        //----------------Protractor----------------------------------->
        
         //Set Automation Tests
         'protractor': {
@@ -268,41 +209,98 @@ module.exports = function(grunt) {
                 options: {
                     coverageFolder: path.resolve('test-coverage/server-coverage'), // will check both coverage folders and merge the coverage results
                     check: {
-                        lines: 90,
-                        statements: 90
+                        lines: 95,
+                        statements: 95
                     }
                 }
             }
-        }
+        },
         //<-------Mocha Coverage -------------/
 
+        //<---------------Testing---------------------------------------<
+
+
+        //-------------------DEBUG Add Ons------------------------------>
+        'node-inspector': {
+            'server-unit': {
+                options: {
+                    'preload': false,
+                    'hidden': ['node_modules', 'bower_components', 'module.js'],
+                    'stack-trace-limit': 4,
+                }
+            },
+            'dev': {
+                options: {
+                    'preload': false,
+                    'hidden': ['node_modules'],
+                    'stack-trace-limit': 4,
+                }
+            }
+        },
+
+        shell: {
+            'server-unit': {
+                options: {
+                    stdout: true
+                },
+                //windows debug
+                command: "node-debug c:\\Users\\Dimo\\AppData\\Roaming\\npm\\node_modules\\grunt-cli\\bin\\grunt server-unit"
+            },
+            'dev': {
+                options: {
+                    stdout: true
+                },
+                command: "node-debug --hidden node_modules --no-preload " + path.resolve('server/index.js')
+            },
+            'e2e': {
+                options: {
+                    stdout: true
+                },
+                command: "protractor debug protractor.conf.js"
+            },
+        },
+
+        concurrent: {
+            'server-unit': {
+                tasks: ['node-inspector:server-unit', 'shell:server-unit'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            },
+            'dev': {
+                tasks: ['node-inspector:dev', 'shell:dev'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            },
+        },
+        //-------------------DEBUG Add Ons------------------------------<
     });
-
-    //debugger tasks
-    grunt.loadNpmTasks('grunt-node-inspector');
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-shell');
-
-
+    
+    //-------------------Server----------------------------------------->
+    grunt.loadNpmTasks('grunt-express-server');
+    
+    //-------------------Front End------------------------------------>
     grunt.loadNpmTasks('grunt-contrib-concat');
 
     // uglifiers/minifiers
     grunt.loadNpmTasks('grunt-contrib-uglify');
+
     grunt.loadNpmTasks('grunt-css');
 
     //quality code watchers
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
+    //-----------File and Folder Manipulations---------------------------->
 
-    grunt.loadNpmTasks('grunt-express-server');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    //front end version control managment (migght be applied to more libraries)
     grunt.loadNpmTasks('grunt-bowercopy');
 
-    grunt.loadNpmTasks('grunt-contrib-copy');
+
+    //------------------Testing Tools------------------------------------>
 
     //Finally we need a Selenium server. If we don't have one set up already, we can install a local standalone version with this command:
     //./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update
@@ -310,15 +308,27 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.loadNpmTasks('grunt-debug');
     grunt.loadNpmTasks('grunt-istanbul');
 
     grunt.loadNpmTasks('grunt-mocha-istanbul');
 
-    //-------------------BUNDLES
+    //---------------Debug Tasks------------------------------------------->
+
+    grunt.loadNpmTasks('grunt-debug');
+
+    grunt.loadNpmTasks('grunt-node-inspector');
+
+    grunt.loadNpmTasks('grunt-concurrent');
+
+    grunt.loadNpmTasks('grunt-shell');
+
+    //-------------------BUNDLES------------------------------------------>
 
     //updates front end libraries, cleans folder before the copy
     grunt.registerTask('update-frontendlibs', ['clean:lib', 'bowercopy:jsfiles', 'bowercopy:stylefiles']);
+
+    //>-----------Test Bundle------------------------------------------>
+
 
     //------------E2E Tests ----------------
 
@@ -340,16 +350,18 @@ module.exports = function(grunt) {
 
     //grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
 
-    //------------Test Bundle-----------------------
+    //<-----------Test Bundle------------------------------------------<
 
     //'grunt test' command will check the js files for syntax and 
-    //after this it all the test methods will be run in consecutive bundle
+    //all test methods will be run in consecutive bundle
     grunt.registerTask('test', ['jshint', 'e2e-test', 'unit-test', 'server-test']);
 
     //'grunt rebuild' command will activte the 'rebuild' bundle of processes
-    //rebuild bundle - it cleans 'public/js/app/dist' and prepares the 'dist' directory
-    // for the new js bunbled files. The code is being tested for errors
-    //with jshint, after waht all file are being concatenated into one and then minified;
+    //rebuild bundle - it cleans 'public/js/dist' and 'public/css/dist' and 
+    //prepares the 'dist' directories
+    // for the new js and css bunbled files. The code is being tested for errors
+    //with jshint, after what all js and css files are being concatenated into bundles
+    // after this are being tested again and at the end - minified;
     grunt.registerTask('rebuild', ['clean:dist', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'cssmin']);
 
     //'grunt start' command will activte the 'start' bundle of processes
@@ -358,5 +370,7 @@ module.exports = function(grunt) {
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
     grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
 
+
+    //debugging
     grunt.registerTask('debug-dev', ['shell:dev']);
 };

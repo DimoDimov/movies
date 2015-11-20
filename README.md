@@ -22,33 +22,29 @@ Technical Details:
 
 10. GitHub account - https://github.com/DimoDimov/movies
 
+
 Steps to Follow To Run The Project:
+1. Copy the project to a project directory.
+2. Make sure npm is up to date – Start Git Bash terminal and copy the following “npm update -g npm” 
+3. Install Grunt globally – Start Git Bash terminal and copy the following “npm install -g grunt-cli”
+4. Install Protractor globally – Start Git Bash terminal and copy the following “npm install -g protractor”
+5. Open Git bash terminal and run the command “npm install” – to instal npm modules, bower modules will install automatically. Selenium will check to updates automatically. All necessary libraries will be copied to the project.
+6. Start two Git Bash terminals from the project directory.
+7. Run the command “grunt start” – to start the server from the first Git Bash terminal.
+8. From the second Git Bash terminal run the command “grunt test” – to start all the tests.
+9. Code coverage of the test – summary on the console. The complete reports are in ‘test-coverage’ folder
 
-1. Copy the project to a project directory
+Approach
+	Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
+	Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
 
-2. Operating System:
 
-2.1 If you are using Windows leave it like this
 
-2.2 If you are using Unix based OS edit the “package.json” and replace the line
+Approach
+	Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
+	Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
 
-"postinstall": "bash -c 'node_modules/protractor/bin/webdriver-manager update'"
 
-With
-
-"postinstall": "node_modules/protractor/bin/webdriver-manager update"
-
-3. Open Git bash terminal and run the command “npm install” – to instal npm modules
-
-4. Run the command “bower install” – to instal bower components
-
-5. Run the command “grunt update-frontendlibs” – to update the front end libraries
-
-6. Run the command “grunt rebuild” – to rebuild the project
-
-7. Run the command “grunt start” – to start the server
-
-8. Open another Git bash terminal and Run the command “grunt test” – to start all the tests (for e2e testing we need to have the server up)
 
 Structure
 

@@ -1,22 +1,26 @@
-var path = require('path');
-var express = require('express');
+(function() {
+    'use strict';
 
-var app = express();
+    var path = require('path');
+    var express = require('express');
 
-app.use(express.static(path.resolve('public')));
+    var app = express();
 
-require(path.resolve('server/config/environment.js'))(app, express);
+    app.use(express.static(path.resolve('public')));
 
-//Films, 
-//fs.readFile OR fs.readFileSync is better if data of the file is changing.
-//For the purpose of this example require will be used. The result will be cached!
+    require(path.resolve('server/config/environment.js'))(app, express);
 
-require(path.resolve('server/config/routes.js'))(app);
+    //Films, 
+    //fs.readFile OR fs.readFileSync is better if data of the file is changing.
+    //For the purpose of this example require will be used. The result will be cached!
 
-app.set('port', process.env.PORT || app.locals.routingConstants.port);
+    require(path.resolve('server/config/routes.js'))(app);
 
-app.listen(app.get('port'), function() {
-    console.log('App started on port ' + app.get('port'));
-});
+    app.set('port', process.env.PORT || app.locals.routingConstants.port);
 
-module.exports = app;
+    app.listen(app.get('port'), function() {
+        console.log('App started on port ' + app.get('port'));
+    });
+
+    module.exports = app;
+})();

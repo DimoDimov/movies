@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     appDep.Directives.directive('movieList', function() {
         return {
             restrict: 'E',

@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
     appDep.Directives.directive('paginationDir', [
         function() {
             return {

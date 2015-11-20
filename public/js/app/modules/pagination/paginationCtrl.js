@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     appDep.Controllers.controller('paginationCtrl', ['$scope', 'paginationService',
         function($scope, paginationService) {
 

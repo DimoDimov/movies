@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     //API service provider. Responsible for declaring and offering 
     //services to the backend using $http. It handles and saves (logs) 
     //any errors related ot backend requests.

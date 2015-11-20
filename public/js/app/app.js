@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     // Organizing the code
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js

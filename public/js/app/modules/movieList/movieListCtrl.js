@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     appDep.Controllers.controller('movieListCtrl', [
         '$scope', 'movieModelServices', 'commonConstants', 'validationServices',
         function($scope, movieModelServices, commonConstants, validationServices) {
@@ -30,7 +30,6 @@
                     self.scope.currentPage--;
                 }
             }.bind(self);
-
 
             //self invoked to load 20 movies on page load
             // - On page load, you should display first 20 movies, 
@@ -79,8 +78,7 @@
             
             //exposing the callback functions for testing
             var getAllMoviesError = function(data) {
-                requestSent = false;
-
+                
                 //when error received we handle it
                 if (data.errorMessage) {
                     $scope.errorMessage = data.errorMessage;
@@ -89,7 +87,6 @@
             };
 
             var proccessMovies = function(list, currentPage, searchPhrase, forceList) {
-
                 if (searchPhrase.length < 3) {
                     searchPhrase = '';
                 }

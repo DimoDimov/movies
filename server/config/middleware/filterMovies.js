@@ -1,6 +1,7 @@
 //------ All Input Data Validation ------------
 
-(function(module) {
+(function() {
+    'use strict';
     var exports = module.exports;
 
     //-------------------- FilterResultsByPhrase --------------------
@@ -64,4 +65,4 @@
     exports.byPhrase = _filterByPhrase;
     exports.byPageAndList = _filterByPageAndList;
 
-})(module);
+})();

@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     appDep.Services.factory('validationServices', [function() {
         //isNumeric tests used by jQuery project http://run.plnkr.co/plunks/93FPpacuIcXqqKMecLdk/
         //more details: http://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric/1830844#1830844
@@ -45,7 +45,7 @@
                 throw "Please provide valid integer for page number.";
             }
 
-            //the pafenumber int should be >= 1
+            //the pagenumber int should be >= 1
             pageNumber = pageNumber < 1 || pageNumber === undefined ? 1 : pageNumber;
 
             //we make sure we have a int for pageNumber

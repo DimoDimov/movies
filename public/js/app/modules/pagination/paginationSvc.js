@@ -1,5 +1,5 @@
 (function() {
-
+    'use strict';
     appDep.Services.factory('paginationService', ['validationServices',
         function(validationServices) {
 
@@ -8,37 +8,39 @@
                 var _maxCount = maxCount;
                 var _counter = current;
 
-                this.nextcallback = nextcallback;
-                this.previouscallback = previouscallback;
+                var self = this;
 
-                if (!validationServices.isFunction(this.nextcallback) ||
-                    !validationServices.isFunction(this.previouscallback)) {
+                self.nextcallback = nextcallback;
+                self.previouscallback = previouscallback;
+
+                if (!validationServices.isFunction(self.nextcallback) ||
+                    !validationServices.isFunction(self.previouscallback)) {
                     throw "Please provide a next and previous callback functions";
                 }
 
-                this.max = function() {
+                self.max = function() {
                     return _maxCount;
                 };
-                this.current = function() {
+                self.current = function() {
                     return _counter;
                 };
-                this.next = function() {
-                    if (this.hasNext()) {
+                self.next = function() {
+                    if (self.hasNext()) {
                         _counter++;
                         nextcallback();
 
                     }
                 };
-                this.previous = function() {
-                    if (this.hasPrevious()) {
+                self.previous = function() {
+                    if (self.hasPrevious()) {
                         _counter--;
-                        this.previouscallback();
+                        self.previouscallback();
                     }
                 };
-                this.hasPrevious = function() {
+                self.hasPrevious = function() {
                     return _counter > 1;
                 };
-                this.hasNext = function() {
+                self.hasNext = function() {
                     return _counter < _maxCount;
                 };
             };

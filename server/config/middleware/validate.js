@@ -1,6 +1,7 @@
 //------ All Input Data Validation ------------
 
-(function (module) {
+(function () {
+    'use strict';
 	var exports = module.exports;
 
 	//------------ Helpers ------------
@@ -61,4 +62,4 @@
     exports.inputParams = _validateInputParams;
     exports.isNumeric = _isNumeric;
 
-})(module);
+})();
