@@ -126,7 +126,9 @@
                     params.page = page;
                     params.q = searchPhrase;
 
-                    $http.get(routingConstants.moviesAPI, {
+                    var getMovieListUrl = routingConstants.url + ':' + routingConstants.port + routingConstants.moviesAPI;
+
+                    $http.get(getMovieListUrl, {
                             params: params
                         })
                         .success(function(data, status, headers, config, statusText) {
