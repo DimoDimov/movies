@@ -122,7 +122,6 @@ describe("Movie list testing", function() {
 
         it("Should hide the custom error message", function() {
             existingEl = false;
-
             movieListPage.testCustomErrorMsg(expected, existingEl);
         });
 

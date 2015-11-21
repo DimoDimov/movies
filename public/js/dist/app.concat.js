@@ -90,8 +90,10 @@
         });
 
         $routeProvider.
-        when('/', {
-            templateUrl: '/js/app/htmlTemplates/movieListTemplate.html',
+        when('/', { 
+            templateUrl: function (routeParams) {
+                return '/js/app/htmlTemplates/movieListTemplate.html';
+            },
             controller: 'MainCtrl'
         }).
         otherwise({
@@ -185,7 +187,7 @@
     //Change of the routings will be easily updated for the whole application
     //White labeling or multitenancy friendly
     appDep.Constants.constant("routingConstants", {
-        url: "http://localhost",
+        url: "http://127.0.0.1",
         port: "8000",
         moviesAPI: "/api/movies"
     });

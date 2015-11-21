@@ -1,5 +1,3 @@
-//------ All Input Data Validation ------------
-
 (function() {
     'use strict';
     var exports = module.exports;
