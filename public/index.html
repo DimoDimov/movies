@@ -2,6 +2,9 @@
 <html lang="en" ng-app="app">
 
 <head>
+    <script>
+    document.write('<base href="' + document.location + '" />');
+    </script>
     <meta charset="UTF-8" name="viewport" content="width=device-width, user-scalable=no" />
     <title>Iceberg Search</title>
     <!--  Styles  -->
@@ -13,15 +16,13 @@
 <body>
     <!-- --------- SPA entry point ------------------- -->
     <div ng-view></div>
-    
     <!-- --------- Dependencies ------------------- -->
-    
     <!--  Scripts  -->
     <script src="js/lib/angular.js"></script>
     <script src="js/lib/angular-route.js"></script>
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/bootstrap.js"></script>
-     <script src="js/lib/neosavvy-javascript-angular-core.js"></script>
+    <script src="js/lib/neosavvy-javascript-angular-core.js"></script>
     <!-- LiveReload Script -->
     <!-- For Dev Purposes -->
     <script src="//localhost:35729/livereload.js"></script>

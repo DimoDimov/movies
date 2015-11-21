@@ -14,8 +14,7 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    port: 8000,
-                    bases: 'public',
+                    port: 8001,
                     script: path.resolve(__dirname, 'server/index.js'),
                 }
             },
@@ -28,7 +27,13 @@ module.exports = function(grunt) {
                 options: {
                     script: path.resolve(__dirname, 'path/to/test/server.js')
                 }
-            }
+            },
+            'e2e-coverage': {
+                options: {
+                    port: 8000,
+                    script: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented/server/index.js'),
+                }
+            },
         },
 
         //------------ Front End Options - Concatenation, Minification, Syntax validity check ------------------------------>
@@ -121,6 +126,70 @@ module.exports = function(grunt) {
             'server-coverage': {
                 src: [path.resolve(__dirname, 'test-coverage/server-coverage/**/*')],
             },
+            'e2e-coverage': {
+                src: [path.resolve(__dirname, 'test-coverage/e2e-coverage/**/*')],
+            },
+        },
+
+        copy: {
+            'e2e-coverage': {
+                options: {
+                    //srcPrefix: path.resolve(__dirname, 'server'),
+                    //destPrefix: path.resolve(__dirname, '/')
+                },
+                files: [
+                    // includes files that should not be instrumented for e2e coverage test reporting
+                    {
+                        cwd: path.resolve(__dirname, ''),
+                        expand: true,
+                        src: ['server/data.json', 'public/**', '!public/js/app/dist', '!public/js/app/**', '!public/styles/app/**'],
+                        dest: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented')
+                    },
+                ],
+            },
+        },
+
+        //instrument code for e2e coverage reports
+        instrument: {
+            files: ['server/**/*.js', 'public/js/dist/app.concat.js'],
+            options: {
+                cwd: path.resolve(__dirname, ''),
+                lazy: true,
+                basePath: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented')
+            }
+        },
+
+        protractor_coverage: {
+            options: {
+                collectorPort: 3001,
+                configFile: path.resolve(__dirname, "protractor.conf.js"), // Default config file
+                keepAlive: true, // If false, the grunt process stops when the test fails.
+                noColor: false, // If true, protractor will not use colors in its output.
+                coverageDir: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented'),
+
+                //coverage express server started on 9000
+                args: {
+                    baseUrl: 'http://localhost:9000'
+                }
+            },
+            chrome: {
+                options: {
+                    args: {
+                        baseUrl: 'http://localhost:3000/',
+                        // Arguments passed to the command
+                        'browser': 'chrome'
+                    }
+                }
+            },
+        },
+
+        makeReport: {
+            src: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented/*.json'),
+            options: {
+                type: 'html',
+                dir: path.resolve(__dirname, 'test-coverage/e2e-coverage/reports'),
+                print: 'detail'
+            }
         },
 
         //updates my libraries
@@ -162,7 +231,7 @@ module.exports = function(grunt) {
         //>---------------Testing--------------------------------------->
 
         //----------------Protractor----------------------------------->
-       
+
         //Set Automation Tests
         'protractor': {
             options: {
@@ -170,13 +239,14 @@ module.exports = function(grunt) {
                 keepAlive: true, // If false, the grunt process stops when the test fails. 
                 noColor: false, // If true, protractor will not use colors in its output. 
                 args: {
-                    // Arguments passed to the command 
+                    //baseUrl: 'http://localhost:8001'
                 }
             },
-            your_target: { // Grunt requires at least one target to run so we can simply put 'all: {}' here too. 
+            chrome: { // Grunt requires at least one target to run so we can simply put 'all: {}' here too. 
                 all: {
+                    //baseUrl: 'http://localhost:8001/',
                     //seleniumPort : 9000,
-                    baseUrl: 'http://localhost:9000'
+                    //baseUrl: 'http://localhost:9000'
                 }
             },
         },
@@ -190,7 +260,6 @@ module.exports = function(grunt) {
             }
         },
 
-
         //--------Mocha Coverage ------------->
         mocha_istanbul: {
             coverage: {
@@ -199,7 +268,7 @@ module.exports = function(grunt) {
                 options: {
                     // coverage: true,
                     coverageFolder: 'test-coverage/server-coverage',
-                    reportFormats: ['text','lcov','lcovonly']
+                    reportFormats: ['text', 'lcov', 'lcovonly']
                 }
             }
         },
@@ -276,10 +345,10 @@ module.exports = function(grunt) {
         },
         //-------------------DEBUG Add Ons------------------------------<
     });
-    
+
     //-------------------Server----------------------------------------->
     grunt.loadNpmTasks('grunt-express-server');
-    
+
     //-------------------Front End------------------------------------>
     grunt.loadNpmTasks('grunt-contrib-concat');
 
@@ -299,12 +368,14 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-bowercopy');
 
-
+    grunt.loadNpmTasks('grunt-contrib-copy');
     //------------------Testing Tools------------------------------------>
 
     //Finally we need a Selenium server. If we don't have one set up already, we can install a local standalone version with this command:
     //./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update
     grunt.loadNpmTasks('grunt-protractor-runner');
+
+    grunt.loadNpmTasks('grunt-protractor-coverage');
 
     grunt.loadNpmTasks('grunt-karma');
 
@@ -325,36 +396,64 @@ module.exports = function(grunt) {
     //-------------------BUNDLES------------------------------------------>
 
     //updates front end libraries, cleans folder before the copy
-    grunt.registerTask('update-frontendlibs', ['clean:lib', 'bowercopy:jsfiles', 'bowercopy:stylefiles']);
+    grunt.registerTask('update-frontendlibs', [
+        'clean:lib',
+        'bowercopy:jsfiles',
+        'bowercopy:stylefiles'
+    ]);
 
-    //>-----------Test Bundle------------------------------------------>
+    //>-----------------------Test Bundles--------------------------------->
 
 
-    //------------E2E Tests ----------------
+    //-----------------------E2E Tests ------------------------------------>
 
     //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
+    grunt.registerTask('e2e-coverage', [
+        'clean:e2e-coverage',
+        'copy:e2e-coverage',
+        'instrument',
+        'express:e2e-coverage',
+        'protractor_coverage:chrome',
+        'makeReport'
+    ]);
+
     grunt.registerTask('e2e-test', ['protractor']);
 
     grunt.registerTask('debug-e2e', ['shell:e2e-coverage']); //debug object - window.clientSideScripts
 
-    //------------Front End Tests ----------------
+    //--------------Front End Tests --------------------------------------->
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
-    grunt.registerTask('unit-test', ['clean:unit-coverage', 'karma']);
+    grunt.registerTask('unit-test', [
+        'clean:unit-coverage',
+        'karma'
+    ]);
 
-    //------------Back End Tests ----------------
+    //-----------------Back End Tests ------------------------------------->
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
-    grunt.registerTask('server-test-coverage', ['mocha_istanbul:coverage', 'istanbul_check_coverage']);
-    grunt.registerTask('server-test', ['clean:server-coverage', 'server-test-coverage']);
+    grunt.registerTask('server-test-coverage', [
+        'mocha_istanbul:coverage',
+        'istanbul_check_coverage'
+    ]);
+
+    grunt.registerTask('server-test', [
+        'clean:server-coverage',
+        'server-test-coverage'
+    ]);
 
     //grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
 
-    //<-----------Test Bundle------------------------------------------<
+    //<----------------Test Bundles------------------------------------------<
 
     //'grunt test' command will check the js files for syntax and 
     //all test methods will be run in consecutive bundle
-    grunt.registerTask('test', ['jshint', 'e2e-test', 'unit-test', 'server-test']);
+    grunt.registerTask('test', [
+        'jshint',
+        'e2e-test',
+        'unit-test',
+        'server-test'
+    ]);
 
     //'grunt rebuild' command will activte the 'rebuild' bundle of processes
     //rebuild bundle - it cleans 'public/js/dist' and 'public/css/dist' and 
@@ -362,14 +461,32 @@ module.exports = function(grunt) {
     // for the new js and css bunbled files. The code is being tested for errors
     //with jshint, after what all js and css files are being concatenated into bundles
     // after this are being tested again and at the end - minified;
-    grunt.registerTask('rebuild', ['clean:dist', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify', 'cssmin']);
+    grunt.registerTask('rebuild', [
+        'clean:dist',
+        'jshint:beforeconcat',
+        'concat',
+        'jshint:afterconcat',
+        'uglify',
+        'cssmin'
+    ]);
 
     //'grunt start' command will activte the 'start' bundle of processes
     // additionaly after a succesfull rebuild we will run a express server
     // we will watch the java script files for any changes. A server will restart automatically
     // no CTRL+SHIFT+R or 'Refresh' is being done automatically. 
-    grunt.registerTask('start', ['rebuild', 'express:dev', 'watch']);
+    grunt.registerTask('start', [
+        'rebuild',
+        'express:dev',
+        'watch'
+    ]);
 
+    grunt.registerTask('starte2e', [
+        'clean:e2e-coverage',
+        'copy:e2e-coverage',
+        'instrument',
+        'express:e2e-coverage',
+        'watch'
+    ]);
 
     //debugging
     grunt.registerTask('debug-dev', ['shell:dev']);

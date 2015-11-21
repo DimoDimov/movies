@@ -7,7 +7,8 @@ describe("APIService", function() {
         page,
         searchPhrase,
         routingConstants,
-        getMovieListUrl;
+        getMovieListUrl,
+        $location;
 
     describe("Initialization", function() {
         beforeEach(function() {
@@ -20,7 +21,9 @@ describe("APIService", function() {
 
                 routingConstants = $injector.get('routingConstants');
 
-                getMovieListUrl = routingConstants.url + ':' + routingConstants.port + routingConstants.moviesAPI;
+                $location = $injector.get('$location');
+                
+                getMovieListUrl = $location.absUrl() + routingConstants.moviesAPI;
             });
         });
 

@@ -13,8 +13,8 @@
     appDep.Services.factory('movieAPIServices',
 
         //inline array annotation. Best way for minification approach
-        ['$http', '$q', 'routingConstants',
-            function($http, $q, routingConstants) {
+        ['$http', '$q', 'routingConstants', '$location',
+            function($http, $q, routingConstants, $location) {
 
                 var _getAllMovies = function(maxList, page, searchPhrase) {
                     var deferred = $q.defer();
@@ -23,8 +23,8 @@
                     params.list = maxList;
                     params.page = page;
                     params.q = searchPhrase;
-
-                    var getMovieListUrl = routingConstants.url + ':' + routingConstants.port + routingConstants.moviesAPI;
+                    
+                    var getMovieListUrl = $location.absUrl() + routingConstants.moviesAPI;
 
                     $http.get(getMovieListUrl, {
                             params: params

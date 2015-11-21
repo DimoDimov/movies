@@ -6,7 +6,7 @@
     appDep.Constants.constant("routingConstants", {
         url: "http://127.0.0.1",
         port: "8000",
-        moviesAPI: "/api/movies"
+        moviesAPI: "api/movies"
     });
 
     appDep.Constants.constant("commonConstants", {

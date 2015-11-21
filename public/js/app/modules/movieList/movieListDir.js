@@ -7,7 +7,7 @@
             controller: 'movieListCtrl',
             link: function(scope, element, attrs) {
             },
-            templateUrl: 'js/app/modules/movieList/movieListView.html'
+            templateUrl: 'views/movieListView.html'
         };
     });
 

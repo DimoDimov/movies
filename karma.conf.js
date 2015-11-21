@@ -15,7 +15,7 @@ module.exports = function(config) {
             'public/js/dist/app.concat.js',
 
             //load html templates for html2js
-            'public/js/app/**/*View.html',
+            'public/views/**/*View.html',
 
             //load tests
             'test/unit/libs/test-helpers.js',

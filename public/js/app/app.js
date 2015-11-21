@@ -3,7 +3,7 @@
     // Organizing the code
     // The Domain Style
     // modules are declared into namespacing at app-dependencies.js
-    var app = angular.module('app', appDep.AllDependencies); 
+    var app = angular.module('app', appDep.AllDependencies);
 
     // the Structure:
     // resuable modules. What works together lives together. All necessary files
@@ -48,8 +48,8 @@
         });
 
         $routeProvider.
-        when('/', { 
-            templateUrl: '/js/app/htmlTemplates/movieListTemplate.html',
+        when('/', {
+            templateUrl: 'views/movieListTemplate.html',
             // templateUrl: function (routeParams) {
             //     return '/js/app/htmlTemplates/movieListTemplate.html';
             // },
@@ -59,4 +59,22 @@
             redirectTo: '/'
         });
     }]);
+
+    // app.run([
+    //     '$rootScope',
+    //     function($rootScope) {
+    //         // see what's going on when the route tries to change
+    //         $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    //             // next is an object that is the route that we are starting to go to
+    //             // current is an object that is the route where we are currently
+    //             if (current) {
+    //                 var currentPath = current.originalPath;
+    //                 var nextPath = next.originalPath;
+
+    //                 console.log('Starting to leave %s to go to %s', currentPath, nextPath);
+    //             }
+
+    //         });
+    //     }
+    // ]);
 })();
