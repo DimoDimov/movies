@@ -16,17 +16,17 @@ module.exports = function(grunt) {
                 options: {
                     port: 8000,
                     bases: 'public',
-                    script: path.resolve('server/index.js'),
+                    script: path.resolve(__dirname, 'server/index.js'),
                 }
             },
             prod: {
                 options: {
-                    script: path.resolve('path/to/prod/server.js')
+                    script: path.resolve(__dirname, 'path/to/prod/server.js')
                 }
             },
             test: {
                 options: {
-                    script: path.resolve('path/to/test/server.js')
+                    script: path.resolve(__dirname, 'path/to/test/server.js')
                 }
             }
         },
@@ -38,39 +38,39 @@ module.exports = function(grunt) {
                 //separator: ';'
             },
             distJS: {
-                src: [path.resolve('public/js/app/app-dependencies.js'), path.resolve('public/js/app/app.js'), path.resolve('public/js/app/**/*.js')],
-                dest: path.resolve('public/js/dist/app.concat.js'),
+                src: [path.resolve(__dirname, 'public/js/app/app-dependencies.js'), path.resolve(__dirname, 'public/js/app/app.js'), path.resolve(__dirname, 'public/js/app/**/*.js')],
+                dest: path.resolve(__dirname, 'public/js/dist/app.concat.js'),
             },
             distCSS: {
-                src: [path.resolve('public/styles/app/**/*.css')],
-                dest: path.resolve('public/styles/dist/app.concat.css'),
+                src: [path.resolve(__dirname, 'public/styles/app/**/*.css')],
+                dest: path.resolve(__dirname, 'public/styles/dist/app.concat.css'),
             }
         },
 
         //minifies the js files
         'uglify': {
             dist: {
-                src: [path.resolve('public/js/dist/app.concat.js')],
-                dest: path.resolve('public/js/dist/app.min.js'),
+                src: [path.resolve(__dirname, 'public/js/dist/app.concat.js')],
+                dest: path.resolve(__dirname, 'public/js/dist/app.min.js'),
             }
         },
 
         //minifies the css
         'cssmin': {
             css: {
-                src: path.resolve('public/styles/dist/app.concat.css'),
-                dest: path.resolve('public/styles/dist/app.min.css')
+                src: path.resolve(__dirname, 'public/styles/dist/app.concat.css'),
+                dest: path.resolve(__dirname, 'public/styles/dist/app.min.css')
             }
         },
 
         //high quality code
         'jshint': {
             gruntfile: {
-                src: path.resolve('gruntfile.js')
+                src: path.resolve(__dirname, 'gruntfile.js')
             },
-            test: [path.resolve('test/**/*.js')],
-            beforeconcat: [path.resolve('public/js/app/**/*.js'), path.resolve('server/**/*.js')],
-            afterconcat: [path.resolve('public/js/dist/**/*concat.js')],
+            test: [path.resolve(__dirname, 'test/**/*.js')],
+            beforeconcat: [path.resolve(__dirname, 'public/js/app/**/*.js'), path.resolve(__dirname, 'server/**/*.js')],
+            afterconcat: [path.resolve(__dirname, 'public/js/dist/**/*concat.js')],
             //all: ['public/js/app/**/*.js', 'server/**/*.js'],
             options: {
                 // options here to override JSHint defaults
@@ -91,11 +91,11 @@ module.exports = function(grunt) {
         //set watchers on files for running tasks on file change
         'watch': {
             test: {
-                files: [path.resolve('test/**/*.js'), '!' + path.resolve('test/*-coverage/**/*')],
+                files: [path.resolve(__dirname, 'test/**/*.js'), '!' + path.resolve(__dirname, 'test/*-coverage/**/*')],
                 tasks: ['jshint:test'],
             },
             express: {
-                files: [path.resolve('public/**/*'), path.resolve('server/**/*'), path.resolve('Gruntfile.js'), '!' + path.resolve('public/js/dist/*'), '!' + path.resolve('public/styles/dist/*'), '!' + path.resolve('test/**/*')],
+                files: [path.resolve(__dirname, 'public/**/*'), path.resolve(__dirname, 'server/**/*'), path.resolve(__dirname, 'Gruntfile.js'), '!' + path.resolve(__dirname, 'public/js/dist/*'), '!' + path.resolve(__dirname, 'public/styles/dist/*'), '!' + path.resolve(__dirname, 'test/**/*')],
                 tasks: ['start'],
                 options: {
                     spawn: false,
@@ -108,18 +108,18 @@ module.exports = function(grunt) {
         //clean folders pre-build
         'clean': {
             dist: {
-                src: [path.resolve('public/js/dist/**/*'), path.resolve('public/styles/dist/**/*')],
+                src: [path.resolve(__dirname, 'public/js/dist/**/*'), path.resolve(__dirname, 'public/styles/dist/**/*')],
                 //filter: 'isFile',
             },
             lib: {
-                src: [path.resolve('public/js/lib/**/*'), path.resolve('public/styles/lib/**/*'), path.resolve('public/styles/fonts/**/*')],
+                src: [path.resolve(__dirname, 'public/js/lib/**/*'), path.resolve(__dirname, 'public/styles/lib/**/*'), path.resolve(__dirname, 'public/styles/fonts/**/*')],
                 //filter: 'isFile',
             },
             'unit-coverage': {
-                src: [path.resolve('test-coverage/unit-coverage/**/*')],
+                src: [path.resolve(__dirname, 'test-coverage/unit-coverage/**/*')],
             },
             'server-coverage': {
-                src: [path.resolve('test-coverage/server-coverage/**/*')],
+                src: [path.resolve(__dirname, 'test-coverage/server-coverage/**/*')],
             },
         },
 
@@ -132,8 +132,8 @@ module.exports = function(grunt) {
             // js
             jsfiles: {
                 options: {
-                    srcPrefix: path.resolve('bower_components/'),
-                    destPrefix: path.resolve('public/js/lib/')
+                    srcPrefix: path.resolve(__dirname, 'bower_components/'),
+                    destPrefix: path.resolve(__dirname, 'public/js/lib/')
                 },
                 files: {
                     'jquery.js': 'jquery/dist/jquery.js',
@@ -149,8 +149,8 @@ module.exports = function(grunt) {
             //css
             stylefiles: {
                 options: {
-                    srcPrefix: path.resolve('bower_components/'),
-                    destPrefix: path.resolve('public/styles/')
+                    srcPrefix: path.resolve(__dirname, 'bower_components/'),
+                    destPrefix: path.resolve(__dirname, 'public/styles/')
                 },
                 files: {
                     'lib/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
@@ -166,7 +166,7 @@ module.exports = function(grunt) {
         //Set Automation Tests
         'protractor': {
             options: {
-                configFile: path.resolve("protractor.conf.js"), // Default config file 
+                configFile: path.resolve(__dirname, "protractor.conf.js"), // Default config file 
                 keepAlive: true, // If false, the grunt process stops when the test fails. 
                 noColor: false, // If true, protractor will not use colors in its output. 
                 args: {
@@ -184,9 +184,9 @@ module.exports = function(grunt) {
         //------------------Karma-----------------
         'karma': {
             unit: {
-                configFile: path.resolve('karma.conf.js'),
+                configFile: path.resolve(__dirname, 'karma.conf.js'),
                 // background: true,
-                //singleRun: true
+                singleRun: true
             }
         },
 
@@ -194,7 +194,7 @@ module.exports = function(grunt) {
         //--------Mocha Coverage ------------->
         mocha_istanbul: {
             coverage: {
-                src: [path.resolve('test/server/config/**/*')], // a folder works nicely
+                src: [path.resolve(__dirname, 'test/server/**/*')], // a folder works nicely
 
                 options: {
                     // coverage: true,
@@ -207,7 +207,7 @@ module.exports = function(grunt) {
         istanbul_check_coverage: {
             default: {
                 options: {
-                    coverageFolder: path.resolve('test-coverage/server-coverage'), // will check both coverage folders and merge the coverage results
+                    coverageFolder: path.resolve(__dirname, 'test-coverage/server-coverage'), // will check both coverage folders and merge the coverage results
                     check: {
                         lines: 95,
                         statements: 95
@@ -250,7 +250,7 @@ module.exports = function(grunt) {
                 options: {
                     stdout: true
                 },
-                command: "node-debug --hidden node_modules --no-preload " + path.resolve('server/index.js')
+                command: "node-debug --hidden node_modules --no-preload " + path.resolve(__dirname, 'server/index.js')
             },
             'e2e': {
                 options: {

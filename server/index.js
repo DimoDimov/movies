@@ -6,15 +6,15 @@
 
     var app = express();
 
-    app.use(express.static(path.resolve('public')));
+    app.use(express.static(path.resolve(__dirname, '../public')));
 
-    require(path.resolve('server/config/environment.js'))(app, express);
+    require(path.resolve(__dirname, 'config/environment.js'))(app, express);
 
     //Films, 
     //fs.readFile OR fs.readFileSync is better if data of the file is changing.
     //For the purpose of this example require will be used. The result will be cached!
 
-    require(path.resolve('server/config/routes.js'))(app);
+    require(path.resolve(__dirname, 'config/routes.js'))(app);
 
     app.set('port', process.env.PORT || app.locals.routingConstants.port);
 

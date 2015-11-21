@@ -176,7 +176,6 @@ var movieListPage = function() {
     //Should have loaded movies alphabetically by phrase. Test all fields for first movie from the page.
     this.testIfSearchWrapperBodyIsHidden = function(expected) {
         element(by.className('search-wrapper-body')).isDisplayed().then(function(actual) {
-            console.log(actual);
             expect(actual).toEqual(expected);
         });
     };

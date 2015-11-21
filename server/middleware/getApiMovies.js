@@ -5,9 +5,9 @@
     'use strict';
     var Q = require('q');
     var path = require('path');
-    var db = require(path.resolve('server/data.json'));
-    var validate = require(path.resolve('server/config/middleware/validate.js'));
-    var filterMovies = require(path.resolve('server/config/middleware/filterMovies.js'));
+    var db = require(path.resolve(__dirname, '../data.json'));
+    var validate = require(path.resolve(__dirname, 'modules/validate.js'));
+    var filterMovies = require(path.resolve(__dirname, 'modules/filterMovies.js'));
 
     module.exports = function(req, res) {
         var deferred = Q.defer();

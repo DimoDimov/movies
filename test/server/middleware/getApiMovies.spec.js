@@ -14,9 +14,9 @@ chai.use(chaiAsPromised);
 var expect = chai.expect,
     assert = chai.assert;
 
-var getApiMovies = require(path.resolve('server/config/middleware/getApiMovies.js'));
-var validate = require(path.resolve('server/config/middleware/validate.js'));
-var filterMovies = require(path.resolve('server/config/middleware/filterMovies.js'));
+var getApiMovies = require(path.resolve(__dirname, '../../../server/middleware/getApiMovies.js'));
+var validate = require(path.resolve(__dirname, '../../../server/middleware/modules/validate.js'));
+var filterMovies = require(path.resolve(__dirname, '../../../server/middleware/modules/filterMovies.js'));
 
 
 var db = require(path.resolve('server/data.json'));

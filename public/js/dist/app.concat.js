@@ -91,9 +91,10 @@
 
         $routeProvider.
         when('/', { 
-            templateUrl: function (routeParams) {
-                return '/js/app/htmlTemplates/movieListTemplate.html';
-            },
+            templateUrl: '/js/app/htmlTemplates/movieListTemplate.html',
+            // templateUrl: function (routeParams) {
+            //     return '/js/app/htmlTemplates/movieListTemplate.html';
+            // },
             controller: 'MainCtrl'
         }).
         otherwise({

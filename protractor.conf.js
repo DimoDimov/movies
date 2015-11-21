@@ -11,7 +11,7 @@ exports.config = {
 
     //Spec patterns are relative to the current working
     //when protractor is called 
-    specs: [path.resolve('test/e2e/movieList/**/*.spec.js')],
+    specs: [path.resolve(__dirname, 'test/e2e/movieList/**/*.spec.js')],
 
     //the address of a running selenium address (default)
     seleniumAddress: 'http://localhost:4444/wd/hub',
