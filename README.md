@@ -1,6 +1,6 @@
-Dev in Test 
+                              Dev in Test 
 
-Technical Details:
+                            Technical Details:
 
 1. OS – Windows
 
@@ -65,19 +65,19 @@ Steps to Follow To Run The Project:
 
 * Note: server-coverage and unit-coverage reports are 100%. e2e reports for e2e-unit-coverage are <100% because many of the cases are only programatically available. The html and js restrictions will not allow some incorrect input data to be entered inside the front end logical layer. The e2e report for e2e-server-coverage are even less covered because the front end restrictions are making sure no bad data is being sent to the server side. 
 
-Approach
+                                 Approach
 
 Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
 	
 Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
 
 Approach
-	Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
-	Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
+Back end - as no documentation was provided regarding how to handle the bad requests – wheather to handle the errors silentley or to show error messages, I decide to silently handle the bad requests and return any valid result if possible. I believe this approach is more challenging.
+Front end – the restrictions applied in the front end layer will not allow inappropriate requests to be send.
 
 
 
-Structure
+							Structure
 
 For the hereby “Movie List” project I am using classical, three layered architecture including Angular for the Client (Front End) layer, Node for the Business (Middle) layer and I am using a Data.json file as a mock for the Data (Back) End layer. 
 
@@ -94,14 +94,14 @@ Implementation:
 		- Allowed limiting the number of items returned – list parameter
 		- Allowed pagination of data – page parameter
 
-Testing:
+							Testing:
 
  I really would like not to just test my endpoints, but to test each of the logic modules. Once I am sure my modules are doing fine I am attaching them to my endpoint and microservices.  The Behavior Driven Development (which is extension of the Test Driven Development) is the core motivation.
 
 For testing my Q promises nicely I am using the extension for Chai – Chai-As-Promised and Mocha. In the tests you can find various scenarious where I am showing the very Best Practices for testing promises. The comments are all around the implementation and the testing logic.
 
 
-Client (Front End) layer
+						Client (Front End) layer
 
 Structure:
 
@@ -209,7 +209,7 @@ Commands to run:
  npm run e2e - run the protractor tests 
  npm run server-unit - run the backend mocha tests
 
-Task Accomplished:
+						Task Accomplished:
  
 Implement the following user story in JavaScript / AngularJS, using TDD/BDD/ATDD.
 Write acceptance tests in Protractor and unit tests as you see fit.
