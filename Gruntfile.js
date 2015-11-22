@@ -315,69 +315,6 @@ module.exports = function(grunt) {
         //<-------Mocha Coverage -------------/
 
         //<---------------Testing---------------------------------------<
-
-
-        //-------------------DEBUG Add Ons------------------------------>
-        'node-inspector': {
-            'server-unit': {
-                options: {
-                    'preload': false,
-                    'hidden': ['node_modules', 'bower_components', 'module.js'],
-                    'stack-trace-limit': 4,
-                }
-            },
-            'dev': {
-                options: {
-                    'preload': false,
-                    'hidden': ['node_modules'],
-                    'stack-trace-limit': 4,
-                }
-            }
-        },
-
-        shell: {
-            'server-unit': {
-                options: {
-                    stdout: true
-                },
-                //windows debug
-                command: "node-debug c:\\Users\\Dimo\\AppData\\Roaming\\npm\\node_modules\\grunt-cli\\bin\\grunt server-unit"
-            },
-            'dev': {
-                options: {
-                    stdout: true
-                },
-                command: "node-debug --hidden node_modules --no-preload " + path.resolve(__dirname, 'server/index.js')
-            },
-            'e2e': {
-                options: {
-                    stdout: true
-                },
-                command: "protractor debug protractor.conf.js"
-            },
-        },
-
-        concurrent: {
-            'server-unit': {
-                tasks: ['node-inspector:server-unit', 'shell:server-unit'],
-                options: {
-                    logConcurrentOutput: true
-                }
-            },
-            'dev': {
-                tasks: ['node-inspector:dev', 'shell:dev'],
-                options: {
-                    logConcurrentOutput: true
-                }
-            },
-            'e2e-coverage': {
-                tasks: ['node-inspector:dev', 'shell:dev'],
-                options: {
-                    logConcurrentOutput: true
-                }
-            },
-        },
-        //-------------------DEBUG Add Ons------------------------------<
     });
 
     //-------------------Server----------------------------------------->
@@ -417,16 +354,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-mocha-istanbul');
 
-    //---------------Debug Tasks------------------------------------------->
-
-    grunt.loadNpmTasks('grunt-debug');
-
-    grunt.loadNpmTasks('grunt-node-inspector');
-
-    grunt.loadNpmTasks('grunt-concurrent');
-
-    grunt.loadNpmTasks('grunt-shell');
-
     //-------------------BUNDLES------------------------------------------>
 
     //updates front end libraries, cleans folder before the copy
@@ -437,7 +364,6 @@ module.exports = function(grunt) {
     ]);
 
     //>-----------------------Test Bundles--------------------------------->
-
 
     //-----------------------E2E Tests ------------------------------------>
 
@@ -461,8 +387,6 @@ module.exports = function(grunt) {
     //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
     grunt.registerTask('e2e-test', ['protractor']);
 
-    grunt.registerTask('debug-e2e', ['shell:e2e-coverage']); //debug object - window.clientSideScripts
-
     //--------------Front End Tests --------------------------------------->
 
     //equivalent to package.json => "scripts" => "unit": "karma start karma.conf.js", 
@@ -483,8 +407,6 @@ module.exports = function(grunt) {
         'clean:server-coverage',
         'server-test-coverage'
     ]);
-
-    //grunt.registerTask('debug-server-unit', ['concurrent:server-unit']);
 
     //<----------------Test Bundles------------------------------------------<
 
@@ -521,9 +443,4 @@ module.exports = function(grunt) {
         'express:dev',
         'watch'
     ]);
-
-    
-
-    //debugging
-    grunt.registerTask('debug-dev', ['shell:dev']);
 };
