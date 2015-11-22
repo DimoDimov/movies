@@ -222,10 +222,10 @@
         function(validationServices) {
 
             return function(actors) {
-                //debugger; //jshint ignore:line
+
                 if (validationServices.isObject(actors) && validationServices.isArray(actors.list)) {
                     var result = "";
-                    //debugger //jshint ignore:line
+
                     for (var i = 0; i < actors.list.length; i++) {
                         if (i < actors.list.length - 1) {
                             result += actors.list[i].name + ", ";
@@ -235,7 +235,9 @@
                     }
 
                     return result;
+
                 } else {
+                    
                     return "";
                 }
             };

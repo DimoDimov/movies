@@ -14,7 +14,7 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    port: 8001,
+                    port: 8000,
                     script: path.resolve(__dirname, 'server/index.js'),
                 }
             },
@@ -133,15 +133,13 @@ module.exports = function(grunt) {
 
         copy: {
             'e2e-coverage': {
-                options: {
-                    //srcPrefix: path.resolve(__dirname, 'server'),
-                    //destPrefix: path.resolve(__dirname, '/')
-                },
                 files: [
                     // includes files that should not be instrumented for e2e coverage test reporting
                     {
                         cwd: path.resolve(__dirname, ''),
                         expand: true,
+                        //src: ['server/**/*', 'public/**', '!public/js/app/dist', '!public/js/app/**', '!public/styles/app/**'],
+                        
                         src: ['server/data.json', 'public/**', '!public/js/app/dist', '!public/js/app/**', '!public/styles/app/**'],
                         dest: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented')
                     },
@@ -152,6 +150,7 @@ module.exports = function(grunt) {
         //instrument code for e2e coverage reports
         instrument: {
             files: ['server/**/*.js', 'public/js/dist/app.concat.js'],
+            //files: ['public/js/dist/app.concat.js'],
             options: {
                 cwd: path.resolve(__dirname, ''),
                 lazy: true,
@@ -165,11 +164,10 @@ module.exports = function(grunt) {
                 configFile: path.resolve(__dirname, "protractor.conf.js"), // Default config file
                 keepAlive: true, // If false, the grunt process stops when the test fails.
                 noColor: false, // If true, protractor will not use colors in its output.
-                coverageDir: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented'),
+                coverageDir: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented/'),
 
-                //coverage express server started on 9000
                 args: {
-                    baseUrl: 'http://localhost:9000'
+                    
                 }
             },
             chrome: {
@@ -184,10 +182,10 @@ module.exports = function(grunt) {
         },
 
         makeReport: {
-            src: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented/*.json'),
+            src: 'test-coverage/e2e-coverage/instrumented/**.json',
             options: {
                 type: 'html',
-                dir: path.resolve(__dirname, 'test-coverage/e2e-coverage/reports'),
+                dir: 'test-coverage/e2e-coverage/e2e-unit-reports',
                 print: 'detail'
             }
         },
@@ -244,7 +242,7 @@ module.exports = function(grunt) {
             },
             chrome: { // Grunt requires at least one target to run so we can simply put 'all: {}' here too. 
                 all: {
-                    //baseUrl: 'http://localhost:8001/',
+                    baseUrl: 'http://localhost:8001/',
                     //seleniumPort : 9000,
                     //baseUrl: 'http://localhost:9000'
                 }
@@ -262,19 +260,40 @@ module.exports = function(grunt) {
 
         //--------Mocha Coverage ------------->
         mocha_istanbul: {
-            coverage: {
+            'server-test-coverage': {
                 src: [path.resolve(__dirname, 'test/server/**/*')], // a folder works nicely
 
                 options: {
                     // coverage: true,
                     coverageFolder: 'test-coverage/server-coverage',
-                    reportFormats: ['text', 'lcov', 'lcovonly']
+                    reportFormats: ['text', 'lcov', 'lcovonly'],
+                    print: 'detail'
                 }
-            }
+            },
+            'e2e-server-coverage': {
+                src: [path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented/server/**/*')], // a folder works nicely
+
+                options: {
+                    // coverage: true,
+                    coverageFolder: 'test-coverage/e2e-coverage/e2e-server-report',
+                    reportFormats: ['text', 'lcov', 'lcovonly'],
+                    print: 'detail'
+                }
+            },
+            // 'e2e-unit-coverage': {
+            //     src: [path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented/public/js/dist/**/*')], // a folder works nicely
+
+            //     options: {
+            //         // coverage: true,
+            //         coverageFolder: 'test-coverage/e2e-coverage/e2e-unit-report',
+            //         reportFormats: ['html', 'text', 'lcov', 'lcovonly'],
+            //         print: 'detail'
+            //     }
+            // },
         },
 
         istanbul_check_coverage: {
-            default: {
+            'server-test': {
                 options: {
                     coverageFolder: path.resolve(__dirname, 'test-coverage/server-coverage'), // will check both coverage folders and merge the coverage results
                     check: {
@@ -282,7 +301,16 @@ module.exports = function(grunt) {
                         statements: 95
                     }
                 }
-            }
+            },
+            'e2e-server-test': {
+                options: {
+                    coverageFolder: path.resolve(__dirname, 'test-coverage/e2e-coverage/instrumented'), // will check both coverage folders and merge the coverage results
+                    check: {
+                        lines: 90,
+                        statements: 90
+                    }
+                }
+            },
         },
         //<-------Mocha Coverage -------------/
 
@@ -337,6 +365,12 @@ module.exports = function(grunt) {
                 }
             },
             'dev': {
+                tasks: ['node-inspector:dev', 'shell:dev'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            },
+            'e2e-coverage': {
                 tasks: ['node-inspector:dev', 'shell:dev'],
                 options: {
                     logConcurrentOutput: true
@@ -407,16 +441,24 @@ module.exports = function(grunt) {
 
     //-----------------------E2E Tests ------------------------------------>
 
-    //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
-    grunt.registerTask('e2e-coverage', [
+    grunt.registerTask('start-e2e-instrumented-server', [
         'clean:e2e-coverage',
         'copy:e2e-coverage',
         'instrument',
         'express:e2e-coverage',
-        'protractor_coverage:chrome',
-        'makeReport'
     ]);
 
+    grunt.registerTask('e2e-coverage-data', [
+        'start-e2e-instrumented-server',
+        'protractor_coverage:chrome',
+    ]);
+
+    grunt.registerTask('e2e-coverage-reports', [
+        'mocha_istanbul:e2e-server-coverage',
+        'makeReport',
+    ]);
+
+    //equivalent to package.json => "scripts" => "e2e": "protractor protractor.conf.js", 
     grunt.registerTask('e2e-test', ['protractor']);
 
     grunt.registerTask('debug-e2e', ['shell:e2e-coverage']); //debug object - window.clientSideScripts
@@ -433,8 +475,8 @@ module.exports = function(grunt) {
 
     //equivalent to package.json => "scripts" => "server-unit": "mocha test/server/**/*.spec.js", 
     grunt.registerTask('server-test-coverage', [
-        'mocha_istanbul:coverage',
-        'istanbul_check_coverage'
+        'mocha_istanbul:server-test-coverage',
+        'istanbul_check_coverage:server-test'
     ]);
 
     grunt.registerTask('server-test', [
@@ -480,13 +522,7 @@ module.exports = function(grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('starte2e', [
-        'clean:e2e-coverage',
-        'copy:e2e-coverage',
-        'instrument',
-        'express:e2e-coverage',
-        'watch'
-    ]);
+    
 
     //debugging
     grunt.registerTask('debug-dev', ['shell:dev']);
