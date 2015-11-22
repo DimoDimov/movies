@@ -10,7 +10,15 @@ Technical Details:
 
 4. Back end technologies used: Node, Express.
 
-5. Testing technologies and tools:  front layer - Jasmine, Karma; business layer: Chai, Chai-As-Promised, Mocha; e2e testing – Protractor;
+5. Testing technologies and tools:  
+
+front layer - Jasmine, Karma; 
+
+business layer: Chai, Chai-As-Promised, Mocha; 
+
+e2e testing – Protractor; 
+
+code coverage – Istanbul, Karma-Coverage, Grunt-Mocha-Istanbul, Grunt-Istanbul, Grunt-Protractor-Coverage;
 
 6. Task runner: Grunt
 
@@ -34,6 +42,7 @@ Steps to Follow To Run The Project:
 4. Install Protractor globally – Start Git Bash terminal and copy the following “npm install -g protractor”
 
 5. Open Git bash terminal and run the command “npm install” – to instal npm modules, bower modules will install automatically. Selenium will check to updates automatically. All necessary libraries will be copied to the project.
+
 6. Start two Git Bash terminals from the project directory.
 
 7. Run the command “grunt start” – to start the server from the first Git Bash terminal.
@@ -41,6 +50,20 @@ Steps to Follow To Run The Project:
 8. From the second Git Bash terminal run the command “grunt test” – to start all the tests.
 
 9. Code coverage of the test – summary on the console. The complete reports are in ‘test-coverage’ folder
+
+10. Generating e2e reports:
+
+* Note: the process of generating e2e reports is time consuming and is taking average 2-3 minutes.
+
+	10.1 If any express server is started – then stop it. 
+
+	10.2 Run grunt e2e-coverage-data - it will copy the project files to test-coverage/e2e-coverage/instrumented and will instrument the js files with Istanbul so that coverage report is being recorded. Then it will start a new server with the instrumented files and will record the coverage.
+
+	10.3 Run grunt e2e-coverage-reports – this will generate coverage reports about the e2e testing. Reports are stored at test-coverage/e2e-coverage/e2e-unit-report and test-coverage/e2e-coverage/e2e-server-report. 
+
+* Note: Protractor is not always being able to run Web Drvier correctly. If at any point e2e testing fails, just rerun the test.
+
+* Note: server-coverage and unit-coverage reports are 100%. e2e reports for e2e-unit-coverage are <100% because many of the cases are only programatically available. The html and js restrictions will not allow some incorrect input data to be entered inside the front end logical layer. The e2e report for e2e-server-coverage are even less covered because the front end restrictions are making sure no bad data is being sent to the server side. 
 
 Approach
 

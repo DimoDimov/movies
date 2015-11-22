@@ -185,7 +185,7 @@ module.exports = function(grunt) {
             src: 'test-coverage/e2e-coverage/instrumented/**.json',
             options: {
                 type: 'html',
-                dir: 'test-coverage/e2e-coverage/e2e-unit-reports',
+                dir: 'test-coverage/e2e-coverage/e2e-unit-report',
                 print: 'detail'
             }
         },
