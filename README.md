@@ -35,7 +35,7 @@ Steps to Follow To Run The Project:
 
 1. Copy the project to a project directory.
 
-2. Make sure npm is up to date – Start Git Bash terminal and copy the following “npm update -g npm” 
+2. Make sure npm is up to date (Win Only) – Start Git Bash terminal and copy the following “npm update -g npm” 
 
 3. Install Grunt globally – Start Git Bash terminal and copy the following “npm install -g grunt-cli”
 

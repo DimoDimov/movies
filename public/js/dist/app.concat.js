@@ -138,10 +138,10 @@
         //inline array annotation. Best way for minification approach
         ['$http', '$q', 'routingConstants', '$location',
             function($http, $q, routingConstants, $location) {
-
+			
                 var _getAllMovies = function(maxList, page, searchPhrase) {
+				
                     var deferred = $q.defer();
-
                     var params = {};
                     params.list = maxList;
                     params.page = page;
@@ -174,7 +174,7 @@
                                 //we can save and log the problem for history and error tracking purposes
                                 console.warn("Error in movieAPIServices _getAllMovies");
                             }
-
+							
                             deferred.resolve(data);
                         })
                         .error(function(data, status, headers, config, statusText) {
